@@ -1,10 +1,35 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta content="text/html" charset="UTF-8" http-equiv="Content-Type">
-    <title>Spring Boot Web Service</title>
-</head>
-<body>
-    <h1>Hello, World!</h1>
-</body>
-</html>
+{{>layout/header}}
+
+<h1>Start With Spring Boot Web Service</h1>
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-6">
+            <a href="/post/save" role="button" class="btn btn-primary">Resist</a>
+
+        </div>
+    </div>
+    <br>
+
+    <table class="table table-horizontal table-boadered">
+        <thead class="thead-strong">
+        <tr>
+            <th>#No</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>ModifiedDate</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        {{#posts}}
+            <tr>
+                <td>{{id}}</td>
+                <td><a href="/posts/update/{{id}}">{{title}}</a></td>
+                <td>{{author}}</td>
+                <td>{{modifiedDate}}</td>
+            </tr>
+        {{/posts}}
+        </tbody>
+    </table>
+</div>
+
+{{>layout/footer}}
