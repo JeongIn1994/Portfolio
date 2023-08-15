@@ -29,14 +29,30 @@ public class IndexController {
     }
 
     @GetMapping("/post/save")
-    public String postsSave() {
+    public String postsSave(Model model, @LoginUser SessionUsers user) {
+
+        model.addAttribute("usersName", user.getName());
         return "Resist_Posts";
     }
-
-    @GetMapping("/posts/update/{id}")
-    public String postsUpdate(@PathVariable Long id, Model model) {
+    @GetMapping("/posts/view/{id}")
+    public String viewPost(@PathVariable Long id, Model model, @LoginUser SessionUsers user) {
         PostsResposeDto dto = postsService.findById(id);
         model.addAttribute("post", dto);
+
+        if(user != null) {
+            model.addAttribute("usersName", user.getName());
+        }
+
+        return "view_Posts";
+    }
+    @GetMapping("/posts/update/{id}")
+    public String postsUpdate(@PathVariable Long id, Model model, @LoginUser SessionUsers user) {
+        PostsResposeDto dto = postsService.findById(id);
+        model.addAttribute("post", dto);
+
+        if(user != null) {
+            model.addAttribute("usersName", user.getName());
+        }
 
         return "Update_Posts";
     }
