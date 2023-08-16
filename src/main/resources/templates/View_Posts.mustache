@@ -14,11 +14,11 @@
             </div>
             <div class="form-group">
                 <label for="author">Author</label>
-                <input type="text" class="form-control" id="author" value="{{post.author}}" readonly>
+                <input type="text" class="form-control" id="author" value="{{post.user_name}}" readonly>
             </div>
             <div class="form-group">
                 <label for="content">Content</label>
-                <div class="form-control" id="content" style="border: 1px solid grey">{{post.content}}
+                <div class="form-control" id="content" style="border: 1px solid grey;width: 100%; height: 300px" >{{post.content}}
                 </div>
 
                 <div class="row" id="buttonRow">
@@ -33,7 +33,7 @@
 <script>
 
     const SessionUserName =  "{{usersName}}";
-    const postAuthorName = "{{post.author}}";
+    const postAuthorName = "{{post.user_name}}";
     if(SessionUserName === postAuthorName ) {
         document.getElementById('btn-update').style.display = 'block';
         document.getElementById('btn-delete').style.display = 'block';

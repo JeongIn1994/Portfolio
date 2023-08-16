@@ -6,10 +6,12 @@ const main = {
         $('#btn-delete').on('click', () => main.delete())
     },
     save: () => {
+
         const data = {
             title: $('#title').val(),
-            author: $('#author').val(),
-            content: $('#content').val()
+            user_name: $('#user_name').val(),
+            // content: $('#content').val()
+            content: CKEDITOR.instances.content.getData()
         };
 
         $.ajax({

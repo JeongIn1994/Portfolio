@@ -1,17 +1,19 @@
 package com.practice.book.springboot.domain.user;
 
 import com.practice.book.springboot.domain.BaseTimeEntity;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 
 @Getter
 @NoArgsConstructor
 @Entity
-public class Users extends BaseTimeEntity {
+@Builder
+@AllArgsConstructor
+@ToString
+public class Users extends BaseTimeEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,14 +32,14 @@ public class Users extends BaseTimeEntity {
     @Column(nullable = false)
     private Role role;
 
-    @Builder
-    public Users(String name, String email, String picture,Role role) {
-
-        this.name = name;
-        this.email = email;
-        this.picture = picture;
-        this.role = role;
-    }
+//    @Builder
+//    public Users(String name, String email, String picture,Role role) {
+//
+//        this.name = name;
+//        this.email = email;
+//        this.picture = picture;
+//        this.role = role;
+//    }
 
     public Users update(String name, String picture) {
         this.name = name;

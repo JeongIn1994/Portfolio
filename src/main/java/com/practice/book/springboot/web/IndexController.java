@@ -34,6 +34,7 @@ public class IndexController {
         model.addAttribute("usersName", user.getName());
         return "Resist_Posts";
     }
+
     @GetMapping("/posts/view/{id}")
     public String viewPost(@PathVariable Long id, Model model, @LoginUser SessionUsers user) {
         PostsResposeDto dto = postsService.findById(id);
