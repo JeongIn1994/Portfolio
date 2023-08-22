@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Entity
 @Builder
 @AllArgsConstructor
-@ToString(exclude = "user_name")
+@ToString
 public class Posts extends BaseTimeEntity implements Serializable {
 
     @Id
@@ -25,7 +25,6 @@ public class Posts extends BaseTimeEntity implements Serializable {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    private String user_name;
 
 //    @Builder
 //    public Posts(String title, String content, Users author){

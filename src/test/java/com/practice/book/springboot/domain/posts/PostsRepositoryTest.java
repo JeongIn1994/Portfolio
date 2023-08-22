@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PostsRepositoryTest {
 
     @Autowired
-    PostsRepository postsRepository;
+    private PostsRepository postsRepository;
 
 //    @AfterEach
 //    public void cleanup(){
@@ -41,7 +41,6 @@ public class PostsRepositoryTest {
         postsRepository.save(Posts.builder()
                 .title(title)
                 .content(content)
-                .user_name(testUser)
                 .build());
 
 
@@ -59,7 +58,6 @@ public class PostsRepositoryTest {
         postsRepository.save(Posts.builder()
                 .title("title")
                 .content("content")
-                .user_name(testUser)
                 .build());
 
         List<Posts> postsList = postsRepository.findAll();
@@ -67,8 +65,7 @@ public class PostsRepositoryTest {
         Posts posts = postsList.get(0);
 
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>createDate="
-                + posts.getCreateDate() + ",modifiedDate="+ posts.getModifiedDate()
-                + ",id= "+ posts.getUser_name() );
+                + posts.getCreateDate() + ",modifiedDate="+ posts.getModifiedDate());
 
 //        assertThat(posts.getCreateDate()).isEqualTo(now);
 //        assertThat(posts.getModifiedDate()).isEqualTo(now);
@@ -81,7 +78,6 @@ public class PostsRepositoryTest {
             Posts post = Posts.builder()
                     .title("title" + i)
                     .content("Content" + i)
-                    .user_name("user" + i)
                     .build();
             postsRepository.save(post);
 
@@ -95,30 +91,16 @@ public class PostsRepositoryTest {
         Posts post = result.get();
 
         System.out.println(post);
-        System.out.println(post.getUser_name());
     }
 
     @Test
-    public void testGetPostWithReply(){
+    public void testGetPostByPid(){
 
-        List<Object[]> result = postsRepository.getPostWithReply(100L);
+        Object result = postsRepository.findById(100L);
 
-        for(Object[] arr : result){
-            System.out.println(Arrays.toString(arr));
-        }
-    }
+        Object[] array = (Object[]) result;
 
-    @Test
-    public void testWithReplyCount(){
-        Pageable pageable = PageRequest.of(0,10, Sort.by("id").descending());
-
-        Page<Object[]> result = postsRepository.getPostWithReplyCount(pageable);
-
-        result.get().forEach( row ->{
-            Object[] arr = (Object[]) row;
-
-            System.out.println(Arrays.toString(arr));
-        });
+        System.out.println(Arrays.toString(array));
     }
 
 }

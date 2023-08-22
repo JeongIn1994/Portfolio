@@ -1,5 +1,6 @@
 package com.practice.book.springboot.domain.posts;
 
+import com.practice.book.springboot.domain.board.Board;
 import com.practice.book.springboot.domain.posts.Posts;
 import com.practice.book.springboot.domain.reply.Reply;
 import com.practice.book.springboot.domain.reply.ReplyRepository;
@@ -19,15 +20,15 @@ public class ReplyRepositoryTests {
     public void insertReply(){
         IntStream.rangeClosed(1,300).forEach(i -> {
 
-            long pno = (long) (Math.random() * 100 ) + 1;
+            long bno = (long) (Math.random() * 100 ) + 1;
 
-            Posts post = Posts.builder()
-                    .id((long) pno)
+            Board board = Board.builder()
+                    .bno(bno)
                     .build();
 
             Reply reply = Reply.builder()
                     .text("Reply" + i)
-                    .post(post)
+                    .board(board)
                     .replyer("Guest")
                     .build();
 

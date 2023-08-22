@@ -25,7 +25,6 @@ public class PostsSaveRequestDto {
         return Posts.builder()
                 .title(title)
                 .content(content)
-                .user_name(user_name)
                 .build();
     }
 }

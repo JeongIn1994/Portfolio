@@ -1,18 +1,17 @@
 package com.practice.book.springboot.domain.reply;
 
 import com.practice.book.springboot.domain.BaseTimeEntity;
-import com.practice.book.springboot.domain.posts.Posts;
+import com.practice.book.springboot.domain.board.Board;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Getter
 @NoArgsConstructor
 @Entity
 @Builder
 @AllArgsConstructor
-@ToString(exclude = "post")
+@ToString(exclude = "board")
 public class Reply extends BaseTimeEntity {
 
     @Id
@@ -24,5 +23,5 @@ public class Reply extends BaseTimeEntity {
     private String replyer;
 
     @ManyToOne
-    private Posts post;
+    private Board board;
 }

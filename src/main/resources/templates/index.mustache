@@ -1,22 +1,4 @@
 {{>layout/header}}
-
-<h1>Start With Spring Boot Web Service</h1>
-<div class="col-md-12">
-    <div class="row">
-        <div class="col-md-6">
-            <a href="/post/save" role="button" class="btn btn-primary">Resist</a>
-            {{#usersName}}
-                Logged in as: <span id="user">{{usersName}}</span>
-                <a href="/logout" class="btn btn-info active" role="button">Logout</a>
-            {{/usersName}}
-            {{^usersName}}
-                <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
-                <a href="/oauth2/authorization/naver" class="btn btn-secondary active" role="button">Naver Login</a>
-            {{/usersName}}
-        </div>
-    </div>
-    <br>
-
     <table class="table table-horizontal table-boadered">
         <thead class="thead-strong">
         <tr>
@@ -28,15 +10,37 @@
         </thead>
         <tbody id="tbody">
         {{#posts}}
-            <tr>
-                <td>{{id}}</td>
-                <td><a href="/posts/view/{{id}}">{{title}}</a></td>
-                <td>{{user_name}}</td>
-                <td>{{modifiedDate}}</td>
-            </tr>
+<!--            <tr>-->
+<!--                <td>{{id}}</td>-->
+<!--                <td><a href="/posts/view/{{id}}">{{title}}</a></td>-->
+<!--                <td>{{user_name}}</td>-->
+<!--                <td>{{modifiedDate}}</td>-->
+<!--            </tr>-->
         {{/posts}}
         </tbody>
     </table>
 </div>
+<script >
 
+    let tbody = document.getElementById("tbody");
+
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+
+    const posts = {{posts}};
+
+    console.log(posts)
+
+    window.addEventListener('scroll',function(){
+        if (scrollTop + windowHeight >= windowHeight - 100) {
+            // 스크롤 끝에 도달했을 때 추가 데이터 요청
+            loadMoreData();
+        }
+    });
+
+    const loadMoreData = (e) =>{
+        console.log("a")
+    }
+
+</script>
 {{>layout/footer}}

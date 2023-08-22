@@ -13,17 +13,13 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @ToString
-public class Users extends BaseTimeEntity implements Serializable {
+public class Users extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String email;
 
     @Column(nullable = false)
     private String name;
-
-    @Column(nullable = false)
-    private String email;
 
     @Column
     private String picture;

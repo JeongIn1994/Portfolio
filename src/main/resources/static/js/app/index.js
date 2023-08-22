@@ -1,7 +1,6 @@
 const main = {
     init: () => {
         $('#btn-save').on('click', () => main.save());
-
         $('#btn-update').on('click', () => main.update());
         $('#btn-delete').on('click', () => main.delete())
     },

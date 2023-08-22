@@ -24,6 +24,7 @@ public class IndexController {
 
         if(user != null) {
             model.addAttribute("usersName", user.getName());
+            model.addAttribute("picture", user.getPicture());
         }
         return "index";
     }

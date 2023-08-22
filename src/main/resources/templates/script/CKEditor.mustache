@@ -3,7 +3,15 @@
 <script>
     $(function() {
         CKEDITOR.replace('content', {
-
         })
+
+        CKEDITOR.editorConfig = function( config ) {
+            // Define changes to default configuration here. For example:
+            config.language = 'en';
+            config.uiColor = '#DAEDF6';
+            CKEDITOR.dtd.$removeEmpty['i'] = 'false';
+            config.enterMode = 'CKEDITOR.ENTER_BR';
+            config.fillEmptyBlocks = 'false';
+        };
     })
 </script>
