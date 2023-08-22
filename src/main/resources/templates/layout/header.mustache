@@ -11,8 +11,13 @@
 <div class="col-md-12">
     <div class="row">
         <div class="col-md-6">
+            <a href="/" class="btn btn-success active" role="button">Home</a>
+            <a href="/board/list" class="btn btn-secondary active" role="button">Board</a>
+        </div>
+        <div class="col-md-6 text-right" >
             {{#usersName}}
-                <span style="border: 1px solid grey; padding: 15px" class="col-md-6" >
+                <span id="loginPanel"
+                        class="col-md-6" >
                     <img alt="" src="{{picture}}" height="35px" width="35px">
                     Logged in as: <span id="user">{{usersName}}</span>
                     <a href="/logout" class="btn btn-info active" role="button">Logout</a>
@@ -25,6 +30,3 @@
         </div>
     </div>
     <hr>
-    <a href="/" class="btn btn-success active" role="button">Home</a>
-    <a href="/board/list" class="btn btn-secondary active" role="button">Board</a>
-

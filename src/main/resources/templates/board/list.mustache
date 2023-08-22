@@ -1,6 +1,6 @@
 {{>layout/header}}
 {{#usersName}}
-    <a href="/board/register" role="button" class="btn btn-primary">Resist</a>
+    <a href="/board/register" role="button" class="btn btn-primary" style="margin-bottom: 15px">Resist</a>
 {{/usersName}}
 <table class="table table-horizontal table-boadered">
     <thead class="thead-strong">
@@ -30,17 +30,17 @@
 <script>
     const prev = {{result.prev}};
     const next = {{result.next}}
-    const startNum = {{result.start}};
-    const endNum = {{result.end}};
+    const startNum = parseInt({{result.start}}) - 1;
+    const endNum = parseInt({{result.end}}) + 1 ;
     const pageList = {{result.pageList}};
 
     const paginationBar = document.getElementById("paginationBar");
     const previousBtn = "<li class='page-item'>" +
-            "   <a class='page-link' href='/board/list?page='"+ startNum-1 +"></a>" +
+            "   <a class='page-link' href='/board/list?page="+ startNum+"'>Pre</a>" +
             "</li>" ;
 
     const nextBtn = "<li class='page-item'>"+
-            "   <a class='page-link' href='/board/list?page='"+endNum +1 +">" +
+            "   <a class='page-link' href='/board/list?page="+ endNum +"'>Next</a>" +
             "</li>"
 
     const parseToDOM = function (htmlString){
@@ -75,11 +75,11 @@
             paginationBar.append(parsedNextBtn);
         }
     }
-    window.onload = function() {
+
+    window.onload = function (){
         addPrevBtn();
         addPageNumBtn();
         addNextBtn();
     }
-
 </script>
 {{>layout/footer}}

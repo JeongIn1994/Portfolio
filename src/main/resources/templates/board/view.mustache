@@ -1,57 +1,129 @@
 {{>layout/header}}
 <div class="col-md-12" id="boardDiv">
     <div class="col-md-4" id="boardCenterDiv">
-        <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" class="form-control" name="title" value="{{dto.title}}" readonly>
-        </div>
-        <div class="form-group">
-            <label for="userName">Author</label>
-            <input type="text" class="form-control" name="userName" value="{{dto.userName}}" disabled readonly>
-        </div>
-        <div class="form-group">
-            <label for="content">Content</label>
-            <div class="form-control" name="content" id="content">{{{dto.content}}}</div>
-        </div>
-        <div class="form-group">
-            <label for="regDate">regDate</label>
-            <input class="form-control" name="regDate" value="{{dto.regDate}}" readonly>
-        </div>
-        <div class="form-group">
-            <label for="modDate">modDate</label>
-            <input class="form-control" name="modDate" value="{{dto.modDate}}" readonly>
-        </div>
-
+        <form id = 'bodyForm'>
+            <input type="hidden" name="bno" value="{{dto.bno}}">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" name="title" value="{{dto.title}}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="userName">Author</label>
+                <input type="text" class="form-control" name="userName" value="{{dto.userName}}" disabled readonly>
+            </div>
+            <div class="form-group">
+                <label for="content">Content</label>
+                <div class="form-control" name="content" id="content">{{{dto.content}}}</div>
+            </div>
+            <div class="form-group">
+                <label for="regDate">regDate</label>
+                <input class="form-control" name="regDate" value="{{dto.regDate}}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="modDate">modDate</label>
+                <input class="form-control" name="modDate" value="{{dto.modDate}}" readonly>
+            </div>
+        </form>
         <br>
 
-        <a href="/board/list" role="button" class="btn btn-secondary">Cancel</a>
-        <button type="button" class="btn btn-primary" >modify</button>
+        <a href="/board/list?page={{requestDTO.page}}" role="button" class="btn btn-secondary">Cancel</a>
+        <a href="/board/modify?bno={{dto.bno}}" class="btn btn-success active"  id="btn-update" style="display: none;" >modify</a>
+        <a class="btn btn-danger active"  id="btn-delete" style="display: none;"onclick="onclickDelBtn()">Delete</a>
+
+        <div>
+            <div class="mt-4">
+                <h5><span class="badge badge-secondary replyCount" > Reply Count
+                          {{dto.replyCount}}</span>
+                </h5>
+            </div>
+            <div class="list-group replyList">
+
+            </div>
+            <div style="margin-bottom: 20px">
+                <label for="replyer">replyer:</label>
+                {{#usersName}}
+                    <input type="text" class="" name="replyer" readonly value="{{usersName}}">
+                {{/usersName}}
+                {{^usersName}}
+                    <input type="text" class="" name="replyer" >
+                {{/usersName}}
+
+            </div>
+        </div>
     </div>
 </div>
-<script lang="js">
+<script>
 
-    // function unescapeHtml(safe) {
-    //     return safe
-    //             .replace(/&lt;/g, '<')
-    //             .replace(/&gt;/g, '>')
-    //             .replace(/&amp;/g, '&')
-    //             .replace(/&quot;/g, '"')
-    //             .replace(/&#039;/g, "'");
-    //
-    // }
-    //
-    // const main = {
-    //     init:() => {
-    //         const content = document.getElementById('content').innerText
-    //         const htmlStr = (content.replace(/\s+/g, ''));
-    //         const safeContent = new DOMParser().parseFromString(htmlStr,'text/html').body.textContent;
-    //         console.log(unescapeHtml(safeContent));
-    //         // document.getElementById('content').innerHTML = unescapeHtml(safeContent);
-    //
-    //
-    //     }
-    // }
+    let sessionUserName = '';
 
-    main.init();
+    {{#userEmail}}
+        sessionUserName =  "{{userEmail}}";
+    {{/userEmail}}
+    {{#dto.bno}}
+        const bno = {{dto.bno}};
+    {{/dto.bno}}
+
+    //server session check
+    const addBtnEvent = () => {
+
+        const postAuthorName = "{{dto.userEmail}}";
+
+        if(sessionUserName === postAuthorName ) {
+            document.getElementById('btn-update').style.display = 'inline-flex';
+            document.getElementById('btn-delete').style.display = 'inline-flex';
+        }
+    }
+
+    const onclickDelBtn = () => {
+        const checkUserEmail = prompt("Input Your EmailAddress")
+        if ( sessionUserName !== checkUserEmail){
+           alert("userEmail Was Not Equal!")
+        }else{
+            const bodyForm = document.getElementById('bodyForm')
+            bodyForm.method = 'post'
+            bodyForm.action = '/board/remove'
+
+            bodyForm.submit();
+        }
+
+    }
+
+    const formatTime = (str) => {
+        const date = new Date(str);
+
+        return date.getFullYear() + '/' +
+                (date.getMonth() + 1 ) + '/' +
+                date.getDate() + ' ' +
+                date.getHours() + ':' +
+                date.getMinutes();
+    }
+
+    const addReplies = () => {
+        let listGroup = document.getElementsByClassName("replyList");
+
+        $.getJSON('/replies/board/' + bno, function (arr) {
+
+            let str = "";
+
+            $.each(arr, function (idx, reply){
+
+                str += '<div class="card-body" data-rno="'+reply.rno+'"><b>' + reply.rno + '</b>';
+                str += '<h5 class="card-title">'+ reply.text + '</h5>';
+                str += '<h6 class="card-subtitle mb-2 text-muted">' +reply.replyer +'</h6>';
+                str += '<p class="card-text">' + formatTime(reply.regDate)+'</p>';
+                str += '</div>'
+            })
+
+            listGroup[0].innerHTML = str;
+        })
+
+    }
+
+    window.onload = function (){
+        addBtnEvent();
+        addReplies();
+    }
+
 </script>
+
 {{>layout/footer}}
