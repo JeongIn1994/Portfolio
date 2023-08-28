@@ -8,6 +8,7 @@
             </div>
             <div class="modal-body uploadResult">
             </div>
+            <hr>
             <div class="modal-body uploadFileList">
 
             </div>
@@ -15,13 +16,17 @@
                 <label for="file" class="btn btn-warning">파일 선택</label>
                 <input type="file" id="file" class="input" multiple>
                 <button type="button" class="btn btn-secondary" onclick="onclickUploadBtn()">Upload</button>
-                <button type="button" class="btn btn-primary" onclick="onclickUploadBtn()">Attach</button>
+                <button type="button" class="btn btn-primary" onclick="onclickAttachBtn()">Attach</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
 </div>
 <script>
+
+    const fileNameDisplay = document.querySelector('.uploadResult');
+    const inputFileList = document.querySelector('input[type="file"]')
+
 
     const showUploadedImages = (arr) => {
         fileNameDisplay.innerHTML = '';
@@ -52,8 +57,35 @@
         $.post('/removeFile', {fileName : fileName}, function(result) {
             if(result === true){
                 imgDiv.remove();
-                fileNameDisplay.innerHTML = '';
+                setFileNameList();
             }
         })
     }
+
+    const onclickAttachBtn = () => {
+        const imgList = fileNameDisplay.querySelectorAll('img');
+
+
+        imgList.forEach(img => {
+            document.getElementById('openModalBtn').append(img)
+            CKEDITOR.instances.content.insertHtml(img)
+            // const imgElement = document.createElement('div'); // 이미지를 감싸는 div 요소 생성
+            // imgElement.innerHTML = img; // div 내부에 이미지 태그 삽입
+            // const imgHtml = imgElement.innerHTML; // div 내용을 HTML 문자열로 가져옴
+            // console.log(imgHtml)
+            // CKEDITOR.instances.content.setData(img);
+        })
+
+    }
+
+    inputFileList.addEventListener('change', function (event) {
+
+        for (let i = 0 ; i < event.target.files.length; i++){
+            document.querySelector('.uploadFileList').append(event.target.files[i].name);
+            document.querySelector('.uploadFileList').appendChild(document.createElement('br'));
+        }
+
+    })
+
+
 </script>

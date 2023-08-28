@@ -19,8 +19,9 @@
             <input type="hidden" name="userEmail" value="{{userEmail}}">
 
             <hr>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                File Upload
+            <button type="button" class="btn btn-warning" id="openModalBtn" data-toggle="modal" data-backdrop="static"
+                    data-keyboard="false" data-target="#myModal">
+                Image Upload
             </button>
             <hr>
             <a href="/board/list" role="button" class="btn btn-secondary">Cancel</a>
@@ -31,9 +32,6 @@
 {{>board/register_modal}}
 <hr>
 <script>
-
-    const fileNameDisplay = document.querySelector('.uploadResult');
-
     function escapeHtml(unsafe) {
         return unsafe
                 .replace(/&/g, "&amp;")
@@ -83,18 +81,21 @@
 
 
 
-    const setFileNameList = () => {
-        if (fileNameDisplay.innerHTML.trim() === '' ){
-            fileNameDisplay.innerHTML = 'Not Exist To Upload Files'
-        }else{
+    const setFileImgList = () => {
             fileNameDisplay.innerHTML = '';
+    }
+
+    const setFileNameList = () => {
+        if (document.querySelector('.uploadFileList').innerHTML.trim() === ''){
+            document.querySelector('.uploadFileList').innerHTML = 'Not Exist Selected File Name'
+        }else{
+            document.querySelector('.uploadFileList').innerHTML = ''
         }
     }
 
-
-
     window.onload = function (){
-        setFileNameList();
+        setFileImgList();
+        document.getElementById('openModalBtn').addEventListener('onClick', setFileNameList);
     }
 
 
