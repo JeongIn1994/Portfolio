@@ -14,4 +14,6 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
     void deleteRepliesByBoardBno(@Param("bno") Long bno);
 
     List<Reply> getRepliesByBoardOrderByRno(Board board);
+
+    List<Reply> findByBoard(Board board);
 }

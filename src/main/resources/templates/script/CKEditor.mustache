@@ -1,16 +1,23 @@
-<script src="/js/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="/js/ckeditor/ckeditor.js"></script>
 <script>
     $(function() {
         CKEDITOR.replace('content', {
-        })
+            filebrowserUploadUrl:'/board/upload.do',
+            filebrowserUploadMethod : 'form',
+            language:'en',
+            removeButtons: 'Image'
+        });
+        CKEDITOR.on('cialogDefinition', function (ev) {
+            let dialogName = ev.data.name;
+            let dilogDefinition = ev.data.definition;
+            let uploadTap = dialogDefinition.getContents('Upliad');
+            let uploadButton = uploadTap.get('uploadButton');
 
-        CKEDITOR.editorConfig = function( config ) {
-            // Define changes to default configuration here. For example:
-            config.language = 'en';
-            config.uiColor = '#DAEDF6';
-            CKEDITOR.dtd.$removeEmpty['i'] = 'false';
-            config.enterMode = 'CKEDITOR.ENTER_BR';
-            config.fillEmptyBlocks = 'false';
-        };
+            uploadButton['fileBrowser']['onSelect'] = function(fileUrl, errorMessage){
+
+            }
+
+        })
     })
+
 </script>

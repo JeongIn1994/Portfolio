@@ -2,8 +2,8 @@
 <h1>Resist Board</h1>
 
 <div class="col-md-12" id="boardDiv">
-    <div class="col-md-4" id="boardCenterDiv">
-        <form id="contentForm" method="POST" action="/board/register">
+    <div class="" id="boardCenterDiv">
+        <form id="contentForm" method="POST" action="/board/register" enctype="multipart/form-data" >
             <div class="form-group">
                 <label for="title">Title</label>
                 <input type="text" class="form-control" name="title" id="title" placeholder="Input Your board Title">
@@ -18,13 +18,22 @@
             </div>
             <input type="hidden" name="userEmail" value="{{userEmail}}">
 
-            <br>
+            <hr>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                File Upload
+            </button>
+            <hr>
             <a href="/board/list" role="button" class="btn btn-secondary">Cancel</a>
             <button type="button" class="btn btn-primary" id="submitBtn" onclick="onclickSubmitBtn()">Resist</button>
         </form>
     </div>
 </div>
+{{>board/register_modal}}
+<hr>
 <script>
+
+    const fileNameDisplay = document.querySelector('.uploadResult');
+
     function escapeHtml(unsafe) {
         return unsafe
                 .replace(/&/g, "&amp;")
@@ -39,17 +48,56 @@
 
         const content = escapeHtml(CKEDITOR.instances.content.getData());
 
-        // const content = CKEDITOR.instances.content.getData();
-
         document.getElementById('content').value = "'" + (content.replace(/\s+/g, '')) +"'";
-
         console.log(document.getElementById('content').value);
-
-        // document.getElementById('contentForm').submit();
+        document.getElementById('contentForm').submit();
 
     }
 
-</script>
 
-{{>script/CKEditor}}
+    const onclickUploadBtn = () => {
+        const formData = new FormData();
+
+        const inputFile = document.querySelectorAll("input[type='file']");
+
+        const files = inputFile[0].files;
+        for(let i = 0 ; i < files.length; i++) {
+            formData.append("uploadFiles", files[i]);
+        }
+
+        $.ajax({
+            url : '/uploadAjax',
+            processData : false,
+            contentType : false,
+            data : formData,
+            type : 'POST',
+            dataType : 'json',
+            success : function (result){
+                showUploadedImages(result);
+            },
+            error : function (jqXHR, textStatus, errorThrown){
+                alert("Need To ImageFile!")
+            }
+        })
+    }
+
+
+
+    const setFileNameList = () => {
+        if (fileNameDisplay.innerHTML.trim() === '' ){
+            fileNameDisplay.innerHTML = 'Not Exist To Upload Files'
+        }else{
+            fileNameDisplay.innerHTML = '';
+        }
+    }
+
+
+
+    window.onload = function (){
+        setFileNameList();
+    }
+
+
+</script>
 {{>layout/footer}}
+{{>script/CKEditor}}

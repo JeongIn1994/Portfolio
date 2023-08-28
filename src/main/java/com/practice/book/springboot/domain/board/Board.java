@@ -20,6 +20,7 @@ public class Board extends BaseTimeEntity {
 
     private String title;
 
+    @Column(columnDefinition = "text")
     private String content;
 
     @ManyToOne(fetch = FetchType.EAGER)

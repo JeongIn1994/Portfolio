@@ -1,4 +1,4 @@
-package com.practice.book.springboot.web;
+package com.practice.book.springboot.web.controller;
 
 import com.practice.book.springboot.domain.posts.Posts;
 import com.practice.book.springboot.domain.posts.PostsRepository;

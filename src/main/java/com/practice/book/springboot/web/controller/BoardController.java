@@ -1,4 +1,4 @@
-package com.practice.book.springboot.web;
+package com.practice.book.springboot.web.controller;
 
 import com.practice.book.springboot.config.auth.LoginUser;
 import com.practice.book.springboot.config.auth.dto.SessionUsers;
