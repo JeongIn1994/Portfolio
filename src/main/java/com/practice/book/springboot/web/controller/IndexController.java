@@ -26,6 +26,7 @@ public class IndexController {
             model.addAttribute("usersName", user.getName());
             model.addAttribute("picture", user.getPicture());
         }
+
         return "index";
     }
 

@@ -3,6 +3,8 @@ package com.practice.book.springboot.web.dto;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @ToString
@@ -26,5 +28,8 @@ public class BoardDTO {
     private LocalDateTime modDate;
 
     private int replyCount;
+
+    @Builder.Default
+    private List<UploadResultDTO> resultDTOList = new ArrayList<>();
 
 }

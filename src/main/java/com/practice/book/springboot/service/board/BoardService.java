@@ -19,6 +19,7 @@ public interface BoardService {
     void modify(BoardDTO boardDTO);
 
     default Board dtoToEntity(BoardDTO dto){
+
         Users user = Users.builder().email(dto.getUserEmail()).build();
 
         return Board.builder()

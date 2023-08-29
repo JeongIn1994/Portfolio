@@ -30,15 +30,15 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
             " WHERE b.bno = :bno" +
             " GROUP BY b, u, b.bno")
     Object getBoardByBno(@Param("bno") Long bno);
-
-    @Query("Select b,bi, r.text, count(distinct r) from " +
-            "Board b left outer join BoardImage bi on bi.board = b " +
-            "left outer join Reply r on r.board = b group by b,bi")
-    Page<Object[]> getListPage(Pageable pageable);
-
-    @Query("Select b, bi, count(r) from Board b " +
-            "left outer join Reply r on r.board = b left outer join BoardImage bi on bi.board = b" +
-            " where b.bno = :bno" +
-            " group by b, bi" )
-    List<Object[]> getBoardWithAll(@Param("bno")Long bno);
+//
+//    @Query("Select b,bi, r.text, count(distinct r) from " +
+//            "Board b left outer join BoardImage bi on bi.board = b " +
+//            "left outer join Reply r on r.board = b group by b,bi")
+//    Page<Object[]> getListPage(Pageable pageable);
+//
+//    @Query("Select b, bi, count(r) from Board b " +
+//            "left outer join Reply r on r.board = b left outer join BoardImage bi on bi.board = b" +
+//            " where b.bno = :bno" +
+//            " group by b, bi" )
+//    List<Object[]> getBoardWithAll(@Param("bno")Long bno);
 }

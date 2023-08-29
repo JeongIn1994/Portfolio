@@ -15,6 +15,8 @@ public class UploadResultDTO implements Serializable {
     private String uuid;
     private String folderPath;
 
+
+
     @JsonProperty
     public String getImageUrl() {
         return folderPath + "/" + uuid + "_" + fileName;
