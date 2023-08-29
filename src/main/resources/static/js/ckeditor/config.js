@@ -37,4 +37,5 @@ CKEDITOR.editorConfig = function( config ) {
 	config.removeDialogTabs = 'image:advanced;link:advanced';
 
 	config.clipboard_handleImages = false;
+	config.allowedContent = 'img[src,alt,width,height]';
 };
