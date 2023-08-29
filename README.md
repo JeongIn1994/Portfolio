@@ -1,5 +1,5 @@
 # initaillize
-=============
+
 ##Bash Shell Script Auto Execute
 ####PowerShell
     $wsl
