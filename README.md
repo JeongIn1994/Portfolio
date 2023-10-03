@@ -1,6 +1,6 @@
 # 1.initaillize
 
-## 1.1 Bash Shell Script Auto Execute
+## 1.1 Bash Shell Script Auto Execute（ログ自動削除）
 管理者モードでPowerShellを実行し、理科のコマンドを実行する。
 #### PowerShell
     $wsl
