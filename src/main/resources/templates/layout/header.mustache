@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta content="text/html" charset="UTF-8" http-equiv="Content-Type">
-    <title>Spring Boot Web Service</title>
+    <title>[Jeong_In]Home</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
@@ -11,16 +11,17 @@
 <hr>
 <div class="col-md-12">
     <div class="row header-body">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <a href="/" class="active headerbar" role="button">Home</a>
+            <a href="/histroy" class="active headerbar" role="button">History</a>
             <a href="/board/list" class="active headerbar" role="button">Board</a>
         </div>
-        <div class="col-md-6 text-right" >
+        <div class="col-md-4 text-right" >
             {{#usersName}}
                 <span id="loginPanel"
                         class="col-md-6" >
                     <img alt="" src="{{picture}}" height="35px" width="35px">
-                    Logged in as: <span id="user">{{usersName}}</span>
+                    <span id="user">{{usersName}}</span>
                     <a href="/logout" class="btn btn-info active" role="button">Logout</a>
                 </span>
             {{/usersName}}

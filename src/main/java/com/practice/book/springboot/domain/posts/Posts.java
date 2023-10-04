@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Getter
 @NoArgsConstructor
@@ -25,6 +26,14 @@ public class Posts extends BaseTimeEntity implements Serializable {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String language;
+
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private Date start_date;
+
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private Date end_date;
 
 //    @Builder
 //    public Posts(String title, String content, Users author){

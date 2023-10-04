@@ -9,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.stream.IntStream;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest
 public class UsersRepositoryTests {
 
@@ -27,5 +29,14 @@ public class UsersRepositoryTests {
                     .build();
             usersRepository.save(user);
         });
+    }
+
+    @Test
+    public void readUser(){
+        String mail = "be7814@gmail.com";
+
+
+        System.out.println(usersRepository.findByEmail(mail).get().getRole());
+
     }
 }

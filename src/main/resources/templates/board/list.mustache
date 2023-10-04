@@ -1,7 +1,4 @@
 {{>layout/header}}
-{{#usersName}}
-    <a href="/board/register" role="button" class="btn btn-primary" style="margin-bottom: 15px">Resist</a>
-{{/usersName}}
 <table class="table table-horizontal table-boadered">
     <thead class="thead-strong">
     <tr>
@@ -23,11 +20,16 @@
     </div>
     </tbody>
 </table>
+{{#usersName}}
+    <a href="/board/register" role="button" class="btn btn-primary" style="margin-bottom: 15px">Resist</a>
+{{/usersName}}
 <ul class="pagination h-100 justify-content-center align-items-center" id="paginationBar">
 
 </ul>
 
 <script>
+    document.title = "[Jeong_In]Board";
+
     const prev = {{result.prev}};
     const next = {{result.next}}
     const startNum = parseInt({{result.start}}) - 1;

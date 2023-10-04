@@ -2,6 +2,8 @@ package com.practice.book.springboot.web.controller;
 
 import com.practice.book.springboot.config.auth.LoginUser;
 import com.practice.book.springboot.config.auth.dto.SessionUsers;
+import com.practice.book.springboot.domain.user.Role;
+import com.practice.book.springboot.domain.user.UsersRepository;
 import com.practice.book.springboot.service.posts.PostsService;
 import com.practice.book.springboot.web.dto.PostsResposeDto;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,8 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 @Controller
 public class IndexController {
+    private final UsersRepository usersRepository;
+
     private final PostsService postsService;
     private final HttpSession httpSession;
     @GetMapping("/")
@@ -25,6 +29,7 @@ public class IndexController {
         if(user != null) {
             model.addAttribute("usersName", user.getName());
             model.addAttribute("picture", user.getPicture());
+            model.addAttribute("role", usersRole(user.getEmail()));
         }
 
         return "index";
@@ -58,5 +63,10 @@ public class IndexController {
         }
 
         return "Update_Posts";
+    }
+
+    public Role usersRole(String email) {
+
+        return usersRepository.findByEmail(email).get().getRole();
     }
 }
