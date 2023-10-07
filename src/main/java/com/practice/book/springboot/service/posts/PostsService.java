@@ -3,7 +3,7 @@ package com.practice.book.springboot.service.posts;
 import com.practice.book.springboot.domain.posts.Posts;
 import com.practice.book.springboot.domain.posts.PostsRepository;
 import com.practice.book.springboot.web.dto.PostsListResponseDto;
-import com.practice.book.springboot.web.dto.PostsResposeDto;
+import com.practice.book.springboot.web.dto.PostsResponseDto;
 import com.practice.book.springboot.web.dto.PostsSaveRequestDto;
 import com.practice.book.springboot.web.dto.PostsupdateRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -28,17 +28,19 @@ public class PostsService {
         Posts posts =
                 postsRepository.findById(id)
                         .orElseThrow(()-> new IllegalArgumentException("Not Found Posts!"));
-        posts.update(requestDto.getTitle(), requestDto.getContent());
+        posts.update(requestDto.getTitle(), requestDto.getContent(),
+                requestDto.getLanguage(), requestDto.getSummary(),
+                requestDto.getStart_date(), requestDto.getEnd_date());
 
         return id;
 
     }
 
-    public PostsResposeDto findById (Long id){
+    public PostsResponseDto findById (Long id){
         Posts entity = postsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Not Found Posts!"));
 
-        return new PostsResposeDto(entity);
+        return new PostsResponseDto(entity);
     }
 
     @Transactional(readOnly = true)

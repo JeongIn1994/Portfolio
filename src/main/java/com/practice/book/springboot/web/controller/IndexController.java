@@ -5,7 +5,7 @@ import com.practice.book.springboot.config.auth.dto.SessionUsers;
 import com.practice.book.springboot.domain.user.Role;
 import com.practice.book.springboot.domain.user.UsersRepository;
 import com.practice.book.springboot.service.posts.PostsService;
-import com.practice.book.springboot.web.dto.PostsResposeDto;
+import com.practice.book.springboot.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,35 +34,47 @@ public class IndexController {
 
         return "index";
     }
+    @GetMapping("/history/list")
+    public String postsList(Model model, @LoginUser SessionUsers user) {
 
-    @GetMapping("/post/save")
+        model.addAttribute("posts", postsService.finAllDesc());
+
+        if(user != null) {
+            model.addAttribute("usersName", user.getName());
+            model.addAttribute("picture", user.getPicture());
+            model.addAttribute("role", usersRole(user.getEmail()));
+        }
+
+        return "/history/List_Posts";
+    }
+    @GetMapping("/history/save")
     public String postsSave(Model model, @LoginUser SessionUsers user) {
 
         model.addAttribute("usersName", user.getName());
-        return "Resist_Posts";
+        return "/history/Resist_Posts";
     }
 
-    @GetMapping("/posts/view/{id}")
+    @GetMapping("/history/view/{id}")
     public String viewPost(@PathVariable Long id, Model model, @LoginUser SessionUsers user) {
-        PostsResposeDto dto = postsService.findById(id);
+        PostsResponseDto dto = postsService.findById(id);
         model.addAttribute("post", dto);
 
         if(user != null) {
             model.addAttribute("usersName", user.getName());
         }
 
-        return "view_Posts";
+        return "/history/View_Posts";
     }
-    @GetMapping("/posts/update/{id}")
+    @GetMapping("/history/update/{id}")
     public String postsUpdate(@PathVariable Long id, Model model, @LoginUser SessionUsers user) {
-        PostsResposeDto dto = postsService.findById(id);
+        PostsResponseDto dto = postsService.findById(id);
         model.addAttribute("post", dto);
 
         if(user != null) {
             model.addAttribute("usersName", user.getName());
         }
 
-        return "Update_Posts";
+        return "/history/Update_Posts";
     }
 
     public Role usersRole(String email) {

@@ -13,10 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -73,11 +70,15 @@ public class PostsRepositoryTest {
     @Test
     public void insertPost(){
 
-        IntStream.rangeClosed(1,100).forEach(i -> {
+        IntStream.rangeClosed(1,5).forEach(i -> {
 
             Posts post = Posts.builder()
                     .title("title" + i)
                     .content("Content" + i)
+                    .language("testLeng")
+                    .summary("testSummary")
+                    .start_date(new Date())
+                    .end_date(new Date())
                     .build();
             postsRepository.save(post);
 

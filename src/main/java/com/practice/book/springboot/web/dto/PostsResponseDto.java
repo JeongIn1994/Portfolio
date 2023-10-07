@@ -1,17 +1,16 @@
 package com.practice.book.springboot.web.dto;
 
 import com.practice.book.springboot.domain.posts.Posts;
-import com.practice.book.springboot.domain.user.Users;
 import lombok.Getter;
 
 @Getter
-public class PostsResposeDto {
+public class PostsResponseDto {
 
-    private Long id;
-    private String title;
-    private String content;
+    private final Long id;
+    private final String title;
+    private final String content;
 
-    public PostsResposeDto(Posts entity){
+    public PostsResponseDto(Posts entity){
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.content = entity.getContent();

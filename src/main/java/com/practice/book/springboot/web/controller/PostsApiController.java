@@ -1,9 +1,7 @@
 package com.practice.book.springboot.web.controller;
 
-import com.practice.book.springboot.domain.posts.Posts;
-import com.practice.book.springboot.domain.posts.PostsRepository;
 import com.practice.book.springboot.service.posts.PostsService;
-import com.practice.book.springboot.web.dto.PostsResposeDto;
+import com.practice.book.springboot.web.dto.PostsResponseDto;
 import com.practice.book.springboot.web.dto.PostsSaveRequestDto;
 import com.practice.book.springboot.web.dto.PostsupdateRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +25,7 @@ public class PostsApiController {
     }
 
     @GetMapping("/api/v1/posts/{id}")
-    public PostsResposeDto findById (@PathVariable Long id){
+    public PostsResponseDto findById (@PathVariable Long id){
         return postsService.findById(id);
     }
 

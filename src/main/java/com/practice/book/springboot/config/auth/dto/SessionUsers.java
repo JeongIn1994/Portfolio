@@ -9,9 +9,11 @@ import java.io.Serializable;
 @Getter
 public class SessionUsers implements Serializable {
 
-    private String name;
-    private String email;
-    private String picture;
+    private static final long serialVersionUID = 7946600907589952504L;
+
+    private final String name;
+    private final String email;
+    private final String picture;
 
     public SessionUsers(Users user){
         this.name = user.getName();

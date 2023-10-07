@@ -1,18 +1,24 @@
 {{>layout/header}}
-<!--    <table class="table table-horizontal table-boadered">-->
-<!--        <thead class="thead-strong">-->
-<!--        <tr>-->
-<!--            <th>#No</th>-->
-<!--            <th>Title</th>-->
-<!--            <th>Author</th>-->
-<!--            <th>ModifiedDate</th>-->
-<!--        </tr>-->
-<!--        </thead>-->
-<!--        <tbody id="tbody">-->
-<!--        </tbody>-->
-<!--    </table>-->
 <div id="idxBody">
-
+    <table class="table table-horizontal table-bordered">
+        <thead class="thead-strong">
+        {{#posts}}
+            <tr>
+                <td colspan="2">{{title}}</td>
+                <td>{{language}}</td>
+            </tr>
+            <tr>
+                <td>{{title}}</td>
+                <td colspan="2">{{start_date}}~{{end_date}}</td>
+            </tr>
+            <tr>
+                <td colspan="3">{{summary}}</td>
+            </tr>
+        {{/posts}}
+        </thead>
+        <tbody id="tbody">
+        </tbody>
+    </table>
 </div>
 <script >
 

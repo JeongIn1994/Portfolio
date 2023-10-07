@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -76,7 +77,7 @@ public class UploadController {
         ResponseEntity<byte[]> result;
 
         try{
-            String srcFileName = URLDecoder.decode(fileName,"UTF-8");
+            String srcFileName = URLDecoder.decode(fileName, StandardCharsets.UTF_8);
 
             log.info("fileName:" + srcFileName);
 
@@ -101,22 +102,17 @@ public class UploadController {
 
         String srcFileName = null;
 
-        try {
-            srcFileName = URLDecoder.decode(fileName,"UTF-8");
+        srcFileName = URLDecoder.decode(fileName, StandardCharsets.UTF_8);
 
-            File file = new File(uploadBaseUrl + File.separator + srcFileName);
-            boolean result = file.delete();
+        File file = new File(uploadBaseUrl + File.separator + srcFileName);
+        boolean result = file.delete();
 
-            File thumbnail = new File(file.getParent(), "s_" + file.getName());
+        File thumbnail = new File(file.getParent(), "s_" + file.getName());
 
-            result = thumbnail.delete();
+        result = thumbnail.delete();
 
-            return new ResponseEntity<>(result, HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
 
-        }catch (UnsupportedEncodingException exception){
-            log.error(exception);
-            return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 
     private String makeFolder(){
