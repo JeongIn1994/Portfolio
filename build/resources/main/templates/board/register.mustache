@@ -1,0 +1,104 @@
+{{>layout/header}}
+<h1>Resist Board</h1>
+
+<div class="col-md-12" id="boardDiv">
+    <div class="" id="boardCenterDiv">
+        <form id="contentForm" method="POST" action="/board/register" enctype="multipart/form-data" >
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" name="title" id="title" placeholder="Input Your board Title">
+            </div>
+            <div class="form-group">
+                <label for="userName">Author</label>
+                <input type="text" class="form-control" name="userName" id="userName" value="{{usersName}}" disabled readonly>
+            </div>
+            <div class="form-group">
+                <label for="content">Content</label>
+                <textarea class="form-control" name="content" id="content"></textarea>
+            </div>
+            <input type="hidden" name="userEmail" value="{{userEmail}}">
+
+            <hr>
+            <button type="button" class="btn btn-warning" id="openModalBtn" data-toggle="modal" data-backdrop="static"
+                    data-keyboard="false" data-target="#myModal">
+                Image Upload
+            </button>
+            <hr>
+            <a href="/board/list" role="button" class="btn btn-secondary">Cancel</a>
+            <button type="button" class="btn btn-primary" id="submitBtn" onclick="onclickSubmitBtn()">Resist</button>
+        </form>
+    </div>
+</div>
+{{>board/register_modal}}
+<hr>
+<script>
+    function escapeHtml(unsafe) {
+        return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+    }
+
+
+    const onclickSubmitBtn = () => {
+
+        const content = escapeHtml(CKEDITOR.instances.content.getData());
+
+        document.getElementById('content').value = "'" + (content.replace(/\s+/g, '')) +"'";
+        console.log(document.getElementById('content').value);
+        document.getElementById('contentForm').submit();
+
+    }
+
+
+    const onclickUploadBtn = () => {
+        const formData = new FormData();
+
+        const inputFile = document.querySelectorAll("input[type='file']");
+
+        const files = inputFile[0].files;
+        for(let i = 0 ; i < files.length; i++) {
+            formData.append("uploadFiles", files[i]);
+        }
+
+        $.ajax({
+            url : '/uploadAjax',
+            processData : false,
+            contentType : false,
+            data : formData,
+            type : 'POST',
+            dataType : 'json',
+            success : function (result){
+                showUploadedImages(result);
+            },
+            error : function (jqXHR, textStatus, errorThrown){
+                alert("Need To ImageFile!")
+            }
+        })
+    }
+
+
+
+    const setFileImgList = () => {
+            fileNameDisplay.innerHTML = '';
+    }
+
+    const setFileNameList = () => {
+        if (document.querySelector('.uploadFileList').innerHTML.trim() === ''){
+            document.querySelector('.uploadFileList').innerHTML = 'Not Exist Selected File Name'
+        }else{
+            document.querySelector('.uploadFileList').innerHTML = ''
+        }
+    }
+
+    window.onload = function (){
+        setFileImgList();
+        document.getElementById('openModalBtn').addEventListener('onClick', setFileNameList);
+    }
+
+
+</script>
+{{>layout/footer}}
+{{>script/CKEditor}}

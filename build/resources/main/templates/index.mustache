@@ -1,0 +1,73 @@
+{{>layout/header}}
+<body>
+<div id="index_slider">
+    <div id="slider">
+        <ul>
+            <li><a href="#"><img src="1" alt="슬라이드4"></a></li>
+            <li><a href="#"><img src="2" alt="슬라이드5"></a></li>
+            <li><a href="#"><img src="3" alt="슬라이드6"></a></li>
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript" >
+    const li_height = parseInt(window.getComputedStyle(document.querySelector('#slider > ul').querySelector('li')).height, 10);
+    const firstLi = document.querySelector('#slider > ul').querySelectorAll('li')[0];
+    const lastLi = document.querySelector('#slider > ul').querySelectorAll('li')[document.querySelector('#slider > ul').querySelectorAll('li').length - 1];
+    let scrollPosition = 0;
+
+    document.querySelector('#slider > ul').addEventListener('wheel', throttle(handleScroll, 500));
+
+    function handleScroll(event) {
+        // 스크롤 이벤트에서 deltaY 값을 가져와서 스크롤 방향을 판별
+        const deltaY = event.deltaY;
+
+        if ((deltaY < 0 && firstLi.contains(event.target)) || (deltaY > 0 && lastLi.contains(event.target))) {
+            return;
+        }
+        // 스크롤 방향에 따라 ul 요소를 이동시킴
+        if (deltaY > 0) {
+            // 아래로 스크롤 시
+            scrollPosition -= li_height;
+            slideDown(scrollPosition);
+        } else {
+            // 위로 스크롤 시
+            scrollPosition += li_height;
+            slideUp(scrollPosition);
+        }
+
+        document.querySelector('#slider > ul').style.transition = 'margin-top 0.5s ease-in-out';
+
+        event.preventDefault();
+    }
+
+    function slideUp(scrollPosition) {
+        document.querySelector('#slider > ul').style.transition = 'margin-top 0.5s ease-in-out';
+        document.querySelector('#slider > ul').style.marginTop = scrollPosition + 'px';
+    }
+
+    function slideDown(scrollPosition) {
+        document.querySelector('#slider > ul').style.transition = 'margin-top 0.5s ease-in-out';
+        document.querySelector('#slider > ul').style.marginTop = scrollPosition + 'px';
+
+    }
+
+    function throttle(func, delay) {
+        let isThrottled = false;
+        return function() {
+            if (!isThrottled) {
+                func.apply(this, arguments);
+                isThrottled = true;
+                setTimeout(() => {
+                    isThrottled = false;
+                }, delay);
+            }
+        };
+    }
+
+
+</script>
+</body>
+
+</html>
+

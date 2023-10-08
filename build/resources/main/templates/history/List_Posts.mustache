@@ -1,0 +1,32 @@
+{{>layout/header}}
+
+{{#posts}}
+    <tr>
+        <td colspan="2">{{title}}</td>
+        <td>{{language}}</td>
+    </tr>
+    <tr>
+        <td>{{title}}</td>
+        <td colspan="2">{{start_date}}~{{end_date}}</td>
+    </tr>
+    <tr>
+        <td colspan="3">{{summary}}</td>
+    </tr>
+{{/posts}}
+<button type="button" class="btn btn-primary" id="btn-create" style="display: none;">Add History</button>
+{{#usersName}}
+    <input type="hidden" name="usersName" value="{{usersName}}">
+{{/usersName}}
+{{#role}}
+    <input type="hidden" name="role" value="{{role}}">
+{{/role}}
+<script>
+    document.title = "[Jeong_In]Histroy";
+    const userRole = document.getElementsByName("role")[0].value;
+
+    if( userRole === "ADMIN" ) {
+        document.getElementById('btn-create').style.display = 'block';
+    }
+
+</script>
+{{>layout/footer}}
