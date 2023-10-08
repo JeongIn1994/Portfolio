@@ -1,45 +1,73 @@
 {{>layout/header}}
-<div id="idxBody">
-    <table class="table table-horizontal table-bordered">
-        <thead class="thead-strong">
-        {{#posts}}
-            <tr>
-                <td colspan="2">{{title}}</td>
-                <td>{{language}}</td>
-            </tr>
-            <tr>
-                <td>{{title}}</td>
-                <td colspan="2">{{start_date}}~{{end_date}}</td>
-            </tr>
-            <tr>
-                <td colspan="3">{{summary}}</td>
-            </tr>
-        {{/posts}}
-        </thead>
-        <tbody id="tbody">
-        </tbody>
-    </table>
+<body>
+<div id="index_slider">
+    <div id="slider">
+        <ul>
+            <li><a href="#"><img src="img/04.jpg" alt="슬라이드4"></a></li>
+            <li><a href="#"><img src="img/05.jpg" alt="슬라이드5"></a></li>
+            <li><a href="#"><img src="img/06.jpg" alt="슬라이드6"></a></li>
+        </ul>
+    </div>
 </div>
-<script >
 
-    let tbody = document.getElementById("tbody");
+<script type="text/javascript" >
+    const li_height = parseInt(window.getComputedStyle(document.querySelector('#slider > ul').querySelector('li')).height, 10);
+    const firstLi = document.querySelector('#slider > ul').querySelectorAll('li')[0];
+    const lastLi = document.querySelector('#slider > ul').querySelectorAll('li')[document.querySelector('#slider > ul').querySelectorAll('li').length - 1];
+    let scrollPosition = 0;
 
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+    document.querySelector('#slider > ul').addEventListener('wheel', throttle(handleScroll, 500));
 
-    const posts = {{posts}};
+    function handleScroll(event) {
+        // 스크롤 이벤트에서 deltaY 값을 가져와서 스크롤 방향을 판별
+        const deltaY = event.deltaY;
 
-    console.log(posts)
-
-    window.addEventListener('scroll',function(){
-        if (scrollTop + windowHeight >= windowHeight - 100) {
-            // 스크롤 끝에 도달했을 때 추가 데이터 요청
-            loadMoreData();
+        if ((deltaY < 0 && firstLi.contains(event.target)) || (deltaY > 0 && lastLi.contains(event.target))) {
+            return;
         }
-    });
+        // 스크롤 방향에 따라 ul 요소를 이동시킴
+        if (deltaY > 0) {
+            // 아래로 스크롤 시
+            scrollPosition -= li_height;
+            slideDown(scrollPosition);
+        } else {
+            // 위로 스크롤 시
+            scrollPosition += li_height;
+            slideUp(scrollPosition);
+        }
 
-    const loadMoreData = (e) =>{
-        console.log("a")
+        document.querySelector('#slider > ul').style.transition = 'margin-top 0.5s ease-in-out';
+
+        event.preventDefault();
     }
+
+    function slideUp(scrollPosition) {
+        document.querySelector('#slider > ul').style.transition = 'margin-top 0.5s ease-in-out';
+        document.querySelector('#slider > ul').style.marginTop = scrollPosition + 'px';
+    }
+
+    function slideDown(scrollPosition) {
+        document.querySelector('#slider > ul').style.transition = 'margin-top 0.5s ease-in-out';
+        document.querySelector('#slider > ul').style.marginTop = scrollPosition + 'px';
+
+    }
+
+    function throttle(func, delay) {
+        let isThrottled = false;
+        return function() {
+            if (!isThrottled) {
+                func.apply(this, arguments);
+                isThrottled = true;
+                setTimeout(() => {
+                    isThrottled = false;
+                }, delay);
+            }
+        };
+    }
+
+
 </script>
-{{>layout/footer}}
+</body>
+
+</html>
+
