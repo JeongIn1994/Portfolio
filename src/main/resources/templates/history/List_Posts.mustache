@@ -1,6 +1,9 @@
 {{>layout/header}}
+<button type="button" class="btn btn-primary" id="btn-create" style="display: none;">Add History</button><br>
+<table class="table table-horizontal table-boadered" style="text-align: center">
 
-{{#posts}}
+    <tbody id="tbody">
+    {{#posts}}
     <tr>
         <td colspan="2">{{title}}</td>
         <td>{{language}}</td>
@@ -10,10 +13,22 @@
         <td colspan="2">{{start_date}}~{{end_date}}</td>
     </tr>
     <tr>
-        <td colspan="3">{{summary}}</td>
+        <td colspan="2">{{summary}}</td>
+        <td colspan="1"><a type="button" class="btn btn-primary" href="/history/view/{{id}}">Show Detail</a><br></td>
     </tr>
-{{/posts}}
-<button type="button" class="btn btn-primary" id="btn-create" style="display: none;">Add History</button>
+    <tr>
+        <td colspan="3" style="text-align: center"> <h2>↓</h2></td>
+    </tr>
+    {{/posts}}
+    </tbody>
+</table>
+<div style="text-align: center">
+    <h3>End Of History</h3><br>
+    <a href="#tbody" style="text-align: center">On the Top</a>
+</div>
+<hr>
+
+
 {{#usersName}}
     <input type="hidden" name="usersName" value="{{usersName}}">
 {{/usersName}}

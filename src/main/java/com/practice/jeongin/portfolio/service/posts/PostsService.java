@@ -30,7 +30,8 @@ public class PostsService {
                         .orElseThrow(()-> new IllegalArgumentException("Not Found Posts!"));
         posts.update(requestDto.getTitle(), requestDto.getContent(),
                 requestDto.getLanguage(), requestDto.getSummary(),
-                requestDto.getStart_date(), requestDto.getEnd_date());
+                requestDto.getStart_date(), requestDto.getEnd_date(),
+                requestDto.getProgress());
 
         return id;
 

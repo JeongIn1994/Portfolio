@@ -71,6 +71,7 @@ public class PostsRepositoryTest {
                     .summary("testSummary")
                     .start_date(new Date())
                     .end_date(new Date())
+                    .progress(0)
                     .build();
             postsRepository.save(post);
 

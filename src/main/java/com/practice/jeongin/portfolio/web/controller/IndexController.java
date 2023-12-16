@@ -20,7 +20,6 @@ public class IndexController {
     private final UsersRepository usersRepository;
 
     private final PostsService postsService;
-    private final HttpSession httpSession;
     @GetMapping("/")
     public String index(Model model, @LoginUser SessionUsers user) {
 
@@ -61,6 +60,8 @@ public class IndexController {
 
         if(user != null) {
             model.addAttribute("usersName", user.getName());
+            model.addAttribute("picture", user.getPicture());
+            model.addAttribute("role", usersRole(user.getEmail()));
         }
 
         return "/history/View_Posts";

@@ -15,15 +15,17 @@ public class PostsupdateRequestDto {
     private String language;
     private Date start_date;
     private Date end_date;
+    private long progress;
 
 
     @Builder
-    public PostsupdateRequestDto(String title, String content, String language, String summary, Date start_date, Date end_date){
+    public PostsupdateRequestDto(String title, String content, String language, String summary, Date start_date, Date end_date, long progress){
         this.title = title;
         this.content = content;
         this.language = language;
         this.summary = summary;
         this.start_date = start_date;
         this.end_date = end_date;
+        this.progress = progress;
     }
 }
