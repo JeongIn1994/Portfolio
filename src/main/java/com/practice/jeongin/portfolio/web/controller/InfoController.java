@@ -6,11 +6,13 @@ import com.practice.jeongin.portfolio.domain.user.Role;
 import com.practice.jeongin.portfolio.domain.user.UsersRepository;
 import com.practice.jeongin.portfolio.service.info.InfoService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @RequiredArgsConstructor
+@Log4j2
 @Controller
 public class InfoController {
 
@@ -21,18 +23,18 @@ public class InfoController {
     @GetMapping("/setting")
     public String setting(Model model, @LoginUser SessionUsers user){
 
-        model.addAttribute("info", infoService);
-        if(user != null) {
-            model.addAttribute("usersName", user.getName());
-            model.addAttribute("picture", user.getPicture());
-            model.addAttribute("role", usersRole(user.getEmail()));
-        }
+//        model.addAttribute("info", infoService.get(user.getEmail()));
+        model.addAttribute("email", user.getEmail());
+
 
         return "setting";
     }
 
     public Role usersRole(String email) {
-
-        return usersRepository.findByEmail(email).get().getRole();
+        if(email.isEmpty()){
+            return null;
+        }else{
+            return usersRepository.findByEmail(email).get().getRole();
+        }
     }
 }
