@@ -1,5 +1,5 @@
 {{>layout/header}}
-<button type="button" class="btn btn-primary" id="btn-create" style="display: none;">Add History</button><br>
+<button type="button" class="btn btn-primary" id="btn-create" style="display: none;" onclick="onclickAddbtn()">Add History</button><br>
 <table class="table table-horizontal table-boadered" style="text-align: center">
 
     <tbody id="tbody">
@@ -36,11 +36,15 @@
     <input type="hidden" name="role" value="{{role}}">
 {{/role}}
 <script>
-    document.title = "[Jeong_In]Histroy";
+    document.title = "🛠️[Jeong_In]Histroy";
     const userRole = document.getElementsByName("role")[0].value;
 
     if( userRole === "ADMIN" ) {
         document.getElementById('btn-create').style.display = 'block';
+    }
+
+    const onclickAddbtn = () => {
+        document.location.href= "/history/regist";
     }
 
 </script>

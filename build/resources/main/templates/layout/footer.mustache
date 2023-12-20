@@ -19,11 +19,10 @@
         }
 
         if("{{role}}" == "ADMIN"){
-            const settingMenu = document.createElement("a");
+            const settingMenu = document.createElement("button");
 
-            settingMenu.href = "#";
             settingMenu.innerHTML = "<i class='fa fa-cog fa-2xl' aria-hidden='true'></i>";
-            settingMenu.style = "padding-left : 5px"
+            settingMenu.style = "background-color:transparent;";
 
             settingMenu.addEventListener('click', onClickSettingBtn)
             category.lastElementChild.after(settingMenu);

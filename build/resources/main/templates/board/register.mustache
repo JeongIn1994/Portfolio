@@ -1,6 +1,10 @@
 {{>layout/header}}
 <h1>Resist Board</h1>
-
+<style>
+    .cke_inner .cke_reset {
+        min-height:600px;
+    }
+</style>
 <div class="col-md-12" id="boardDiv">
     <div class="" id="boardCenterDiv">
         <form id="contentForm" method="POST" action="/board/register" enctype="multipart/form-data" >
@@ -32,6 +36,7 @@
 {{>board/register_modal}}
 <hr>
 <script>
+    document.title = "🛠️[Jeong_In]Regist"
     function escapeHtml(unsafe) {
         return unsafe
                 .replace(/&/g, "&amp;")
@@ -101,4 +106,4 @@
 
 </script>
 {{>layout/footer}}
-{{>script/CKEditor}}
+{{>script/Board_CKEditor}}

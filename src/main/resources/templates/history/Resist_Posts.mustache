@@ -1,30 +1,54 @@
 {{>layout/header}}
-
-<h1>Resist Post</h1>
+<style>
+    .cke_inner .cke_reset {
+        min-height:600px;
+    }
+</style>
+<h1>Resist History</h1>
 
 <div class="col-md-12" id="postDiv">
-    <div class="col-md-4" id="postCenterDiv">
+    <div class="" id="postCenterDiv">
         <form>
             <div class="form-group">
                 <label for="title">Title</label>
                 <input type="text" class="form-control" id="title" placeholder="Input Your Post Title">
             </div>
             <div class="form-group">
-                <label for="user_name">Author</label>
-                <input type="text" class="form-control" id="user_name" value="{{usersName}}" placeholder="Input Your Name" readonly>
+                <label for="language">Title</label>
+                <select class="form-control" id="language">
+                    <option value="C#">C#</option>
+                    <option value="C">C</option>
+                    <option value="JAVA">JAVA</option>
+                    <option value="Python">Python</option>
+                    <option value="Php">Php</option>
+                    <option value="etc">etc</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="language_etc" readonly="readonly">
+            </div>
+            <div class="form-group">
+                <label for="summary">summary</label><br>
+                <img id="summary" src="#" alt="#">
             </div>
             <div class="form-group">
                 <label for="content">Content</label>
-<!--                <textarea class="form-control" id="content" placeholder="Input Content"></textarea>-->
-                <textarea class="form-control" id="content"></textarea>
+                <textarea class="form-control" name="content" id="content"></textarea>
             </div>
         </form>
         <br>
         <a href="/" role="button" class="btn btn-secondary">Cancel</a>
         <button type="button" class="btn btn-primary" id="btn-save">Resist</button>
-
+        <br>
     </div>
 </div>
+<script>
+    document.title = "🛠️[Jeong_In]History_Regist"
 
-{{>script/CKEditor}}
+    document.getElementById("language").addEventListener('change',function(){
+        document.getElementById("language_etc").readOnly = document.getElementById("language").value !== "etc";
+    })
+</script>
+
 {{>layout/footer}}
+{{>script/Posts_CKEditor}}

@@ -1,5 +1,6 @@
 {{>layout/header}}
 <body>
+<img src='../image/no_image.png' alt=''>
 <div id="index_slider">
     <div id="slider">
         <ul>
@@ -9,6 +10,7 @@
 </div>
 
 <script type="text/javascript" >
+    document.title = "🛠️[Jeong_In]Home"
 
     window.onload = function (){
         document.querySelector('#slider > ul').addEventListener('wheel', throttle(handleScroll, 500));
@@ -20,7 +22,7 @@
     {{#posts}}
         "{{progress}}" === "1" ? progress =
             '<h2><span class="badge badge-warning">Ing</span></h2>' : progress = '<h2><span class="badge badge-secondary">Done</span></h2>';
-        li_List += "<li>"+progress+"<a href='#'><img src='' alt=''></a>写真置き場</li>"
+        li_List += "<li>"+progress+"<a href='#'><img src='../image/no_image.png' alt=''></a></li>"
 
     {{/posts}}
     document.querySelector('#slider > ul').innerHTML = li_List;

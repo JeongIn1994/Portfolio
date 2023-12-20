@@ -1,6 +1,10 @@
-<!-- 모달 다이얼로그 -->
+<style>
+    .cke_inner .cke_reset {
+        min-height:600px;
+    }
+</style>
 <div class="modal fade" id="myModal">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">File upload</h4>
@@ -36,12 +40,13 @@
             img.src = '/display?fileName='+arr[i].thumbnailURL ;
             img.alt = '/display?fileName='+arr[i].imageUrl;
 
-            let deleteBtn = document.createElement('input');
+            const deleteBtn = document.createElement('input');
             deleteBtn.setAttribute('class', 'removeBtn' ) ;
             deleteBtn.setAttribute('type','button')
             deleteBtn.setAttribute('data-name', arr[i].imageUrl ) ;
             deleteBtn.setAttribute('onClick', 'deleteImg(this)');
             deleteBtn.setAttribute('value', 'Delete')
+
 
             imgDiv.appendChild(img);
             imgDiv.appendChild(deleteBtn);
@@ -65,10 +70,15 @@
     const onclickAttachBtn = () => {
         const imgList = fileNameDisplay.querySelectorAll('img');
 
-
-        imgList.forEach(img => {
-            CKEDITOR.instances.content.insertHtml(img.outerHTML);
+        imgList.forEach((img) => {
+            const temp = img;
+            temp.src = img.alt;
+            CKEDITOR.instances.content.insertHtml(temp.outerHTML);
+            fileNameDisplay.innerHTML = '';
+            document.querySelector(".uploadFileList").innerHTML ='';
+            document.querySelector("button[data-dismiss='modal']").click();
         })
+
 
     }
 
