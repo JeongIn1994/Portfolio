@@ -70,6 +70,16 @@ public class UploadController {
         }
         return new ResponseEntity<>(resultDTOList, HttpStatus.OK);
     }
+    @PostMapping("/summaryUploadAjax")
+    private ResponseEntity<String> uploadSummaryFile(MultipartFile uploadFiles){
+
+        if(!uploadFiles.getContentType().startsWith("image")){
+            log.warn("this file is not image file");
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        return ResponseEntity.ok("File uploaded successfully!");
+    }
 
     @GetMapping("/display")
     public ResponseEntity<byte[]> getFile(String fileName){
