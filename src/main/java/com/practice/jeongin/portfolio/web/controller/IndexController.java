@@ -18,19 +18,19 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 @Controller
 public class IndexController {
-    private final UsersRepository usersRepository;
+
 
     private final PostsService postsService;
     @RequestMapping(value = {"/", "/history/**"})
     public String index(Model model, @LoginUser SessionUsers user) {
 
         model.addAttribute("posts", postsService.finAllDesc());
-
-        if(user != null) {
-            model.addAttribute("usersName", user.getName());
-            model.addAttribute("picture", user.getPicture());
-            model.addAttribute("role", usersRole(user.getEmail()));
-        }
+//
+//        if(user != null) {
+//            model.addAttribute("usersName", user.getName());
+//            model.addAttribute("picture", user.getPicture());
+//            model.addAttribute("role", usersRole(user.getEmail()));
+//        }
 
         return "index";
     }
@@ -39,11 +39,11 @@ public class IndexController {
 
         model.addAttribute("posts", postsService.finAllDesc());
 
-        if(user != null) {
-            model.addAttribute("usersName", user.getName());
-            model.addAttribute("picture", user.getPicture());
-            model.addAttribute("role", usersRole(user.getEmail()));
-        }
+//        if(user != null) {
+//            model.addAttribute("usersName", user.getName());
+//            model.addAttribute("picture", user.getPicture());
+//            model.addAttribute("role", usersRole(user.getEmail()));
+//        }
 
         return "/history/List_Posts";
     }
@@ -52,11 +52,11 @@ public class IndexController {
 
         model.addAttribute("usersName", user.getName());
 
-        if(user != null) {
-            model.addAttribute("usersName", user.getName());
-            model.addAttribute("picture", user.getPicture());
-            model.addAttribute("role", usersRole(user.getEmail()));
-        }
+//        if(user != null) {
+//            model.addAttribute("usersName", user.getName());
+//            model.addAttribute("picture", user.getPicture());
+//            model.addAttribute("role", usersRole(user.getEmail()));
+//        }
 
         return "/history/Resist_Posts";
     }
@@ -66,11 +66,11 @@ public class IndexController {
         PostsResponseDto dto = postsService.findById(id);
         model.addAttribute("post", dto);
 
-        if(user != null) {
-            model.addAttribute("usersName", user.getName());
-            model.addAttribute("picture", user.getPicture());
-            model.addAttribute("role", usersRole(user.getEmail()));
-        }
+//        if(user != null) {
+//            model.addAttribute("usersName", user.getName());
+//            model.addAttribute("picture", user.getPicture());
+//            model.addAttribute("role", usersRole(user.getEmail()));
+//        }
 
         return "/history/View_Posts";
     }
@@ -79,15 +79,12 @@ public class IndexController {
         PostsResponseDto dto = postsService.findById(id);
         model.addAttribute("post", dto);
 
-        if(user != null) {
-            model.addAttribute("usersName", user.getName());
-        }
+//        if(user != null) {
+//            model.addAttribute("usersName", user.getName());
+//        }
 
         return "/history/Update_Posts";
     }
 
-    public Role usersRole(String email) {
 
-        return usersRepository.findByEmail(email).get().getRole();
-    }
 }

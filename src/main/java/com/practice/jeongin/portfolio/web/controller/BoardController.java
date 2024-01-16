@@ -26,10 +26,10 @@ public class BoardController {
     @GetMapping("/list")
     public void list(PageRequestDTO pageRequestDTO, Model model, @LoginUser SessionUsers user){
 
-        if(user != null) {
-            model.addAttribute("usersName", user.getName());
-            model.addAttribute("picture", user.getPicture());
-        }
+//        if(user != null) {
+//            model.addAttribute("usersName", user.getName());
+//            model.addAttribute("picture", user.getPicture());
+//        }
 
         model.addAttribute("result" , boardService.getList(pageRequestDTO));
     }
@@ -37,13 +37,13 @@ public class BoardController {
     @GetMapping("/register")
     public String register(Model model,@LoginUser SessionUsers user) {
 
-        log.info("get Resister");
-
-        if(user != null) {
-            model.addAttribute("usersName", user.getName());
-            model.addAttribute("userEmail", user.getEmail());
-            model.addAttribute("picture", user.getPicture());
-        }
+//        log.info("get Resister");
+//
+//        if(user != null) {
+//            model.addAttribute("usersName", user.getName());
+//            model.addAttribute("userEmail", user.getEmail());
+//            model.addAttribute("picture", user.getPicture());
+//        }
 
         return "/board/register";
     }
@@ -64,11 +64,11 @@ public class BoardController {
     public void read(@ModelAttribute("requestDTO") PageRequestDTO pageRequestDTO,
                      Long bno, Model model,@LoginUser SessionUsers user) {
 
-        if(user != null) {
-            model.addAttribute("usersName", user.getName());
-            model.addAttribute("userEmail", user.getEmail());
-            model.addAttribute("picture", user.getPicture());
-        }
+//        if(user != null) {
+//            model.addAttribute("usersName", user.getName());
+//            model.addAttribute("userEmail", user.getEmail());
+//            model.addAttribute("picture", user.getPicture());
+//        }
 
         BoardDTO boardDTO = boardService.get(bno);
 

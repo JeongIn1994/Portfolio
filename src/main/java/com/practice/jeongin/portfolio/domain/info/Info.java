@@ -7,6 +7,8 @@ import lombok.*;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Date;
 
 @Entity
@@ -22,7 +24,9 @@ public class Info extends BaseTimeEntity {
 
     private String name;
 
-    private Date birthday;
+    private LocalDate birthday;
+
+    private long age;
 
     private String address;
 
@@ -37,14 +41,23 @@ public class Info extends BaseTimeEntity {
     @OneToOne
     private Users user;
 
-    public Info update (Date birthday, String address, String phone_number, String email, String sex, String college){
+    public Info update (LocalDate birthday, long age,String address, String phone_number, String email, String sex, String college){
         this.birthday = birthday;
         this.address = address;
+        this.age = calculateAge(birthday);
         this.phone_number = phone_number;
         this.email = email;
         this.sex = sex;
         this.college = college;
 
         return this;
+    }
+
+    //calculate User Age
+    public static int calculateAge(LocalDate birthday){
+        LocalDate currentDate = LocalDate.now();
+
+        return Period.between(birthday, currentDate).getYears();
+
     }
 }
