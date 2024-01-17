@@ -1,60 +1,62 @@
-{{>layout/header}}
 <style>
     .cke_inner .cke_reset {
         min-height:600px;
     }
 </style>
-<h1>Resist History</h1>
+{{>layout/aside}}
+<main>
+    <h1>Resist History</h1>
 
-<div class="col-md-12" id="postDiv">
-    <div class="" id="postCenterDiv">
-        <form>
-            <div class="form-group">
-                <label for="title"><b>Title</b></label>
-                <input type="text" class="form-control" id="title" >
-            </div>
-            <div class="form-group">
-                <label for="language"><b>Language</b></label>
-                <select class="form-control" id="language">
-                    <option value="C#">C#</option>
-                    <option value="C">C</option>
-                    <option value="JAVA">JAVA</option>
-                    <option value="Python">Python</option>
-                    <option value="Php">Php</option>
-                    <option value="etc">etc</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control" id="language_etc" readonly="readonly">
-            </div>
-            <div class="form-group">
-                <label for="summary"><b>summary</b></label><br>
-                <img id="summary" src="#" alt="#"><br>
-                <button type="button" class="btn btn-warning" id="openModalBtn" data-toggle="modal" data-backdrop="static"
-                        data-keyboard="false" data-target="#myModal">
-                    Image Upload
-                </button>
-                <button type="button" class="btn btn-danger" id="deleteImgBtn" onclick="onClickdeleteImgBtn()">Delete</button>
-            </div>
-            <div class="form-group">
-                <label for="content"><b>Content</b></label>
-                <textarea class="form-control" name="content" id="content"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="content"><b>Start At</b></label><br>
-                <input type="date" class="form-control" name="start_date">
-            </div>
-            <div class="form-group">
-                <label for="content"><b>End At</b></label><br>
-                <input type="date" class="form-control" name="end_date">
-            </div>
-        </form>
-        <br>
-        <a href="/" role="button" class="btn btn-secondary">Cancel</a>
-        <button type="button" class="btn btn-primary" id="btn-save">Resist</button>
-        <Hr>
+    <div class="col-md-12" id="postDiv">
+        <div class="" id="postCenterDiv">
+            <form>
+                <div class="form-group">
+                    <label for="title"><b>Title</b></label>
+                    <input type="text" class="form-control" id="title" >
+                </div>
+                <div class="form-group">
+                    <label for="language"><b>Language</b></label>
+                    <select class="form-control" id="language">
+                        <option value="C#">C#</option>
+                        <option value="C">C</option>
+                        <option value="JAVA">JAVA</option>
+                        <option value="Python">Python</option>
+                        <option value="Php">Php</option>
+                        <option value="etc">etc</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="language_etc" readonly="readonly">
+                </div>
+                <div class="form-group">
+                    <label for="summary"><b>summary</b></label><br>
+                    <img id="summary" src="#" alt="#"><br>
+                    <button type="button" class="btn btn-warning" id="openModalBtn" data-toggle="modal" data-backdrop="static"
+                            data-keyboard="false" data-target="#myModal">
+                        Image Upload
+                    </button>
+                    <button type="button" class="btn btn-danger" id="deleteImgBtn" onclick="onClickdeleteImgBtn()">Delete</button>
+                </div>
+                <div class="form-group">
+                    <label for="content"><b>Content</b></label>
+                    <textarea class="form-control" name="content" id="content"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="content"><b>Start At</b></label><br>
+                    <input type="date" class="form-control" name="start_date">
+                </div>
+                <div class="form-group">
+                    <label for="content"><b>End At</b></label><br>
+                    <input type="date" class="form-control" name="end_date">
+                </div>
+            </form>
+            <br>
+            <a href="/" role="button" class="btn btn-secondary">Cancel</a>
+            <button type="button" class="btn btn-primary" id="btn-save">Resist</button>
+            <Hr>
+        </div>
     </div>
-</div>
+</main>
 <!-- modal -->
 <div class="modal fade" id="myModal">
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -79,6 +81,7 @@
         </div>
     </div>
 </div>
+{{>layout/right}}
 <script>
     document.title = "🛠️[Jeong_In]History_Regist"
 

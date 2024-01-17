@@ -21,6 +21,7 @@ public class CommonControllerAdvice {
         if (user != null) {
             model.addAttribute("usersName", user.getName());
             model.addAttribute("picture", user.getPicture());
+            model.addAttribute("userEmail", user.getEmail());
             model.addAttribute("role", usersRole(user.getEmail()));
         }
     }

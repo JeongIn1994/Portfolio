@@ -30,6 +30,9 @@ public class UploadController {
     @Value("${board.uploadUrl}")
     private String uploadBaseUrl;
 
+    @Value("${summary.uploadUrl}")
+    private String summaryUploadUrl;
+
     @PostMapping("/uploadAjax")
     private ResponseEntity<List<UploadResultDTO>> uploadFile(MultipartFile[] uploadFiles){
 

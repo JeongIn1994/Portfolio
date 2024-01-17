@@ -1,0 +1,130 @@
+
+<div class="right">
+    <div class="top">
+        <button id="menu-btn">
+            <span class="material-symbols-outlined">menu</span>
+        </button>
+        <div class="theme-toggler">
+            <span class="material-symbols-outlined active">light_mode</span>
+            <span class="material-symbols-outlined">dark_mode</span>
+        </div>
+        {{#usersName}}
+            <div class="profile">
+                <div class="info">
+                    <p><b>{{usersName}}</b></p>
+                    <small class="text-muted">{{role}}</small>
+                </div>
+                <div class="profile-photo">
+                    <img src="{{picture}}" alt="#">
+                </div>
+            </div>
+        {{/usersName}}
+        {{^usersName}}
+            <a href="/oauth2/authorization/google" role="button"><i class="fa-brands fa-google"></i></a>
+            <a href="/oauth2/authorization/naver" role="button"><i class="fa-solid fa-n"></i></a>
+        {{/usersName}}
+    </div>
+    <!-- END OF TOP -->
+    <div class="recent-update">
+        <h2>Recent Updates</h2>
+        <div class="updates">
+            <div class="update">
+                <div class="massage">
+                    <p><b>Content</b></p>
+                    <small class="text-muted">Update Time</small>
+                </div>
+            </div>
+            <div class="update">
+                <div class="massage">
+                    <p><b>Content</b></p>
+                    <small class="text-muted">Update Time</small>
+                </div>
+            </div>
+            <div class="update">
+                <div class="massage">
+                    <p><b>Content</b></p>
+                    <small class="text-muted">Update Time</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!------------------------ END OF RECENT UPDATE --------------------------->
+    <div class="languages-analytics">
+        <h2>languages-analytics</h2>
+        <div class="item first">
+            <div class="icon">
+                <span class="material-symbols-outlined">code</span>
+            </div>
+            <div class="right">
+                <div class="info">
+                    <h3>Languages</h3>
+                </div>
+                <h5 class="success">1st</h5>
+            </div>
+        </div>
+        <div class="item second">
+            <div class="icon">
+                <span class="material-symbols-outlined">code</span>
+            </div>
+            <div class="right">
+                <div class="info">
+                    <h3>Languages</h3>
+                </div>
+                <h5 class="primary">2nd</h5>
+            </div>
+        </div>
+        <div class="item third">
+            <div class="icon">
+                <span class="material-symbols-outlined">code</span>
+            </div>
+            <div class="right">
+                <div class="info">
+                    <h3>Languages</h3>
+                </div>
+                <h5 class="warning">3rd</h5>
+            </div>
+        </div>
+    </div>
+    <small class="text-muted">Last 1 years</small>
+</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://kit.fontawesome.com/0630532dcd.js" crossorigin="anonymous"></script>
+<script>
+
+    const sideMenu = document.querySelector("aside");
+    const menuBtn = document.querySelector("#menu-btn");
+    const homeBtn = document.querySelector('a[href="/"]');
+    const workHistory = document.querySelector('a[href="/history/list"]');
+    const note = document.querySelector('a[href="/board/list"]');
+    const closeBtn = document.querySelector("#close-btn");
+    const settingBtn = document.querySelector('a[href="/setting"]');
+    const themeToggler = document.querySelector(".theme-toggler");
+
+    let userRole = "USER";
+
+    {{#role}}
+        userRole = "{{role}}";
+    {{/role}}
+
+    document.addEventListener('DOMContentLoaded', () => {
+        if(userRole !== "ADMIN"){
+            settingBtn.style.display = 'none'
+        }
+    });
+
+    menuBtn.addEventListener('click', () => {
+        sideMenu.style.display = 'block';
+    })
+
+    closeBtn.addEventListener('click', () => {
+        sideMenu.style.display = 'none';
+    })
+
+    themeToggler.addEventListener('click', () => {
+        document.body.classList.toggle('dark-theme-variables');
+
+        themeToggler.querySelector('span:nth-child(1)').classList.toggle('active');
+        themeToggler.querySelector('span:nth-child(2)').classList.toggle('active');
+    })
+</script>

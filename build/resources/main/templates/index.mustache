@@ -1,16 +1,66 @@
-{{>layout/header}}
-<body>
-<img src='../image/no_image.png' alt=''>
-<div id="index_slider">
-    <div id="slider">
-        <ul>
-            <li><a href="#"><img src="#" alt=""></a></li>
-        </ul>
-    </div>
-</div>
+{{>layout/aside}}
+    <main>
+        <h1>Home</h1>
 
-<script type="text/javascript" >
-    document.title = "🛠️[Jeong_In]Home"
+        <div class="insights">
+            <div class="profile">
+                <span class="material-symbols-outlined">badge</span>
+                <div class="middle">
+                    <div class="left">
+                        <h3>Name</h3>
+                        <h3>email</h3>
+                        <h3>college</h3>
+                        <h3>sex</h3>
+                        <h3>age</h3>
+                        <h3>phone_number</h3>
+                    </div>
+                </div>
+                <small class="text-muted">Last Modified</small>
+            </div>
+            <!---------------- END OF PROFILES ------------------------->
+            <div class="skills_front">
+                <span class="material-symbols-outlined">iframe</span>
+                <div class="middle">
+                    <div class="left">
+                        <img src="" alt="#">
+                    </div>
+                </div>
+                <small class="text-muted">Last Modified</small>
+            </div>
+            <!---------------- END OF Skills_front ------------------------->
+            <div class="skills_back">
+                <span class="material-symbols-outlined">code</span>
+                <div class="middle">
+                    <img src="" alt="#">
+                </div>
+                <small class="text-muted">Last Modified</small>
+            </div>
+            <!---------------- END OF skills_back ------------------------->
+        </div>
+        <!------------------------ END OF INSIGHTS --------------------------->
+
+        <div class="work-history-summary" id="work-history-summary">
+            <h2>Work History</h2>
+            <div class="slider" id="slider">
+                <ul>
+                    <li></li>
+                </ul>
+            </div>
+            <a href="/history/list">Show All</a>
+        </div>
+    </main>
+    <!------------------------ END OF MAIN --------------------------->
+{{>layout/right}}
+
+<!--<script src="./script/index1.js"></script>-->
+
+<script>
+    document.title = "In's Inventory"
+
+    const li_height = parseInt(window.getComputedStyle(document.querySelector('#slider > ul').querySelector('li')).height, 10);
+    const firstLi = document.querySelector('#slider > ul').querySelectorAll('li')[0];
+    const lastLi = document.querySelector('#slider > ul').querySelectorAll('li')[document.querySelector('#slider > ul').querySelectorAll('li').length - 1];
+    let scrollPosition = 0;
 
     window.onload = function (){
         document.querySelector('#slider > ul').addEventListener('wheel', throttle(handleScroll, 500));
@@ -19,19 +69,15 @@
     //create li List Start
     let li_List = "";
     let progress = "";
-    {{#posts}}
+        {{#posts}}
         "{{progress}}" === "1" ? progress =
-            '<h2><span class="badge badge-warning">Ing</span></h2>' : progress = '<h2><span class="badge badge-secondary">Done</span></h2>';
-        li_List += "<li>"+progress+"<a href='#'><img src='../image/no_image.png' alt=''></a></li>"
+                '<h2><span class="badge badge-warning">Ing</span></h2>' : progress = '<h2><span class="badge badge-secondary">Done</span></h2>';
+        li_List += "<li>"+progress+"<a href='#'><img alt='/display?fileName=2023/12/19/5a525a22-29a7-48c3-9954-2dff98e64e95_스크린샷 2023-09-05 202305.png' src='/display?fileName=2023/12/19/5a525a22-29a7-48c3-9954-2dff98e64e95_스크린샷 2023-09-05 202305.png'></a>"
 
-    {{/posts}}
+        {{/posts}}
     document.querySelector('#slider > ul').innerHTML = li_List;
     //create li List End
 
-    const li_height = parseInt(window.getComputedStyle(document.querySelector('#slider > ul').querySelector('li')).height, 10);
-    const firstLi = document.querySelector('#slider > ul').querySelectorAll('li')[0];
-    const lastLi = document.querySelector('#slider > ul').querySelectorAll('li')[document.querySelector('#slider > ul').querySelectorAll('li').length - 1];
-    let scrollPosition = 0;
 
 
     const handleScroll = (event) => {
@@ -82,5 +128,5 @@
 
 
 </script>
-{{>layout/footer}}
-
+</body>
+</html>

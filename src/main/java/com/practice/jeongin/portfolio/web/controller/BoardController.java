@@ -26,10 +26,6 @@ public class BoardController {
     @GetMapping("/list")
     public void list(PageRequestDTO pageRequestDTO, Model model, @LoginUser SessionUsers user){
 
-//        if(user != null) {
-//            model.addAttribute("usersName", user.getName());
-//            model.addAttribute("picture", user.getPicture());
-//        }
 
         model.addAttribute("result" , boardService.getList(pageRequestDTO));
     }

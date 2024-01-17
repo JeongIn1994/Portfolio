@@ -16,18 +16,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception{
         http
                 .csrf().disable()
-                .headers().frameOptions().disable()
+                    .headers().contentTypeOptions().disable()
                 .and()
-                .authorizeRequests().antMatchers("/","/board/**","/view/**","/upload.do","/css/**","/images/**","/js/**","/replies/**","/display","/history/**")
-                .permitAll().antMatchers("/api/v1/**","board/register","board/modify").hasAnyRole(Role.USER.name(),Role.ADMIN.name())
-                .and().authorizeRequests().antMatchers("/setting","/posts/").hasAnyRole(Role.ADMIN.name())
-                .anyRequest().authenticated()
+                .authorizeRequests()
+                    .antMatchers("/style/**", "/script/**", "/image/**", "/fonts/**",
+                            "/", "/board/**", "/view/**", "/upload.do", "/replies/**", "/display/**", "/history/**").permitAll()
+                    .antMatchers("/api/v1/**", "/board/register", "/board/modify").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
+                    .antMatchers("/setting", "/posts/").hasAnyRole(Role.ADMIN.name())
+                    .anyRequest().authenticated()
                 .and()
-                .logout().logoutSuccessUrl("/")
+                    .logout().logoutSuccessUrl("/")
                 .and()
-                .oauth2Login()
-                .userInfoEndpoint()
-                .userService(customOAuth2UserService)
+                    .oauth2Login()
+                        .userInfoEndpoint()
+                            .userService(customOAuth2UserService)
                 .and()
                 .defaultSuccessUrl("/",true);
 

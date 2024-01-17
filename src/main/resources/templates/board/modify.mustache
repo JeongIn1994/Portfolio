@@ -1,35 +1,39 @@
-{{>layout/header}}
+{{>layout/aside}}
 <style>
     .cke_inner .cke_reset {
         min-height:600px;
     }
 </style>
-<div class="col-md-12" id="boardDiv">
-    <div class="" id="boardCenterDiv">
-        <form id="contentForm" method="POST" action="/board/modify">
-            <input type="hidden" name='bno' value="{{dto.bno}}">
-            <div class="form-group">
-                <label for="title">Title</label>
-                <input type="text" class="form-control" name="title" value="{{dto.title}}" >
-            </div>
-            <div class="form-group">
-                <label for="userName">Author</label>
-                <input type="text" class="form-control" name="userName" value="{{dto.userName}}" disabled readonly>
-            </div>
-            <div class="form-group">
-                <label for="content">Content</label>
-                <textarea class="form-control" name="content" id="content">{{{dto.content}}}</textarea>
-            </div>
-            <input type="hidden" name="userEmail" value="{{userEmail}}">
+<main>
+    <div class="col-md-12" id="boardDiv">
+        <div class="" id="boardCenterDiv">
+            <form id="contentForm" method="POST" action="/board/modify">
+                <input type="hidden" name='bno' value="{{dto.bno}}">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" name="title" value="{{dto.title}}" >
+                </div>
+                <div class="form-group">
+                    <label for="userName">Author</label>
+                    <input type="text" class="form-control" name="userName" value="{{dto.userName}}" disabled readonly>
+                </div>
+                <div class="form-group">
+                    <label for="content">Content</label>
+                    <textarea class="form-control" name="content" id="content">{{{dto.content}}}</textarea>
+                </div>
+                <input type="hidden" name="userEmail" value="{{userEmail}}">
 
-            <a href="/board/list?page={{requestDTO.page}}" role="button" class="btn btn-secondary">Cancel</a>
-            <button type="submit" class="btn btn-primary"  style="display: inline-flex;">modify</button>
-        </form>
-        <br>
+                <a href="/board/list?page={{requestDTO.page}}" role="button" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary"  style="display: inline-flex;">modify</button>
+            </form>
+            <br>
+        </div>
     </div>
-</div>
+</main>
+{{>layout/right}}
 <script>
     document.title = "🛠️[Jeong_In]Modify_{{dto.title}}"
 </script>
-{{>layout/footer}}
 {{>script/Board_CKEditor}}
+</body>
+</html>
