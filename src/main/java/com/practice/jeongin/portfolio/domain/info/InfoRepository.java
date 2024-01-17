@@ -10,4 +10,7 @@ public interface InfoRepository extends JpaRepository<Info, Long> {
             "FROM Info i where i.email =:email")
     Object getInfoByEmail(@Param("email") String email);
 
+    @Query("Select i From Info i Order By i.id Desc")
+    Object getUserInfo();
+
 }

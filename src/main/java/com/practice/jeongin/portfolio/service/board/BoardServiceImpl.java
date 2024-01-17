@@ -10,10 +10,12 @@ import com.practice.jeongin.portfolio.web.dto.PageResultDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.function.Function;
 
 @Service
@@ -80,6 +82,12 @@ public class BoardServiceImpl implements BoardService{
         board.changeTitle(boardDTO.getTitle());
 
         boardRepository.save(board);
+    }
+
+    @Override
+    public List<Board> getTop3Board() {
+        PageRequest pageable = PageRequest.of(0,3);
+        return boardRepository.getCurrent3Board(pageable);
     }
 }
 

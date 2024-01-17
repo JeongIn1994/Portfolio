@@ -1,7 +1,7 @@
 package com.practice.jeongin.portfolio.web.controller;
 
-import com.practice.jeongin.portfolio.config.auth.LoginUser;
-import com.practice.jeongin.portfolio.config.auth.dto.SessionUsers;
+
+import com.practice.jeongin.portfolio.domain.info.InfoRepository;
 import com.practice.jeongin.portfolio.service.posts.PostsService;
 import com.practice.jeongin.portfolio.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +17,15 @@ public class IndexController {
 
 
     private final PostsService postsService;
+
+    private final InfoRepository infoRepository;
+
+
     @RequestMapping(value = {"/", "/history/**"})
     public String index(Model model) {
 
         model.addAttribute("posts", postsService.finAllDesc());
+        model.addAttribute("userInfo", infoRepository.getUserInfo());
 
         return "index";
     }

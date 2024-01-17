@@ -6,6 +6,8 @@ import com.practice.jeongin.portfolio.domain.user.Users;
 import com.practice.jeongin.portfolio.web.dto.PageRequestDTO;
 import com.practice.jeongin.portfolio.web.dto.PageResultDTO;
 
+import java.util.List;
+
 public interface BoardService {
 
     Long register(BoardDTO dto);
@@ -17,6 +19,8 @@ public interface BoardService {
     void removeWithReplies(Long bno);
 
     void modify(BoardDTO boardDTO);
+
+    List<Board> getTop3Board();
 
     default Board dtoToEntity(BoardDTO dto){
 

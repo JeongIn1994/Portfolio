@@ -28,24 +28,15 @@
     <div class="recent-update">
         <h2>Recent Updates</h2>
         <div class="updates">
+            {{#currentBoard}}
             <div class="update">
                 <div class="massage">
-                    <p><b>Content</b></p>
-                    <small class="text-muted">Update Time</small>
+                    <a href="/board/view?bno={{bno}}"><p><b>{{title}}</b></p></a>
+                    <small class="text-muted">{{createDate}}</small>
                 </div>
             </div>
-            <div class="update">
-                <div class="massage">
-                    <p><b>Content</b></p>
-                    <small class="text-muted">Update Time</small>
-                </div>
-            </div>
-            <div class="update">
-                <div class="massage">
-                    <p><b>Content</b></p>
-                    <small class="text-muted">Update Time</small>
-                </div>
-            </div>
+            {{/currentBoard}}
+
         </div>
     </div>
     <!------------------------ END OF RECENT UPDATE --------------------------->

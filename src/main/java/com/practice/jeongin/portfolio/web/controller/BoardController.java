@@ -1,7 +1,5 @@
 package com.practice.jeongin.portfolio.web.controller;
 
-import com.practice.jeongin.portfolio.config.auth.LoginUser;
-import com.practice.jeongin.portfolio.config.auth.dto.SessionUsers;
 import com.practice.jeongin.portfolio.service.board.BoardService;
 import com.practice.jeongin.portfolio.web.dto.BoardDTO;
 import com.practice.jeongin.portfolio.web.dto.PageRequestDTO;
@@ -24,22 +22,14 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/list")
-    public void list(PageRequestDTO pageRequestDTO, Model model, @LoginUser SessionUsers user){
+    public void list(PageRequestDTO pageRequestDTO, Model model){
 
 
         model.addAttribute("result" , boardService.getList(pageRequestDTO));
     }
 
     @GetMapping("/register")
-    public String register(Model model,@LoginUser SessionUsers user) {
-
-//        log.info("get Resister");
-//
-//        if(user != null) {
-//            model.addAttribute("usersName", user.getName());
-//            model.addAttribute("userEmail", user.getEmail());
-//            model.addAttribute("picture", user.getPicture());
-//        }
+    public String register() {
 
         return "/board/register";
     }
@@ -58,13 +48,7 @@ public class BoardController {
 
     @GetMapping({"/view","/modify"})
     public void read(@ModelAttribute("requestDTO") PageRequestDTO pageRequestDTO,
-                     Long bno, Model model,@LoginUser SessionUsers user) {
-
-//        if(user != null) {
-//            model.addAttribute("usersName", user.getName());
-//            model.addAttribute("userEmail", user.getEmail());
-//            model.addAttribute("picture", user.getPicture());
-//        }
+                     Long bno, Model model) {
 
         BoardDTO boardDTO = boardService.get(bno);
 

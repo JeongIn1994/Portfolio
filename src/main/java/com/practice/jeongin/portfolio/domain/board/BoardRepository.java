@@ -31,4 +31,6 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
             " GROUP BY b, u, b.bno")
     Object getBoardByBno(@Param("bno") Long bno);
 
+    @Query("Select b From Board b Order by b.createDate Desc")
+    List<Board> getCurrent3Board(Pageable pageable);
 }

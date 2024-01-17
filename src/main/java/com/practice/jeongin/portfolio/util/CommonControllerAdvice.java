@@ -4,6 +4,7 @@ import com.practice.jeongin.portfolio.config.auth.LoginUser;
 import com.practice.jeongin.portfolio.config.auth.dto.SessionUsers;
 import com.practice.jeongin.portfolio.domain.user.Role;
 import com.practice.jeongin.portfolio.domain.user.UsersRepository;
+import com.practice.jeongin.portfolio.service.board.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 public class CommonControllerAdvice {
 
     private final UsersRepository usersRepository;
+
+    private final BoardService boardService;
     @ModelAttribute
     public void commonAttributes(Model model, @LoginUser SessionUsers user) {
         if (user != null) {
@@ -23,6 +26,7 @@ public class CommonControllerAdvice {
             model.addAttribute("picture", user.getPicture());
             model.addAttribute("userEmail", user.getEmail());
             model.addAttribute("role", usersRole(user.getEmail()));
+            model.addAttribute("currentBoard", boardService.getTop3Board());
         }
     }
 
