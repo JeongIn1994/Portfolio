@@ -1,7 +1,6 @@
 {{>layout/aside}}
     <main>
         <h1>Home</h1>
-
         <div class="insights">
             <div class="profile">
                 <span class="material-symbols-outlined">badge</span>
@@ -68,15 +67,15 @@
 <!--<script src="./script/index1.js"></script>-->
 
 <script>
-    document.title = "⚙️In's Inventory"
+    document.title = "[⚙️In's Inventory]"
 
-    const li_height = parseInt(window.getComputedStyle(document.querySelector('#slider > ul').querySelector('li')).height, 10);
-    const firstLi = document.querySelector('#slider > ul').querySelectorAll('li')[0];
-    const lastLi = document.querySelector('#slider > ul').querySelectorAll('li')[document.querySelector('#slider > ul').querySelectorAll('li').length - 1];
-    let scrollPosition = 0;
 
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelector("aside .sidebar a:nth-child(1)").classList.add('active');
+    });
     window.onload = function (){
         document.querySelector('#slider > ul').addEventListener('wheel', throttle(handleScroll, 500));
+
     }
 
     //create li List Start
@@ -91,7 +90,11 @@
     document.querySelector('#slider > ul').innerHTML = li_List;
     //create li List End
 
+    const li_height = parseInt(window.getComputedStyle(document.querySelector('#slider > ul').querySelector('li')).height, 10);
+    const firstLi = document.querySelector('#slider > ul').querySelectorAll('li')[0];
+    const lastLi = document.querySelector('#slider > ul').querySelectorAll('li')[document.querySelector('#slider > ul').querySelectorAll('li').length - 1];
 
+    let scrollPosition = 0;
 
     const handleScroll = (event) => {
         const deltaY = event.deltaY;
@@ -138,7 +141,6 @@
             }
         };
     }
-
 
 </script>
 </body>

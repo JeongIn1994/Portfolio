@@ -21,7 +21,7 @@ public class IndexController {
     private final InfoRepository infoRepository;
 
 
-    @RequestMapping(value = {"/", "/history/**"})
+    @RequestMapping(value = "/")
     public String index(Model model) {
 
         model.addAttribute("posts", postsService.finAllDesc());
@@ -35,11 +35,11 @@ public class IndexController {
         model.addAttribute("posts", postsService.finAllDesc());
 
 
-        return "/history/List_Posts";
+        return "history/List_history";
     }
     @GetMapping("/history/regist")
     public String postsSave() {
-        return "/history/Resist_Posts";
+        return "history/Resist_Histroy";
     }
 
     @GetMapping("/history/view/{id}")
@@ -47,14 +47,14 @@ public class IndexController {
         PostsResponseDto dto = postsService.findById(id);
         model.addAttribute("post", dto);
 
-        return "/history/View_Posts";
+        return "history/View_Histroy";
     }
     @GetMapping("/history/update/{id}")
     public String postsUpdate(@PathVariable Long id, Model model) {
         PostsResponseDto dto = postsService.findById(id);
         model.addAttribute("post", dto);
 
-        return "/history/Update_Posts";
+        return "history/Update_Histroy";
     }
 
 

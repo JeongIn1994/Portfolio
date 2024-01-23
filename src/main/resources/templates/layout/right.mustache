@@ -31,12 +31,19 @@
             {{#currentBoard}}
             <div class="update">
                 <div class="massage">
-                    <a href="/board/view?bno={{bno}}"><p><b>{{title}}</b></p></a>
+                    <a href="/board/view?bno={{bno}}"><p><b></b></p></a>
                     <small class="text-muted">{{createDate}}</small>
                 </div>
             </div>
             {{/currentBoard}}
-
+            {{^currentBoard}}
+                <div class="update">
+                    <div class="massage">
+                        <a href="#"><p><b>No Current Note</b></p></a>
+                        <small class="text-muted">No</small>
+                    </div>
+                </div>
+            {{/currentBoard}}
         </div>
     </div>
     <!------------------------ END OF RECENT UPDATE --------------------------->
@@ -78,18 +85,16 @@
     </div>
     <small class="text-muted">Last 1 years</small>
 </div>
-</div>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="https://kit.fontawesome.com/0630532dcd.js" crossorigin="anonymous"></script>
 <script>
 
     const sideMenu = document.querySelector("aside");
     const menuBtn = document.querySelector("#menu-btn");
-    const homeBtn = document.querySelector('a[href="/"]');
-    const workHistory = document.querySelector('a[href="/history/list"]');
-    const note = document.querySelector('a[href="/board/list"]');
     const closeBtn = document.querySelector("#close-btn");
-    const settingBtn = document.querySelector('a[href="/setting"]');
+    const homeBtn = document.querySelector('a[href="/"]');
+    const settingBtn = document.querySelector('#openModalBtn');
     const themeToggler = document.querySelector(".theme-toggler");
 
     let userRole = "USER";
@@ -98,10 +103,46 @@
         userRole = "{{role}}";
     {{/role}}
 
+    //page onload function
     document.addEventListener('DOMContentLoaded', () => {
+        //url check
+        const currentURL = window.location.pathname;
+        if(currentURL.includes('board')){
+            document.querySelector("aside .sidebar a:nth-child(1)").classList.remove('active');
+            document.querySelector("aside .sidebar a:nth-child(2)").classList.remove('active');
+            document.querySelector("aside .sidebar a:nth-child(3)").classList.add('active');
+        }else if(currentURL.includes('history')){
+            document.querySelector("aside .sidebar a:nth-child(1)").classList.remove('active');
+            document.querySelector("aside .sidebar a:nth-child(2)").classList.add('active');
+            document.querySelector("aside .sidebar a:nth-child(3)").classList.remove('active');
+        }else{
+            document.querySelector("aside .sidebar a:nth-child(1)").classList.add('active');
+            document.querySelector("aside .sidebar a:nth-child(2)").classList.remove('active');
+            document.querySelector("aside .sidebar a:nth-child(3)").classList.remove('active');
+        }
+
+        //role check
         if(userRole !== "ADMIN"){
             settingBtn.style.display = 'none'
         }
+        const currentUpdates = [];
+        {{#currentBoard}}
+            currentUpdates.push("{{title}}")
+        {{/currentBoard}}
+        //current update title was so long
+        // const currentUpdateTitle = document.querySelectorAll(".updates .update .massage a p b")
+        currentUpdates.forEach((update, index) =>{
+                    index++;
+                    if(parseInt(update.length) > 12) {
+                        document.querySelector(".updates .update:nth-child(" + index +") .massage a p b").innerText = update.substring(0,6) + "...";
+                    }else {
+                        document.querySelector(".updates .update:nth-child(" + index +") .massage a p b").innerText = update;
+                    }
+
+                }
+        );
+
+
     });
 
     menuBtn.addEventListener('click', () => {
@@ -111,6 +152,7 @@
     closeBtn.addEventListener('click', () => {
         sideMenu.style.display = 'none';
     })
+
 
     themeToggler.addEventListener('click', () => {
         document.body.classList.toggle('dark-theme-variables');

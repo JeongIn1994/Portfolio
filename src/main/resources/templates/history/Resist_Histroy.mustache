@@ -2,6 +2,13 @@
     .cke_inner .cke_reset {
         min-height:600px;
     }
+    #file {
+        display: none;
+    }
+
+    #myModal button {
+        margin-bottom: 6px;
+    }
 </style>
 {{>layout/aside}}
 <main>
@@ -30,7 +37,7 @@
                 </div>
                 <div class="form-group">
                     <label for="summary"><b>summary</b></label><br>
-                    <img id="summary" src="#" alt="#"><br>
+                    <img id="summary" src="#" alt="No Image"><br>
                     <button type="button" class="btn btn-warning" id="openModalBtn" data-toggle="modal" data-backdrop="static"
                             data-keyboard="false" data-target="#myModal">
                         Image Upload
@@ -51,7 +58,7 @@
                 </div>
             </form>
             <br>
-            <a href="/" role="button" class="btn btn-secondary">Cancel</a>
+            <a href="#" role="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</a>
             <button type="button" class="btn btn-primary" id="btn-save">Resist</button>
             <Hr>
         </div>
@@ -72,7 +79,7 @@
 
             </div>
             <div class="modal-footer">
-                <label for="file" class="btn btn-warning">파일 선택</label>
+                <label for="file" class="btn btn-warning">Select Files</label>
                 <input type="file" id="file" class="input" multiple>
                 <button type="button" class="btn btn-secondary" onclick="onclickUploadBtn()">Upload</button>
                 <button type="button" class="btn btn-primary" onclick="onclickAttachBtn()">Attach</button>
@@ -82,8 +89,9 @@
     </div>
 </div>
 {{>layout/right}}
+<script src="/js/app/index.js"></script>
 <script>
-    document.title = "🛠️[Jeong_In]History_Regist"
+    document.title = "[⚙️In's Inventory]New_Work History"
 
     document.getElementById("language").addEventListener('change',function(){
         document.getElementById("language_etc").readOnly = document.getElementById("language").value !== "etc";
@@ -108,7 +116,7 @@
 
 
         $.ajax({
-            url : '/summaryUploadAjax',
+            url : '/uploadAjax',
             processData : false,
             contentType : false,
             data : formData,

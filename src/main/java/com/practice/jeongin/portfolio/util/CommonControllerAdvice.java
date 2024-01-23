@@ -6,6 +6,7 @@ import com.practice.jeongin.portfolio.domain.user.Role;
 import com.practice.jeongin.portfolio.domain.user.UsersRepository;
 import com.practice.jeongin.portfolio.service.board.BoardService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -26,8 +27,8 @@ public class CommonControllerAdvice {
             model.addAttribute("picture", user.getPicture());
             model.addAttribute("userEmail", user.getEmail());
             model.addAttribute("role", usersRole(user.getEmail()));
-            model.addAttribute("currentBoard", boardService.getTop3Board());
         }
+        model.addAttribute("currentBoard", boardService.getTop3Board());
     }
 
     public Role usersRole(String email) {
