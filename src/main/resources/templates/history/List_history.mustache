@@ -32,19 +32,11 @@
     </div>
     <hr>
 
-
-    {{#usersName}}
-        <input type="hidden" name="usersName" value="{{usersName}}">
-    {{/usersName}}
-    {{#role}}
-        <input type="hidden" name="role" value="{{role}}">
-    {{/role}}
 </main>
 {{>layout/right}}
 <script>
 
     document.title = "[⚙️In's Inventory]";
-
 
     if( userRole === "ADMIN" ) {
         document.getElementById('btn-create').style.display = 'block';

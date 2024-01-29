@@ -16,7 +16,7 @@
 
     <div class="col-md-12" id="postDiv">
         <div class="" id="postCenterDiv">
-            <form>
+            <form id="contentForm" method="POST" action="/api/v1/posts/">
                 <div class="form-group">
                     <label for="title"><b>Title</b></label>
                     <input type="text" class="form-control" id="title" >
@@ -37,7 +37,8 @@
                 </div>
                 <div class="form-group">
                     <label for="summary"><b>summary</b></label><br>
-                    <img id="summary" src="#" alt="No Image"><br>
+                    <p><span class="noSummaryNotice">No image</span></p>
+                    <img id="summary" src="#" alt="No Image" style="display:none"><br>
                     <button type="button" class="btn btn-warning" id="openModalBtn" data-toggle="modal" data-backdrop="static"
                             data-keyboard="false" data-target="#myModal">
                         Image Upload
@@ -56,10 +57,11 @@
                     <label for="content"><b>End At</b></label><br>
                     <input type="date" class="form-control" name="end_date">
                 </div>
+                <a href="#" role="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</a>
+                <button type="button" class="btn btn-primary" id="submitBtn" onclick="onclickSubmitBtn()">Resist</button>
             </form>
             <br>
-            <a href="#" role="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</a>
-            <button type="button" class="btn btn-primary" id="btn-save">Resist</button>
+
             <Hr>
         </div>
     </div>
@@ -89,7 +91,7 @@
     </div>
 </div>
 {{>layout/right}}
-<script src="/js/app/index.js"></script>
+<!--<script src="/js/app/index.js"></script>-->
 <script>
     document.title = "[⚙️In's Inventory]New_Work History"
 
@@ -100,11 +102,15 @@
     const fileNameDisplay = document.querySelector('.uploadResult');
     const inputFileList = document.querySelector('input[type="file"]')
 
+
     const onClickdeleteImgBtn = () => {
         if(document.getElementById("summary").src !== '#'){
+            document.getElementById("summary").style.display = 'none';
+            document.querySelector(".noSummaryNotice").style.display = "block";
             document.getElementById("summary").src = '#';
         }
     }
+
 
     const onclickUploadBtn = () => {
         const formData = new FormData();
@@ -135,6 +141,8 @@
         const imgList = fileNameDisplay.querySelectorAll('img');
 
         imgList.forEach((img) => {
+            document.querySelector(".noSummaryNotice").style.display = "none";
+            document.getElementById("summary").style.display = 'block';
             document.getElementById("summary").src = img.alt;
             fileNameDisplay.innerHTML = '';
             document.querySelector(".uploadFileList").innerHTML ='';
@@ -202,8 +210,24 @@
         }
     }
 
+    function escapeHtml(unsafe) {
+        return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+    }
+
+    const onclickSubmitBtn = () => {
+        const content = escapeHtml(CKEDITOR.instances.content.getData());
+
+        document.getElementById('content').value = "'" + (content.replace(/\s+/g, '')) +"'";
+        console.log(document.getElementById('content').value);
+        document.getElementById('contentForm').submit();
+    }
+
 
 </script>
 
-{{>layout/footer}}
 {{>script/Posts_CKEditor}}

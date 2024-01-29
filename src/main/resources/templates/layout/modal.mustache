@@ -6,14 +6,14 @@
                 <h4 class="modal-title">Setting</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <div class="col-md-12 category">
-                    <a href="#" class="active">User Profile</a>
-                    <a href="#">User Management</a>
-                    <a href="#">FrontEnd</a>
-                    <a href="#">BackEnd</a>
+                    <a href="#" class="active" onclick="changeContent('User Profile')">User Profile</a>
+                    <a href="#" onclick="changeContent('User Management')">User Management</a>
+                    <a href="#" onclick="changeContent('FrontEnd')">FrontEnd</a>
+                    <a href="#" onclick="changeContent('BackEnd')">BackEnd</a>
                 </div>
             </div>
-            <div class="modal-body">
-
+            <div class="modal-body" id="modal-body">
+                <p>Default Content</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
@@ -23,14 +23,46 @@
 </div>
 <script>
 
-    const activeCategory = document.querySelector("");
+    const activeCategory = document.querySelector(".category .active");
+    const modalBody = document.querySelector("#modal-body")
+
+    const changeContent = (category) => {
+        if(category === "User Profile"){
+            document.querySelector("#settings .modal-content .category a:nth-child(1)").classList.add('active');
+            document.querySelector("#settings .modal-content .category a:nth-child(2)").classList.remove('active');
+            document.querySelector("#settings .modal-content .category a:nth-child(3)").classList.remove('active');
+            document.querySelector("#settings .modal-content .category a:nth-child(4)").classList.remove('active');
+            displayUserProfile();
+        }else if(category === "User Management"){
+            document.querySelector("#settings .modal-content .category a:nth-child(1)").classList.remove('active');
+            document.querySelector("#settings .modal-content .category a:nth-child(2)").classList.add('active');
+            document.querySelector("#settings .modal-content .category a:nth-child(3)").classList.remove('active');
+            document.querySelector("#settings .modal-content .category a:nth-child(4)").classList.remove('active');
+            displayUserManagement();
+        }else if(category === "FrontEnd" ){
+            document.querySelector("#settings .modal-content .category a:nth-child(1)").classList.remove('active');
+            document.querySelector("#settings .modal-content .category a:nth-child(2)").classList.remove('active');
+            document.querySelector("#settings .modal-content .category a:nth-child(3)").classList.add('active');
+            document.querySelector("#settings .modal-content .category a:nth-child(4)").classList.remove('active');
+            displayFrontEnd();
+        }else if(category === "BackEnd"){
+            document.querySelector("#settings .modal-content .category a:nth-child(1)").classList.remove('active');
+            document.querySelector("#settings .modal-content .category a:nth-child(2)").classList.remove('active');
+            document.querySelector("#settings .modal-content .category a:nth-child(3)").classList.remove('active');
+            document.querySelector("#settings .modal-content .category a:nth-child(4)").classList.add('active');
+            displayBackEnd();
+        }
+
+        modalBody.innerHTML = '<p>' + category + ' Content</p>';
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
+
+
         //url check
         const currentURL = window.location.pathname;
         if (currentURL.includes('board')) {
-            document.querySelector("aside .sidebar a:nth-child(1)").classList.remove('active');
-            document.querySelector("aside .sidebar a:nth-child(2)").classList.remove('active');
-            document.querySelector("aside .sidebar a:nth-child(3)").classList.add('active');
+
         } else if (currentURL.includes('history')) {
             document.querySelector("aside .sidebar a:nth-child(1)").classList.remove('active');
             document.querySelector("aside .sidebar a:nth-child(2)").classList.add('active');
@@ -40,5 +72,6 @@
             document.querySelector("aside .sidebar a:nth-child(2)").classList.remove('active');
             document.querySelector("aside .sidebar a:nth-child(3)").classList.remove('active');
         }
-    }
+    })
+
 </script>

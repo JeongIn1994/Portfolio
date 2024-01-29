@@ -693,6 +693,13 @@
     }
 
 </style>
+<script>
+    let userRole = "USER";
+
+        {{#role}}
+        userRole = "{{role}}";
+        {{/role}}
+</script>
 <body>
 <div class="container ">
     <aside>

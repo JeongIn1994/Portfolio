@@ -99,7 +99,8 @@
     const handleScroll = (event) => {
         const deltaY = event.deltaY;
         //scroll action control at first li & last li
-        if ((deltaY < 0 && firstLi.contains(event.target)) || (deltaY > 0 && lastLi.contains(event.target))) {
+        if ((deltaY <= 0 && firstLi.contains(event.target)) || (deltaY > 0 && lastLi.contains(event.target))) {
+            console.log("1");
             return;
         }
 
@@ -107,7 +108,7 @@
             //upper scroll
             scrollPosition -= li_height;
             slideDown(scrollPosition);
-        } else {
+        } else if (deltaY < 0){
             // down scroll
             scrollPosition += li_height;
             slideUp(scrollPosition);
