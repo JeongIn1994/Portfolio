@@ -16,14 +16,14 @@
 
     <div class="col-md-12" id="postDiv">
         <div class="" id="postCenterDiv">
-            <form id="contentForm" method="POST" action="/api/v1/posts/">
+            <form>
                 <div class="form-group">
                     <label for="title"><b>Title</b></label>
                     <input type="text" class="form-control" id="title" >
                 </div>
                 <div class="form-group">
                     <label for="language"><b>Language</b></label>
-                    <select class="form-control" id="language">
+                    <select class="form-control" id="language" onchange="onChangeLanguageList()">
                         <option value="C#">C#</option>
                         <option value="C">C</option>
                         <option value="JAVA">JAVA</option>
@@ -33,7 +33,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" id="language_etc" readonly="readonly">
+                    <input type="text" class="form-control" id="selectedLanguage" readonly="readonly">
                 </div>
                 <div class="form-group">
                     <label for="summary"><b>summary</b></label><br>
@@ -51,14 +51,14 @@
                 </div>
                 <div class="form-group">
                     <label for="content"><b>Start At</b></label><br>
-                    <input type="date" class="form-control" name="start_date">
+                    <input type="date" class="form-control" id="start_date">
                 </div>
                 <div class="form-group">
                     <label for="content"><b>End At</b></label><br>
-                    <input type="date" class="form-control" name="end_date">
+                    <input type="date" class="form-control" id="end_date">
                 </div>
                 <a href="#" role="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</a>
-                <button type="button" class="btn btn-primary" id="submitBtn" onclick="onclickSubmitBtn()">Resist</button>
+                <button type="button" class="btn btn-primary" id="btn-save" >Resist</button>
             </form>
             <br>
 
@@ -91,16 +91,28 @@
     </div>
 </div>
 {{>layout/right}}
-<!--<script src="/js/app/index.js"></script>-->
+<script src="/js/app/index.js"></script>
 <script>
     document.title = "[⚙️In's Inventory]New_Work History"
 
     document.getElementById("language").addEventListener('change',function(){
-        document.getElementById("language_etc").readOnly = document.getElementById("language").value !== "etc";
+        document.getElementById("selectedLanguage").readOnly = document.getElementById("language").value !== "etc";
     })
 
     const fileNameDisplay = document.querySelector('.uploadResult');
     const inputFileList = document.querySelector('input[type="file"]')
+
+    const onChangeLanguageList = () => {
+        if(document.getElementById("language").value !== "etc"){
+            document.getElementById("selectedLanguage").value = "";
+            document.getElementById("selectedLanguage").value = document.getElementById("language").value;
+        }else{
+            document.getElementById("selectedLanguage").value = "";
+        }
+
+
+
+    }
 
 
     const onClickdeleteImgBtn = () => {
@@ -208,23 +220,6 @@
         }else{
             document.querySelector('.uploadFileList').innerHTML = ''
         }
-    }
-
-    function escapeHtml(unsafe) {
-        return unsafe
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-    }
-
-    const onclickSubmitBtn = () => {
-        const content = escapeHtml(CKEDITOR.instances.content.getData());
-
-        document.getElementById('content').value = "'" + (content.replace(/\s+/g, '')) +"'";
-        console.log(document.getElementById('content').value);
-        document.getElementById('contentForm').submit();
     }
 
 

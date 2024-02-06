@@ -8,10 +8,16 @@ const main = {
 
         const data = {
             title: $('#title').val(),
-            user_name: $('#user_name').val(),
+            language: $('#selectedLanguage').val(),
             // content: $('#content').val()
-            content: CKEDITOR.instances.content.getData()
+            content: escapeHtml(CKEDITOR.instances.content.getData()),
+            summary: $("#summary").attr("src").split("/display?fileName=")[1],
+            start_date: $("#start_date").val(),
+            end_date: $("#end_date").val()
+
         };
+
+        console.log(data);
 
         $.ajax({
             type: 'POST',
@@ -22,7 +28,7 @@ const main = {
             })
             .done(() => {
                 alert('Resist Was Done!');
-                window.location.href = '/';
+                window.location.href = '/history/list';
             })
             .fail((error) => {
                 alert(JSON.stringify(error));
@@ -68,5 +74,14 @@ const main = {
             });
     }
 };
+
+function escapeHtml(unsafe) {
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
 
 main.init();

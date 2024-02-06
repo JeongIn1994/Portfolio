@@ -25,7 +25,7 @@ public class Posts extends BaseTimeEntity implements Serializable {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String summary;
 
     @Column(columnDefinition = "TEXT", nullable = false)
