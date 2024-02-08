@@ -60,6 +60,7 @@
             </div>
             <a href="/history/list">Show All</a>
         </div>
+        <div class="page-indicators"></div>
     </main>
     <!------------------------ END OF MAIN --------------------------->
 {{>layout/right}}
@@ -84,7 +85,7 @@
         {{#posts}}
         "{{progress}}" === "1" ? progress =
                 '<h2><span class="badge badge-warning">Ing</span></h2>' : progress = '<h2><span class="badge badge-secondary">Done</span></h2>';
-        li_List += "<li>"+progress+"<a href='#'><img alt='/display?fileName=2023/12/19/5a525a22-29a7-48c3-9954-2dff98e64e95_스크린샷 2023-09-05 202305.png' src='/display?fileName=2023/12/19/5a525a22-29a7-48c3-9954-2dff98e64e95_스크린샷 2023-09-05 202305.png'></a>"
+        li_List += "<li>"+progress+"<a href='#'><img alt='#' src='/display?fileName={{summary}}'></a>"
 
         {{/posts}}
     document.querySelector('#slider > ul').innerHTML = li_List;

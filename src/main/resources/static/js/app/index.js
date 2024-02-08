@@ -1,3 +1,21 @@
+const getCurrentDate = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+}
+const setProgress = (endDate) => {
+    let result;
+    if(endDate > getCurrentDate()){
+        result = 1;
+    }else if(endDate <= getCurrentDate()){
+        result = 0;
+    }
+    return result
+}
+
 const main = {
     init: () => {
         $('#btn-save').on('click', () => main.save());
@@ -9,30 +27,30 @@ const main = {
         const data = {
             title: $('#title').val(),
             language: $('#selectedLanguage').val(),
-            // content: $('#content').val()
             content: escapeHtml(CKEDITOR.instances.content.getData()),
             summary: $("#summary").attr("src").split("/display?fileName=")[1],
             start_date: $("#start_date").val(),
-            end_date: $("#end_date").val()
+            end_date: $("#end_date").val(),
+            progress: setProgress($("#end_date").val())
 
         };
 
         console.log(data);
 
-        $.ajax({
-            type: 'POST',
-            url: '/api/v1/posts',
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(data)
-            })
-            .done(() => {
-                alert('Resist Was Done!');
-                window.location.href = '/history/list';
-            })
-            .fail((error) => {
-                alert(JSON.stringify(error));
-            });
+        // $.ajax({
+        //     type: 'POST',
+        //     url: '/api/v1/posts',
+        //     dataType: 'json',
+        //     contentType: 'application/json; charset=utf-8',
+        //     data: JSON.stringify(data)
+        //     })
+        //     .done(() => {
+        //         alert('Resist Was Done!');
+        //         window.location.href = '/history/list';
+        //     })
+        //     .fail((error) => {
+        //         alert(JSON.stringify(error));
+        //     });
     },
     update:() => {
         const data = {
