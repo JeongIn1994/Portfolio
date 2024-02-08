@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html" charset="UTF-8" http-equiv="Content-Type">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <!--    <link rel="stylesheet" href="style/style.css">-->
+    <link rel="stylesheet" href="/style/style.css">
+</head>
+<script>
+    let userRole = "USER";
+
+        {{#role}}
+        userRole = "{{role}}";
+        {{/role}}
+</script>
+<body>
+<div class="container ">
+    <aside>
+        <div class="top">
+            <div class="logo">
+                <span class="material-symbols-outlined Gear">manufacturing</span>
+                <h2>In's<span class="danger">&ensp;Inventory</span></h2>
+            </div>
+            <div class="close" id="close-btn">
+                <span class="material-symbols-outlined">close</span>
+            </div>
+        </div>
+        <div class="sidebar">
+            <a href="/" class="text-decoration-none">
+                <span class="material-symbols-outlined">home</span>
+                <h3>Home</h3>
+            </a>
+            <a href="/history/list" class="text-decoration-none">
+                <span class="material-symbols-outlined">work_history</span>
+                <h3>work_history</h3>
+            </a>
+            <a href="/board/list" class="text-decoration-none">
+                <span class="material-symbols-outlined">note</span>
+                <h3>Note</h3>
+            </a>
+            <button type="button" id="openModalBtn" data-toggle="modal" data-backdrop="static"
+                    data-keyboard="false" data-target="#settings">
+                <span class="material-symbols-outlined">settings</span>
+                Setting
+            </button>
+            <a href="/logout" class="text-decoration-none">
+                <span class="material-symbols-outlined">logout</span>
+                <h3>Logout</h3>
+            </a>
+        </div>
+        <!-- modal -->
+{{>layout/modal}}
+    </aside>
+    <!-------------------- END OF ASIDE ---------------------------------->
