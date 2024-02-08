@@ -500,6 +500,9 @@ main .work-history-summary a {
     #slider>ul>li img {
         height:25vh;
     }
+    #content {
+        width: 550px; /* 원하는 너비로 조절 */
+    }
 }
 
 /* ================================ MEDIA QUERIES ========================== */

@@ -10,6 +10,9 @@
     #myModal button {
         margin-bottom: 6px;
     }
+    #content {
+        width: 550px; /* 원하는 너비로 조절 */
+    }
 </style>
 <main>
     <h1>Resist Board</h1>
@@ -26,7 +29,7 @@
                 </div>
                 <div class="form-group">
                     <label for="content">Content</label>
-                    <textarea class="form-control" name="content" id="content"></textarea>
+                    <div class="form-control" name="content" id="content"></div>
                 </div>
                 <input type="hidden" name="userEmail" value="{{userEmail}}">
 
@@ -68,7 +71,7 @@
 </div>
 {{>layout/right}}
 <hr>
-
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script src="/js/app/index.js"></script>
 <script>
     document.title = "[⚙️In's Inventory]Regist"
@@ -199,6 +202,13 @@
         document.getElementById('openModalBtn').addEventListener('click', setFileNameList);
     }
 
+    const editor = new toastui.Editor({
+        el: document.querySelector('#content'),
+        height: '450px',
+        initialEditType: 'wysiwyg',
+        initialValue: '내용을 입력해 주세요.',
+        previewStyle: 'vertical'
+    });
+
 
 </script>
-{{>script/Board_CKEditor}}

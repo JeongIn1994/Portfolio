@@ -27,7 +27,7 @@ const main = {
         const data = {
             title: $('#title').val(),
             language: $('#selectedLanguage').val(),
-            content: escapeHtml(CKEDITOR.instances.content.getData()),
+            content: CKEDITOR.instances.content.getData(),
             summary: $("#summary").attr("src").split("/display?fileName=")[1],
             start_date: $("#start_date").val(),
             end_date: $("#end_date").val(),
@@ -92,14 +92,5 @@ const main = {
             });
     }
 };
-
-function escapeHtml(unsafe) {
-    return unsafe
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
 
 main.init();

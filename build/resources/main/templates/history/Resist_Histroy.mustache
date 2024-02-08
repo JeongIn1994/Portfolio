@@ -9,62 +9,63 @@
     #myModal button {
         margin-bottom: 6px;
     }
+    #content {
+        width: 550px; /* 원하는 너비로 조절 */
+    }
 </style>
 {{>layout/aside}}
 <main>
     <h1>Resist History</h1>
 
-    <div class="col-md-12" id="postDiv">
-        <div class="" id="postCenterDiv">
-            <form>
-                <div class="form-group">
-                    <label for="title"><b>Title</b></label>
-                    <input type="text" class="form-control" id="title" required>
-                </div>
-                <div class="form-group">
-                    <label for="language"><b>Language</b></label>
-                    <select class="form-control" id="language" onchange="onChangeLanguageList()">
-                        <option value="---">---</option>
-                        <option value="C#">C#</option>
-                        <option value="C">C</option>
-                        <option value="JAVA">JAVA</option>
-                        <option value="Python">Python</option>
-                        <option value="Php">Php</option>
-                        <option value="etc">etc</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="selectedLanguage" readonly="readonly" required>
-                </div>
-                <div class="form-group">
-                    <label for="summary"><b>summary</b></label><br>
-                    <p><span class="noSummaryNotice">No image</span></p>
-                    <img id="summary" src="#" alt="No Image" style="display:none"><br>
-                    <button type="button" class="btn btn-warning" id="openModalBtn" data-toggle="modal" data-backdrop="static"
-                            data-keyboard="false" data-target="#myModal">
-                        Image Upload
-                    </button>
-                    <button type="button" class="btn btn-danger" id="deleteImgBtn" onclick="onClickdeleteImgBtn()">Delete</button>
-                </div>
-                <div class="form-group">
-                    <label for="content"><b>Content</b></label>
-                    <textarea class="form-control" name="content" id="content" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="content"><b>Start At</b></label><br>
-                    <input type="date" class="form-control" id="start_date" required>
-                </div>
-                <div class="form-group">
-                    <label for="content"><b>End At</b></label><br>
-                    <input type="date" class="form-control" id="end_date" required>
-                </div>
-                <a href="#" role="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</a>
-                <button type="button" class="btn btn-primary" id="btn-save" >Resist</button>
-            </form>
-            <br>
+    <div class="" id="historyDiv">
+        <form>
+            <div class="form-group">
+                <label for="title"><b>Title</b></label>
+                <input type="text" class="form-control" id="title" required>
+            </div>
+            <div class="form-group">
+                <label for="language"><b>Language</b></label>
+                <select class="form-control" id="language" onchange="onChangeLanguageList()">
+                    <option value="---">---</option>
+                    <option value="C#">C#</option>
+                    <option value="C">C</option>
+                    <option value="JAVA">JAVA</option>
+                    <option value="Python">Python</option>
+                    <option value="Php">Php</option>
+                    <option value="etc">etc</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="selectedLanguage" readonly="readonly" required>
+            </div>
+            <div class="form-group">
+                <label for="summary"><b>summary</b></label><br>
+                <p><span class="noSummaryNotice">No image</span></p>
+                <img id="summary" src="#" alt="No Image" style="display:none"><br>
+                <button type="button" class="btn btn-warning" id="openModalBtn" data-toggle="modal" data-backdrop="static"
+                        data-keyboard="false" data-target="#myModal">
+                    Image Upload
+                </button>
+                <button type="button" class="btn btn-danger" id="deleteImgBtn" onclick="onClickdeleteImgBtn()">Delete</button>
+            </div>
+            <div class="form-group">
+                <label for="content"><b>Content</b></label>
+                <div class="form-control" name="content" id="content" ></div>
+            </div>
+            <div class="form-group">
+                <label for="content"><b>Start At</b></label><br>
+                <input type="date" class="form-control" id="start_date" required>
+            </div>
+            <div class="form-group">
+                <label for="content"><b>End At</b></label><br>
+                <input type="date" class="form-control" id="end_date" required>
+            </div>
+            <a href="#" role="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</a>
+            <button type="button" class="btn btn-primary" id="btn-save" >Resist</button>
+        </form>
+        <br>
 
-            <Hr>
-        </div>
+        <Hr>
     </div>
 </main>
 <!-- modal -->
@@ -92,6 +93,7 @@
     </div>
 </div>
 {{>layout/right}}
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script src="/js/app/index.js"></script>
 <script>
     document.title = "[⚙️In's Inventory]New_Work History";
@@ -222,8 +224,13 @@
             document.querySelector('.uploadFileList').innerHTML = ''
         }
     }
+    const editor = new toastui.Editor({
+        el: document.querySelector('#content'),
+        height: '450px',
+        initialEditType: 'wysiwyg',
+        initialValue: '내용을 입력해 주세요.',
+        previewStyle: 'vertical'
+    });
 
 
 </script>
-
-{{>script/Posts_CKEditor}}
