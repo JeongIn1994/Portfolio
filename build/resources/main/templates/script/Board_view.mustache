@@ -108,9 +108,15 @@ const deleteReply = (button) => {
         })
     }
 }
+
+const setDate = () => {
+    document.querySelector('#regDate').value = formatTime("{{dto.regDate}}");
+    document.querySelector("#modDate").value = formatTime("{{dto.modDate}}")
+}
 window.onload = function (){
     addBtnEvent();
     addReplies();
+    setDate()
 }
 
 </script>
