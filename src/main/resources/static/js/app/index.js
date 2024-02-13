@@ -27,7 +27,7 @@ const main = {
         const data = {
             title: $('#title').val(),
             language: $('#selectedLanguage').val(),
-            content: CKEDITOR.instances.content.getData(),
+            content: editor.getHTML(),
             summary: $("#summary").attr("src").split("/display?fileName=")[1],
             start_date: $("#start_date").val(),
             end_date: $("#end_date").val(),

@@ -91,10 +91,9 @@
 
     const onclickSubmitBtn = () => {
 
-        const content = escapeHtml(CKEDITOR.instances.content.getData());
+        const content = editor.getHTML();
 
-        document.getElementById('content').value = "'" + (content.replace(/\s+/g, '')) +"'";
-        console.log(document.getElementById('content').value);
+        document.getElementById('content').value = "'" + content +"'";
         document.getElementById('contentForm').submit();
 
     }

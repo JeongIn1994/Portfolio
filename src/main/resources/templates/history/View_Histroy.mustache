@@ -1,4 +1,14 @@
 {{>layout/aside}}
+<style>
+    #progress {
+        font-size: 0.8rem;
+    }
+    #content {
+        border: 0 solid grey;
+        width: 100%;
+        height: 300px
+    }
+</style>
 <main>
     <div id="postDiv">
         <div class="form-group">
@@ -11,7 +21,13 @@
         </div>
         <div class="form-group">
             <label for="content">Content</label>
-            <div class="form-control" id="content" style="border: 1px solid grey;width: 100%; height: 300px" >{{{post.content}}}</div>
+            <div class="form-control" id="content" >{{{post.content}}}</div>
+        </div>
+        <div class="form-group">
+            <label for="progress">progress
+                <span id="progress"></span>
+            </label>
+            <div class="form-control" id="date"></div>
         </div>
 
         <div class="row" id="buttonRow">
@@ -25,10 +41,37 @@
     document.title = "[⚙️In's Inventory] " + "{{post.title}}"
 
     window.onload = () => {
+        changProgress({{post.progress}})
+
         if(userRole === "ADMIN"){
             document.querySelector("#btn-update").style.display = "block";
             document.querySelector("#btn-delete").style.display = "block";
         }
+    }
+
+    const changProgress = (progress) => {
+        if(progress === 0) {
+            document.querySelector("#progress").className = "badge badge-warning";
+            document.querySelector("#progress").textContent = "Ing"
+            document.querySelector("#date").textContent = formattedDate("{{post.start_date}}") + " ~ " ;
+        }else {
+            document.querySelector("#progress").className = "badge badge-secondary";
+            document.querySelector("#progress").textContent = "Done"
+            document.querySelector("#date").textContent = formattedDate("{{post.start_date}}") + "~" + formattedDate("{{post.end_date}}") ;
+        }
+    }
+    const formattedDate = (date) => {
+        const originDate = new Date(date);
+
+        const year = originDate.getFullYear();
+        let month = originDate.getMonth() + 1;
+        let day = originDate.getDate();
+
+        month = month < 10 ? '0' + month : month;
+        day = day < 10 ? '0' + day : day;
+
+        return `${year}-${month}-${day}`
+
     }
 </script>
 {{>layout/right}}
