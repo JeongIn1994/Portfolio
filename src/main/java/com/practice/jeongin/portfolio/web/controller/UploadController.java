@@ -6,6 +6,7 @@ import net.coobird.thumbnailator.Thumbnailator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +20,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -34,54 +33,92 @@ public class UploadController {
     private String summaryUploadUrl;
 
     @PostMapping("/uploadAjax")
-    private ResponseEntity<List<UploadResultDTO>> uploadFile(MultipartFile[] uploadFiles){
-
-        List<UploadResultDTO> resultDTOList = new ArrayList<>();
-
-        for (MultipartFile multipartFile : uploadFiles){
-
-            if(!multipartFile.getContentType().startsWith("image")){
-                log.warn("this file is not image file");
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-            }
-            String originName = multipartFile.getOriginalFilename();
-            String fileName = originName.substring(originName.lastIndexOf("\\") + 1);
-
-            String folderPath = makeFolder();
-
-            log.info(folderPath);
-
-            String uuid = UUID.randomUUID().toString();
-
-            String saveName = uploadBaseUrl + File.separator + folderPath + File.separator + uuid + "_" + fileName;
-
-            Path savePath = Paths.get(saveName);
-
-            try{
-                multipartFile.transferTo(savePath);
-
-                String thumbnailSaveName = uploadBaseUrl + File.separator + folderPath + File.separator
-                        + "s_" + uuid + "_" + fileName;
-
-                File thumbnailFile = new File(thumbnailSaveName);
-
-                Thumbnailator.createThumbnail(savePath.toFile(), thumbnailFile, 100, 100);
-                resultDTOList.add(new UploadResultDTO(fileName,uuid, folderPath));
-            } catch (IOException e) {
-                log.error(e);
-            }
+    private String uploadFile(@RequestParam final MultipartFile image){
+        if(image.isEmpty()){
+            return "";
         }
-        return new ResponseEntity<>(resultDTOList, HttpStatus.OK);
-    }
-    @PostMapping("/summaryUploadAjax")
-    private ResponseEntity<String> uploadSummaryFile(MultipartFile uploadFiles){
+        String orgFilename = image.getOriginalFilename();
+        String uuid = UUID.randomUUID().toString().replaceAll("-","");
+        String extension = orgFilename.substring(orgFilename.lastIndexOf(".") + 1);
+        String saveFileName = uuid + "." + extension;
+        String fileFullPath = Paths.get(uploadBaseUrl, saveFileName).toString();
 
-        if(!uploadFiles.getContentType().startsWith("image")){
-            log.warn("this file is not image file");
+
+        String str = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+
+        String folderPath = str.replace("/" , File.separator);
+
+        File uploadPathFolder = new File(uploadBaseUrl, folderPath);
+
+        if(!uploadPathFolder.exists()){
+            uploadPathFolder.mkdirs();
+        }
+
+        try {
+            File uploadFile = new File(fileFullPath);
+            image.transferTo(uploadFile);
+            return saveFileName;
+        }catch (IOException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    @GetMapping(value = "/imageDisplay", produces = {MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
+    public byte[] printEditorImage(@RequestParam final String filename){
+        String fileFullpath = Paths.get(uploadBaseUrl, filename).toString();
+        
+        File uploadFile = new File(fileFullpath);
+        if(!uploadFile.exists()){
+            throw new RuntimeException();
+        }
+        
+        try {
+            return Files.readAllBytes(uploadFile.toPath());
+        }catch (IOException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    @PostMapping("/summaryUploadAjax")
+    private ResponseEntity<UploadResultDTO> uploadSummaryFile(MultipartFile uploadFile) {
+
+        if (uploadFile == null || uploadFile.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if(!uploadFile.getContentType().startsWith("image")){
+            log.warn("this file is not an image file");
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
-        return ResponseEntity.ok("File uploaded successfully!");
+        String originName = uploadFile.getOriginalFilename();
+        String fileName = originName.substring(originName.lastIndexOf("\\") + 1);
+
+        String folderPath = makeFolder();
+
+        log.info(folderPath);
+
+        String uuid = UUID.randomUUID().toString();
+
+        String saveName = summaryUploadUrl + File.separator + folderPath + File.separator + uuid + "_" + fileName;
+
+        Path savePath = Paths.get(saveName);
+
+        try{
+            uploadFile.transferTo(savePath);
+
+            String thumbnailSaveName = summaryUploadUrl + File.separator + folderPath + File.separator
+                    + "s_" + uuid + "_" + fileName;
+
+            File thumbnailFile = new File(thumbnailSaveName);
+
+            Thumbnailator.createThumbnail(savePath.toFile(), thumbnailFile, 100, 100);
+            UploadResultDTO resultDTO = new UploadResultDTO(fileName, uuid, folderPath);
+            return new ResponseEntity<>(resultDTO, HttpStatus.OK);
+        } catch (IOException e) {
+            log.error(e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/display")
@@ -93,7 +130,7 @@ public class UploadController {
 
             log.info("fileName:" + srcFileName);
 
-            File file = new File(uploadBaseUrl + File.separator + srcFileName);
+            File file = new File(summaryUploadUrl + File.separator + srcFileName);
 
             log.info("file:" + file);
 
@@ -109,6 +146,7 @@ public class UploadController {
         return result;
     }
 
+
     @PostMapping("/removeFile")
     public ResponseEntity<Boolean> removeFile (String fileName){
 
@@ -116,7 +154,7 @@ public class UploadController {
 
         srcFileName = URLDecoder.decode(fileName, StandardCharsets.UTF_8);
 
-        File file = new File(uploadBaseUrl + File.separator + srcFileName);
+        File file = new File(summaryUploadUrl + File.separator + srcFileName);
         boolean result = file.delete();
 
         File thumbnail = new File(file.getParent(), "s_" + file.getName());
@@ -133,7 +171,7 @@ public class UploadController {
 
         String folderPath = str.replace("/" , File.separator);
 
-        File uploadPathFolder = new File(uploadBaseUrl, folderPath);
+        File uploadPathFolder = new File(summaryUploadUrl, folderPath);
 
         if(!uploadPathFolder.exists()){
             uploadPathFolder.mkdirs();
