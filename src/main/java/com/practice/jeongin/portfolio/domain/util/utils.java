@@ -25,5 +25,10 @@ public class utils extends BaseTimeEntity {
 
     private String filePath;
 
-
+    public void update(long uid, String uName, String category, String filePath){
+        this.uid = uid;
+        this.uName = uName;
+        this.category = category;
+        this.filePath = filePath;
+    }
 }
