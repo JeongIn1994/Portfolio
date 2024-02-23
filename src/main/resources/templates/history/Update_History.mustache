@@ -1,6 +1,6 @@
 <style>
-    .cke_inner .cke_reset {
-        min-height:600px;
+    #toastUI {
+        width: 550px; /* 원하는 너비로 조절 */
     }
     #file {
         display: none;
@@ -19,7 +19,7 @@
             <form>
                 <div class="form-group">
                     <label for="title"><b>Title</b></label>
-                    <input type="text" class="form-control" id="title" value="{{title}}">
+                    <input type="text" class="form-control" id="title" value="{{post.title}}">
                 </div>
                 <div class="form-group">
                     <label for="language"><b>Language</b></label>
@@ -39,7 +39,7 @@
                 <div class="form-group">
                     <label for="summary"><b>summary</b></label><br>
                     <p><span class="noSummaryNotice">No image</span></p>
-                    <img id="summary" src="#" alt="No Image" style="display:none"><br>
+                    <img id="summary" src="/display?fileName={{post.summary}}" alt="No Image" ><br>
                     <button type="button" class="btn btn-warning" id="openModalBtn" data-toggle="modal" data-backdrop="static"
                             data-keyboard="false" data-target="#myModal">
                         Image Upload
@@ -48,18 +48,20 @@
                 </div>
                 <div class="form-group">
                     <label for="content"><b>Content</b></label>
-                    <textarea class="form-control" name="content" id="content" required></textarea>
+                    <div class="form-control" name="toastUI" id="toastUI" ></div>
                 </div>
                 <div class="form-group">
                     <label for="content"><b>Start At</b></label><br>
-                    <input type="date" class="form-control" id="start_date" required>
+                    <input type="date" class="form-control" id="start_date" value="{{post.start_date}}" required>
                 </div>
                 <div class="form-group">
                     <label for="content"><b>End At</b></label><br>
-                    <input type="date" class="form-control" id="end_date" required>
+                    <input type="date" class="form-control" id="end_date" value="{{post.end_date}}" required>
                 </div>
+                <input type="hidden" id="id" value="{{post.id}}">
                 <a href="#" role="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</a>
-                <button type="button" class="btn btn-primary" id="btn-save" >Resist</button>
+                <button type="button" class="btn btn-primary" id="btn-update" style="margin-left: 1rem">Update</button>
+                <button type="button" class="btn btn-danger" id="btn-delete" style="margin-left: 1rem">Delete</button>
             </form>
             <br>
 
@@ -92,9 +94,26 @@
     </div>
 </div>
 {{>layout/right}}
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script src="/js/app/index.js"></script>
 <script>
     document.title = "[⚙️In's Inventory]New_Work History"
+
+    window.onload = () => {
+        document.querySelector("#language").value = "{{post.language}}"
+        document.querySelector("#selectedLanguage").value = "{{post.language}}"
+        document.querySelector("#start_date").value = changeDate("{{post.start_date}}")
+        document.querySelector("#end_date").value = changeDate("{{post.end_date}}")
+    }
+
+    const changeDate = (date) => {
+        const now = new Date(date);
+        const year = now.getFullYear();
+        const month = (now.getMonth() + 1).toString().padStart(2, '0');
+        const day = now.getDate().toString().padStart(2, '0');
+
+        return `${year}-${month}-${day}`;
+    }
 
     document.getElementById("language").addEventListener('change',function(){
         document.getElementById("selectedLanguage").readOnly = document.getElementById("language").value !== "etc";
@@ -118,9 +137,12 @@
 
     const onClickdeleteImgBtn = () => {
         if(document.getElementById("summary").src !== '#'){
+            const imgFile = document.getElementById("summary").src;
             document.getElementById("summary").style.display = 'none';
             document.querySelector(".noSummaryNotice").style.display = "block";
             document.getElementById("summary").src = '#';
+
+            $.post('/removeFile', {fileName : imgFile})
         }
     }
 
@@ -130,12 +152,13 @@
 
         const inputFile = document.querySelectorAll("input[type='file']");
 
+
         const files = inputFile[0].files;
-        formData.append("uploadFiles", files[0]);
+        formData.append("uploadFile", files[0]);
 
 
         $.ajax({
-            url : '/uploadAjax',
+            url : '/summaryUploadAjax',
             processData : false,
             contentType : false,
             data : formData,
@@ -151,41 +174,39 @@
     }
 
     const onclickAttachBtn = () => {
-        const imgList = fileNameDisplay.querySelectorAll('img');
+        const img = fileNameDisplay.querySelector('img');
 
-        imgList.forEach((img) => {
-            document.querySelector(".noSummaryNotice").style.display = "none";
-            document.getElementById("summary").style.display = 'block';
-            document.getElementById("summary").src = img.alt;
-            fileNameDisplay.innerHTML = '';
-            document.querySelector(".uploadFileList").innerHTML ='';
-            document.querySelector("button[data-dismiss='modal']").click();
-        })
+        document.querySelector(".noSummaryNotice").style.display = "none";
+        document.getElementById("summary").style.display = 'block';
+        document.getElementById("summary").src = img.src;
+        fileNameDisplay.innerHTML = '';
+        document.querySelector(".uploadFileList").innerHTML ='';
+        document.querySelector("button[data-dismiss='modal']").click();
 
-
+        onClickCancelBtn();
+        $('#myModal').modal('hide');
     }
 
-    const showUploadedImages = (arr) => {
+    const showUploadedImages = (file) => {
         fileNameDisplay.innerHTML = '';
-        for (let i = 0 ; i < arr.length; i++){
-            let imgDiv = document.createElement('div');
-            let img = document.createElement('img');
-            img.src = '/display?fileName='+arr[i].thumbnailURL ;
-            img.alt = '/display?fileName='+arr[i].imageUrl;
+        let imgDiv = document.createElement('div');
+        let img = document.createElement('img');
+        img.src = '/display?fileName='+file.imageUrl ;
+        img.alt = '/display?fileName='+file.thumbnailURL;
 
-            const deleteBtn = document.createElement('input');
-            deleteBtn.setAttribute('class', 'removeBtn' ) ;
-            deleteBtn.setAttribute('type','button')
-            deleteBtn.setAttribute('data-name', arr[i].imageUrl ) ;
-            deleteBtn.setAttribute('onClick', 'deleteImg(this)');
-            deleteBtn.setAttribute('value', 'Delete')
+        const deleteBtn = document.createElement('input');
+        deleteBtn.setAttribute('class', 'removeBtn' ) ;
+        deleteBtn.setAttribute('type','button')
+        deleteBtn.setAttribute('data-name', file.imageUrl ) ;
+        deleteBtn.setAttribute('onClick', 'deleteImg(this)');
+        deleteBtn.setAttribute('value', 'Delete')
 
 
-            imgDiv.appendChild(img);
-            imgDiv.appendChild(deleteBtn);
+        imgDiv.appendChild(img);
+        imgDiv.appendChild(deleteBtn);
 
-            fileNameDisplay.appendChild(imgDiv);
-        }
+        fileNameDisplay.appendChild(imgDiv);
+
     }
 
     const deleteImg = (deleteBtn) => {
@@ -223,7 +244,47 @@
         }
     }
 
+    const onClickCancelBtn = () => {
+        const uploadFileList = document.querySelector('.uploadFileList');
+        const displayImgList = document.querySelector('.uploadResult')
+        while( uploadFileList.firstChild){
+            uploadFileList.removeChild(uploadFileList.firstChild);
+        }
+        while(displayImgList.firstChild){
+            displayImgList.removeChild(displayImgList.firstChild);
+        }
+    }
+
+
+    const editor = new toastui.Editor({
+        el: document.querySelector('#toastUI'),
+        height: '450px',
+        initialEditType: 'wysiwyg',
+        initialValue: '내용을 입력해 주세요.',
+        previewStyle: 'vertical',
+        hooks: {
+            async addImageBlobHook(blob, callback){
+                try {
+                    const formData = new FormData();
+                    formData.append('image', blob);
+
+                    const response = await fetch('/uploadAjax',{
+                        method : 'POST',
+                        body : formData,
+
+                    });
+
+                    const filename = await response.text();
+                    console.log('fileName :' , filename);
+
+                    const imageUrl = `/imageDisplay?filename=${filename}`;
+                    callback(imageUrl, 'image alt attribute');
+                }catch (error){
+                    console.error('upload failed',error)
+                }
+            }
+        }
+    });
+
 
 </script>
-
-{{>script/Posts_CKEditor}}

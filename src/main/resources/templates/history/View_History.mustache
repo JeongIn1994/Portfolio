@@ -29,16 +29,16 @@
             </label>
             <div class="form-control" id="date"></div>
         </div>
+        <input type="hidden" id="id" value="{{post.id}}">
 
         <div class="row" id="buttonRow">
             <a href="#" role="button" class="btn btn-secondary" onclick="history.back()">Back</a>
-            <button type="button" class="btn btn-primary" id="btn-update" style="display: none; margin-left: 1rem">Update</button>
-            <button type="button" class="btn btn-danger" id="btn-delete" style="display: none; margin-left: 1rem">Delete</button>
+            <button type="button" class="btn btn-primary" id="btn-update" style="display: none; margin-left: 1rem" onclick="onClickUpdateHistory()">Update</button>
         </div>
     </div>
 </main>
 <script>
-    document.title = "[⚙️In's Inventory] " + "{{post.title}}"
+document.title = "[⚙️In's Inventory] " + "{{post.title}}"
 
     window.onload = () => {
         changProgress({{post.progress}})
@@ -60,6 +60,11 @@
             document.querySelector("#date").textContent = formattedDate("{{post.start_date}}") + "~" + formattedDate("{{post.end_date}}") ;
         }
     }
+
+    const onClickUpdateHistory = () => {
+        location.href = "/history/update/{{post.id}}"
+    }
+
     const formattedDate = (date) => {
         const originDate = new Date(date);
 

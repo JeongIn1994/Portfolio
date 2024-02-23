@@ -37,25 +37,31 @@ const main = {
 
         console.log(data);
 
-        // $.ajax({
-        //     type: 'POST',
-        //     url: '/api/v1/posts',
-        //     dataType: 'json',
-        //     contentType: 'application/json; charset=utf-8',
-        //     data: JSON.stringify(data)
-        //     })
-        //     .done(() => {
-        //         alert('Resist Was Done!');
-        //         window.location.href = '/history/list';
-        //     })
-        //     .fail((error) => {
-        //         alert(JSON.stringify(error));
-        //     });
+        $.ajax({
+            type: 'POST',
+            url: '/api/v1/posts',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(data)
+            })
+            .done(() => {
+                alert('Resist Was Done!');
+                window.location.href = '/history/list';
+            })
+            .fail((error) => {
+                alert(JSON.stringify(error));
+            });
     },
     update:() => {
         const data = {
             title: $('#title').val(),
-            content: $('#content').val()
+            language: $('#selectedLanguage').val(),
+            content: editor.getHTML(),
+            summary: $("#summary").attr("src").split("/display?fileName=")[1],
+            start_date: $("#start_date").val(),
+            end_date: $("#end_date").val(),
+            progress: setProgress($("#end_date").val())
+
         };
 
         const id = $('#id').val();
@@ -68,7 +74,7 @@ const main = {
             data: JSON.stringify(data)
             }).done(() => {
                 alert('Update Was Done!');
-                window.location.href = '/';
+                window.location.href = document.referrer;
             })
             .fail((error) => {
                 alert(JSON.stringify(error));
@@ -85,7 +91,7 @@ const main = {
             contentType: 'application/json; charset=utf-8'
             }).done(() => {
                 alert('Delete Was Done!');
-                window.location.href = '/';
+                window.location.href = "/history/list";
             })
             .fail((error) => {
                 alert(JSON.stringify(error));

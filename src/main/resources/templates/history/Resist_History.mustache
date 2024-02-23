@@ -1,7 +1,5 @@
 <style>
-    .cke_inner .cke_reset {
-        min-height:600px;
-    }
+
     #file {
         display: none;
     }
@@ -9,7 +7,7 @@
     #myModal button {
         margin-bottom: 6px;
     }
-    #content {
+    #toastUI {
         width: 550px; /* 원하는 너비로 조절 */
     }
 </style>
@@ -50,7 +48,7 @@
             </div>
             <div class="form-group">
                 <label for="content"><b>Content</b></label>
-                <div class="form-control" name="content" id="content" ></div>
+                <div class="form-control" name="toastUI" id="toastUI" ></div>
             </div>
             <div class="form-group">
                 <label for="content"><b>Start At</b></label><br>
@@ -74,7 +72,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">File upload</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <button type="button" class="close" data-dismiss="modal" onclick="onClickCancelBtn()">&times;</button>
             </div>
             <div class="modal-body uploadResult">
             </div>
@@ -87,7 +85,7 @@
                 <input type="file" id="file" class="input" multiple>
                 <button type="button" class="btn btn-secondary" onclick="onclickUploadBtn()">Upload</button>
                 <button type="button" class="btn btn-primary" onclick="onclickAttachBtn()">Attach</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="onClickCancelBtn()">Cancel</button>
             </div>
         </div>
     </div>
@@ -120,9 +118,12 @@
 
     const onClickdeleteImgBtn = () => {
         if(document.getElementById("summary").src !== '#'){
+            const imgFile = document.getElementById("summary").src;
             document.getElementById("summary").style.display = 'none';
             document.querySelector(".noSummaryNotice").style.display = "block";
             document.getElementById("summary").src = '#';
+
+            $.post('/removeFile', {fileName : imgFile})
         }
     }
 
@@ -132,12 +133,13 @@
 
         const inputFile = document.querySelectorAll("input[type='file']");
 
+
         const files = inputFile[0].files;
-        formData.append("uploadFiles", files[0]);
+        formData.append("uploadFile", files[0]);
 
 
         $.ajax({
-            url : '/uploadAjax',
+            url : '/summaryUploadAjax',
             processData : false,
             contentType : false,
             data : formData,
@@ -153,41 +155,39 @@
     }
 
     const onclickAttachBtn = () => {
-        const imgList = fileNameDisplay.querySelectorAll('img');
+        const img = fileNameDisplay.querySelector('img');
 
-        imgList.forEach((img) => {
-            document.querySelector(".noSummaryNotice").style.display = "none";
-            document.getElementById("summary").style.display = 'block';
-            document.getElementById("summary").src = img.alt;
-            fileNameDisplay.innerHTML = '';
-            document.querySelector(".uploadFileList").innerHTML ='';
-            document.querySelector("button[data-dismiss='modal']").click();
-        })
+        document.querySelector(".noSummaryNotice").style.display = "none";
+        document.getElementById("summary").style.display = 'block';
+        document.getElementById("summary").src = img.src;
+        fileNameDisplay.innerHTML = '';
+        document.querySelector(".uploadFileList").innerHTML ='';
+        document.querySelector("button[data-dismiss='modal']").click();
 
-
+        onClickCancelBtn();
+        $('#myModal').modal('hide');
     }
 
-    const showUploadedImages = (arr) => {
+    const showUploadedImages = (file) => {
         fileNameDisplay.innerHTML = '';
-        for (let i = 0 ; i < arr.length; i++){
-            let imgDiv = document.createElement('div');
-            let img = document.createElement('img');
-            img.src = '/display?fileName='+arr[i].thumbnailURL ;
-            img.alt = '/display?fileName='+arr[i].imageUrl;
+        let imgDiv = document.createElement('div');
+        let img = document.createElement('img');
+        img.src = '/display?fileName='+file.imageUrl ;
+        img.alt = '/display?fileName='+file.thumbnailURL;
 
-            const deleteBtn = document.createElement('input');
-            deleteBtn.setAttribute('class', 'removeBtn' ) ;
-            deleteBtn.setAttribute('type','button')
-            deleteBtn.setAttribute('data-name', arr[i].imageUrl ) ;
-            deleteBtn.setAttribute('onClick', 'deleteImg(this)');
-            deleteBtn.setAttribute('value', 'Delete')
+        const deleteBtn = document.createElement('input');
+        deleteBtn.setAttribute('class', 'removeBtn' ) ;
+        deleteBtn.setAttribute('type','button')
+        deleteBtn.setAttribute('data-name', file.imageUrl ) ;
+        deleteBtn.setAttribute('onClick', 'deleteImg(this)');
+        deleteBtn.setAttribute('value', 'Delete')
 
 
-            imgDiv.appendChild(img);
-            imgDiv.appendChild(deleteBtn);
+        imgDiv.appendChild(img);
+        imgDiv.appendChild(deleteBtn);
 
-            fileNameDisplay.appendChild(imgDiv);
-        }
+        fileNameDisplay.appendChild(imgDiv);
+
     }
 
     const deleteImg = (deleteBtn) => {
@@ -224,13 +224,47 @@
             document.querySelector('.uploadFileList').innerHTML = ''
         }
     }
+
+    const onClickCancelBtn = () => {
+       const uploadFileList = document.querySelector('.uploadFileList');
+       const displayImgList = document.querySelector('.uploadResult')
+       while( uploadFileList.firstChild){
+           uploadFileList.removeChild(uploadFileList.firstChild);
+       }
+       while(displayImgList.firstChild){
+           displayImgList.removeChild(displayImgList.firstChild);
+       }
+    }
+
+
     const editor = new toastui.Editor({
-        el: document.querySelector('#content'),
+        el: document.querySelector('#toastUI'),
         height: '450px',
         initialEditType: 'wysiwyg',
         initialValue: '내용을 입력해 주세요.',
-        previewStyle: 'vertical'
+        previewStyle: 'vertical',
+        hooks: {
+            async addImageBlobHook(blob, callback){
+                try {
+                    const formData = new FormData();
+                    formData.append('image', blob);
+
+                    const response = await fetch('/uploadAjax',{
+                        method : 'POST',
+                        body : formData,
+
+                    });
+
+                    const filename = await response.text();
+                    console.log('fileName :' , filename);
+
+                    const imageUrl = `/imageDisplay?filename=${filename}`;
+                    callback(imageUrl, 'image alt attribute');
+                }catch (error){
+                    console.error('upload failed',error)
+                }
+            }
+        }
     });
-    console.log(editor.editor.getHTML())
 
 </script>

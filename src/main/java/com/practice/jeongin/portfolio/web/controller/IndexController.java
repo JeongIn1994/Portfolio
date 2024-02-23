@@ -39,7 +39,7 @@ public class IndexController {
     }
     @GetMapping("/history/regist")
     public String postsSave() {
-        return "history/Resist_Histroy";
+        return "history/Resist_History";
     }
 
     @GetMapping("/history/view/{id}")
@@ -47,14 +47,14 @@ public class IndexController {
         PostsResponseDto dto = postsService.findById(id);
         model.addAttribute("post", dto);
 
-        return "history/View_Histroy";
+        return "history/View_History";
     }
     @GetMapping("/history/update/{id}")
     public String postsUpdate(@PathVariable Long id, Model model) {
         PostsResponseDto dto = postsService.findById(id);
         model.addAttribute("post", dto);
 
-        return "history/Update_Histroy";
+        return "history/Update_History";
     }
 
 

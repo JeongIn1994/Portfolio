@@ -1,16 +1,6 @@
 {{>layout/aside}}
 <style>
-    .cke_inner .cke_reset {
-        min-height:600px;
-    }
-    #file {
-         display: none;
-     }
-
-    #myModal button {
-        margin-bottom: 6px;
-    }
-    #content {
+    #toastUI {
         width: 550px; /* 원하는 너비로 조절 */
     }
 </style>
@@ -29,14 +19,10 @@
                 </div>
                 <div class="form-group">
                     <label for="content">Content</label>
-                    <div class="form-control" name="content" id="content"></div>
+                    <div class="form-control" id="toastUI"></div>
                 </div>
-                <input type="hidden" name="userEmail" value="{{userEmail}}">
-
-                <hr>
-                <button type="button" class="btn btn-warning" id="openModalBtn" data-toggle="modal" data-target="#myModal">
-                    Image Upload
-                </button>
+                <input type="hidden" name="userEmail" id="userEmail" value="{{userEmail}}">
+                <input type="hidden" name="content" id="content" value="{{userEmail}}">
                 <hr>
                 <a href="/board/list" role="button" class="btn btn-secondary">Cancel</a>
                 <button type="button" class="btn btn-primary" id="submitBtn" onclick="onclickSubmitBtn()">Resist</button>
@@ -44,31 +30,6 @@
         </div>
     </div>
 </main>
-<!--modal-->
-
-<div class="modal fade" id="myModal">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">File upload</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body uploadResult">
-            </div>
-            <hr>
-            <div class="modal-body uploadFileList">
-
-            </div>
-            <div class="modal-footer">
-                <label for="file" class="btn btn-warning">파일 선택</label>
-                <input type="file" id="file" class="input" multiple>
-                <button type="button" class="btn btn-secondary" onclick="onclickUploadBtn()">Upload</button>
-                <button type="button" class="btn btn-primary" onclick="onclickAttachBtn()">Attach</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
 {{>layout/right}}
 <hr>
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
@@ -79,134 +40,40 @@
     const fileNameDisplay = document.querySelector('.uploadResult');
     const inputFileList = document.querySelector('input[type="file"]')
 
-    function escapeHtml(unsafe) {
-        return unsafe
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-    }
-
-
     const onclickSubmitBtn = () => {
-
-        const content = editor.getHTML();
-
-        document.getElementById('content').value = "'" + content +"'";
+        document.getElementById('content').value =  editor.getHTML() ;
         document.getElementById('contentForm').submit();
-
     }
 
-
-    const onclickUploadBtn = () => {
-        const formData = new FormData();
-
-        const inputFile = document.querySelectorAll("input[type='file']");
-
-        const files = inputFile[0].files;
-        for(let i = 0 ; i < files.length; i++) {
-            formData.append("uploadFiles", files[i]);
-        }
-
-        $.ajax({
-            url : '/uploadAjax',
-            processData : false,
-            contentType : false,
-            data : formData,
-            type : 'POST',
-            dataType : 'json',
-            success : function (result){
-                showUploadedImages(result);
-            },
-            error : function (jqXHR, textStatus, errorThrown){
-                alert("Need To ImageFile!")
-            }
-        })
-    }
-
-    const showUploadedImages = (arr) => {
-        fileNameDisplay.innerHTML = '';
-        for (let i = 0 ; i < arr.length; i++){
-            let imgDiv = document.createElement('div');
-            let img = document.createElement('img');
-            img.src = '/display?fileName='+arr[i].thumbnailURL ;
-            img.alt = '/display?fileName='+arr[i].imageUrl;
-
-            const deleteBtn = document.createElement('input');
-            deleteBtn.setAttribute('class', 'removeBtn' ) ;
-            deleteBtn.setAttribute('type','button')
-            deleteBtn.setAttribute('data-name', arr[i].imageUrl ) ;
-            deleteBtn.setAttribute('onClick', 'deleteImg(this)');
-            deleteBtn.setAttribute('value', 'Delete')
-
-
-            imgDiv.appendChild(img);
-            imgDiv.appendChild(deleteBtn);
-
-            fileNameDisplay.appendChild(imgDiv);
-        }
-    }
-
-    const deleteImg = (deleteBtn) => {
-        const fileName = deleteBtn.getAttribute('data-name');
-        const imgDiv = deleteBtn.parentElement
-
-        $.post('/removeFile', {fileName : fileName}, function(result) {
-            if(result === true){
-                imgDiv.remove();
-                setFileNameList();
-            }
-        })
-    }
-
-    const onclickAttachBtn = () => {
-        const imgList = fileNameDisplay.querySelectorAll('img');
-
-        imgList.forEach((img) => {
-            const temp = img;
-            temp.src = img.alt;
-            CKEDITOR.instances.content.insertHtml(temp.outerHTML);
-            fileNameDisplay.innerHTML = '';
-            document.querySelector(".uploadFileList").innerHTML ='';
-            document.querySelector("button[data-dismiss='modal']").click();
-        })
-
-
-    }
-
-    inputFileList.addEventListener('change', function (event) {
-
-        for (let i = 0 ; i < event.target.files.length; i++){
-            document.querySelector('.uploadFileList').append(event.target.files[i].name);
-            document.querySelector('.uploadFileList').appendChild(document.createElement('br'));
-        }
-
-    })
-
-    const setFileImgList = () => {
-            fileNameDisplay.innerHTML = '';
-    }
-
-    const setFileNameList = () => {
-        if (document.querySelector('.uploadFileList').innerHTML.trim() === ''){
-            document.querySelector('.uploadFileList').innerHTML = 'Not Exist Selected File Name'
-        }else{
-            document.querySelector('.uploadFileList').innerHTML = ''
-        }
-    }
-
-    window.onload = function (){
-        setFileImgList();
-        document.getElementById('openModalBtn').addEventListener('click', setFileNameList);
-    }
 
     const editor = new toastui.Editor({
-        el: document.querySelector('#content'),
+        el: document.querySelector('#toastUI'),
         height: '450px',
         initialEditType: 'wysiwyg',
         initialValue: '내용을 입력해 주세요.',
-        previewStyle: 'vertical'
+        previewStyle: 'vertical',
+        hooks: {
+            async addImageBlobHook(blob, callback){
+                try {
+                    const formData = new FormData();
+                    formData.append('image', blob);
+
+                    const response = await fetch('/uploadAjax',{
+                        method : 'POST',
+                        body : formData,
+
+                    });
+
+                    const filename = await response.text();
+                    console.log('fileName :' , filename);
+
+                    const imageUrl = `/imageDisplay?filename=${filename}`;
+                    callback(imageUrl, 'image alt attribute');
+                }catch (error){
+                    console.error('upload failed',error)
+                }
+            }
+        }
     });
 
 
