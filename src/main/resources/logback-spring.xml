@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <!-- 로그 파일 위치 지정 -->
-    <property name="LOG_FILE" value="C:/resources/files/log/logfile.log" />
+    <!-- 로그 파일 위치 및 이름 지정 -->
+    <property name="LOG_DIR" value="C:/resources/files/log" />
 
     <!-- 로그 출력 형식 지정 -->
     <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n" />
 
-    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>${LOG_FILE}</file>
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/%d{yyyy-MM-dd}/logfile.log</fileNamePattern>
+            <maxHistory>30</maxHistory> <!-- 최대 보관 일수 설정 -->
+            <totalSizeCap>1GB</totalSizeCap> <!-- 로그 파일 총 용량 제한 설정 -->
+        </rollingPolicy>
         <encoder>
             <pattern>${LOG_PATTERN}</pattern>
         </encoder>

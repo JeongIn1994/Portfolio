@@ -41,12 +41,11 @@ public class Info extends BaseTimeEntity {
     @OneToOne
     private Users user;
 
-    public Info update (LocalDate birthday, long age,String address, String phone_number, String email, String sex, String college){
+    public Info update (LocalDate birthday,String address, String phone_number, String sex, String college){
         this.birthday = birthday;
         this.address = address;
         this.age = calculateAge(birthday);
         this.phone_number = phone_number;
-        this.email = email;
         this.sex = sex;
         this.college = college;
 

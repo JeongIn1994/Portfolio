@@ -2,6 +2,7 @@ package com.practice.jeongin.portfolio.web.dto;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -15,7 +16,7 @@ public class InfoDTO {
 
     private String name;
 
-    private Date birthday;
+    private LocalDate birthday;
 
     private String address;
 

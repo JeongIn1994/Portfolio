@@ -5,6 +5,8 @@ import com.practice.jeongin.portfolio.web.dto.InfoDTO;
 public interface InfoService {
     InfoDTO get(String email);
 
+    void modify(InfoDTO infoDTO);
+
     default InfoDTO entityToDTO(InfoDTO dto){
 
         return InfoDTO.builder()

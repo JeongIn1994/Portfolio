@@ -41,11 +41,13 @@
                 <span class="material-symbols-outlined">note</span>
                 <h3>Note</h3>
             </a>
+            {{#userInfo}}
             <button type="button" id="openModalBtn" data-toggle="modal" data-backdrop="static"
                     data-keyboard="false" data-target="#settings">
                 <span class="material-symbols-outlined">settings</span>
                 Setting
             </button>
+            {{/userInfo}}
             <a href="/logout" class="text-decoration-none">
                 <span class="material-symbols-outlined">logout</span>
                 <h3>Logout</h3>

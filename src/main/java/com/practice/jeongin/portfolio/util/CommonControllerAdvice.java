@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 @ControllerAdvice
 @RequiredArgsConstructor
 @Controller
+@Log4j2
 public class CommonControllerAdvice {
 
     private final UsersRepository usersRepository;
@@ -31,6 +32,8 @@ public class CommonControllerAdvice {
             model.addAttribute("userEmail", user.getEmail());
             model.addAttribute("role", usersRole(user.getEmail()));
             model.addAttribute("userInfo", infoRepository.getInfoByEmail(user.getEmail()));
+            log.info("Login usersName : "+model.getAttribute("usersName"));
+            log.info("Login users role : "+model.getAttribute("role"));
         }
         model.addAttribute("currentBoard", boardService.getTop3Board());
     }
