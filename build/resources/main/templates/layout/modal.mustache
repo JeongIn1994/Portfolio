@@ -15,9 +15,10 @@
             <div class="modal-body" id="modal-body">
                 <p class="menuTitle">UserProfile</p>
                 <p class="menuContent" style="color: red"> * mark was readonly</p>
-                <!---- User Profile ---->
+                {{#userInfo}}
+                <!---- Update User Profile ---->
                 <div class="UserProfileDiv">
-                    <form class="UserProfile" action="" method="post">
+                    <form class="UserProfile" action="/info/update" method="post">
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" value="{{userInfo.name}}" >
@@ -28,7 +29,11 @@
                         </div>
                         <div class="form-group">
                             <label for="name">Sex</label>
-                            <input type="text" class="form-control" id="sex" value="{{userInfo.sex}}" >
+                            <input type="text" class="form-control" id="sex" value="{{userInfo.sex}}" readonly style="margin-bottom: 0.2rem">
+                            <select class="form-control" id="sexSelect">
+                                <option value="male">male</option>
+                                <option value="female">female</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="name">Age</label>
@@ -41,6 +46,39 @@
                         <button type="button" class="btn btn-primary" data-dismiss="modal">Update</button>
                     </form>
                 </div>
+                {{/userInfo}}
+                {{^userInfo}}
+                <!---- Create User Profile ---->
+                <div class="UserProfileDiv">
+                    <form class="UserProfile" action="" method="post">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" >
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Email*</label>
+                            <input type="text" class="form-control" id="email" value="{{userEmail}}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Sex</label>
+                            <input type="text" class="form-control" id="sex" readonly style="margin-bottom: 0.2rem">
+                            <select class="form-control" id="sexSelect">
+                                <option value="male">male</option>
+                                <option value="female">female</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Age</label>
+                            <input type="text" class="form-control" id="age"  >
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Phone_Number</label>
+                            <input type="text" class="form-control" id="phone_number" >
+                        </div>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Update</button>
+                    </form>
+                </div>
+                {{/userInfo}}
                 <!---- User Management ---->
                 <div class="UserManagementDiv">
                     <form class="UserManagement">
@@ -94,6 +132,14 @@
             document.querySelector("aside .sidebar a:nth-child(2)").classList.remove('active');
             document.querySelector("aside .sidebar a:nth-child(3)").classList.remove('active');
         }
+
+        {{#userInfo}}
+            document.querySelector("#sexSelect").value = "{{userInfo.sex}}";
+            document.querySelector("#sexSelect").addEventListener('change',() => {
+                document.querySelector("#sex").value = document.querySelector("#sexSelect").value;
+            })
+        {{/userInfo}}
+
     })
 
     const changeContent = (category) => {

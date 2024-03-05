@@ -3,9 +3,11 @@ package com.practice.jeongin.portfolio.util;
 import com.practice.jeongin.portfolio.config.auth.LoginUser;
 import com.practice.jeongin.portfolio.config.auth.dto.SessionUsers;
 import com.practice.jeongin.portfolio.domain.info.InfoRepository;
+import com.practice.jeongin.portfolio.domain.posts.PostsRepository;
 import com.practice.jeongin.portfolio.domain.user.Role;
 import com.practice.jeongin.portfolio.domain.user.UsersRepository;
 import com.practice.jeongin.portfolio.service.board.BoardService;
+import com.practice.jeongin.portfolio.service.posts.PostsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,7 @@ public class CommonControllerAdvice {
     private final UsersRepository usersRepository;
     private final InfoRepository infoRepository;
     private final BoardService boardService;
+    private final PostsService postsService;
 
 
     @ModelAttribute
@@ -36,6 +39,7 @@ public class CommonControllerAdvice {
             log.info("Login users role : "+model.getAttribute("role"));
         }
         model.addAttribute("currentBoard", boardService.getTop3Board());
+        model.addAttribute("top3Lang", postsService.getCurrent3Language());
     }
 
     public Role usersRole(String email) {

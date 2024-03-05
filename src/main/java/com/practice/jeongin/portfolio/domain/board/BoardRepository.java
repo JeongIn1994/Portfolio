@@ -10,12 +10,6 @@ import java.util.List;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
 
-    @Query("Select b, u from Board b left join b.user u where b.bno =:bno")
-    Object getBoardwithUser(@Param("bno") Long bno);
-
-    @Query("Select b, r From Board b left join Reply r ON r.board = b Where b.bno = :bno")
-    List<Object[]> getBoardWithReply(@Param("bno") Long bno);
-
     @Query(value = "Select b, u, count(r)" +
             " From Board b " +
             " Left Join b.user u "+

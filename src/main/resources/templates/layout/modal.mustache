@@ -16,7 +16,7 @@
                 <p class="menuTitle">UserProfile</p>
                 <p class="menuContent" style="color: red"> * mark was readonly</p>
                 {{#userInfo}}
-                <!---- User Profile ---->
+                <!---- Update User Profile ---->
                 <div class="UserProfileDiv">
                     <form class="UserProfile" action="/info/update" method="post">
                         <div class="form-group">
@@ -48,7 +48,7 @@
                 </div>
                 {{/userInfo}}
                 {{^userInfo}}
-                <!---- User Profile ---->
+                <!---- Create User Profile ---->
                 <div class="UserProfileDiv">
                     <form class="UserProfile" action="" method="post">
                         <div class="form-group">
@@ -133,10 +133,12 @@
             document.querySelector("aside .sidebar a:nth-child(3)").classList.remove('active');
         }
 
-        document.querySelector("#sexSelect").value = "{{userInfo.sex}}";
-        document.querySelector("#sexSelect").addEventListener('change',() => {
-            document.querySelector("#sex").value = document.querySelector("#sexSelect").value;
-        })
+        {{#userInfo}}
+            document.querySelector("#sexSelect").value = "{{userInfo.sex}}";
+            document.querySelector("#sexSelect").addEventListener('change',() => {
+                document.querySelector("#sex").value = document.querySelector("#sexSelect").value;
+            })
+        {{/userInfo}}
 
     })
 

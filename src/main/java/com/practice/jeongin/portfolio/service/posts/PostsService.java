@@ -7,10 +7,14 @@ import com.practice.jeongin.portfolio.web.dto.PostsResponseDto;
 import com.practice.jeongin.portfolio.web.dto.PostsSaveRequestDto;
 import com.practice.jeongin.portfolio.web.dto.PostsupdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -57,6 +61,21 @@ public class PostsService {
                 .orElseThrow(() -> new IllegalArgumentException("Posts Was Not Exist! ID=" + id));
 
         postsRepository.delete(posts);
+    }
+
+    public List<Map<String, Object>> getCurrent3Language(){
+        PageRequest pageable = PageRequest.of(0,3);
+
+        List<Object[]> languageCounts = postsRepository.getCurrent3Language(pageable);
+        List<Map<String, Object>> processedData = new ArrayList<>();
+        for (Object[] objArray : languageCounts) {
+            Map<String, Object> dataMap = new HashMap<>();
+            dataMap.put("language", objArray[0]);
+            dataMap.put("count", objArray[1]);
+            processedData.add(dataMap);
+        }
+
+        return processedData;
     }
 
 }

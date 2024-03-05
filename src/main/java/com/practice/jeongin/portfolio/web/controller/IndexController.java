@@ -17,10 +17,6 @@ public class IndexController {
 
 
     private final PostsService postsService;
-
-    private final InfoRepository infoRepository;
-
-
     @RequestMapping(value = "/")
     public String index(Model model) {
 

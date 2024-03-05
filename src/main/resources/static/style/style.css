@@ -444,11 +444,11 @@ main .work-history-summary a {
     display: flex;
 }
 
-.right .languages-analytics .item.second .icon {
+.right .languages-analytics .item .icon-2 {
     background: var(--color-primary);
 }
 
-.right .languages-analytics .item.third .icon {
+.right .languages-analytics .item .icon-3 {
     background: var(--color-warning);
 }
 

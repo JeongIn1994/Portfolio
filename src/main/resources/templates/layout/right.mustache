@@ -49,39 +49,33 @@
     <!------------------------ END OF RECENT UPDATE --------------------------->
     <div class="languages-analytics">
         <h2>languages-analytics</h2>
-        <div class="item first">
+        {{#top3Lang}}
+        <div class="item">
             <div class="icon">
                 <span class="material-symbols-outlined">code</span>
             </div>
             <div class="right">
                 <div class="info">
-                    <h3>Languages</h3>
+                    <h3>{{language}}</h3>
                 </div>
-                <h5 class="success">1st</h5>
+                <h5 >{{count}} to Experienced</h5>
             </div>
         </div>
-        <div class="item second">
-            <div class="icon">
-                <span class="material-symbols-outlined">code</span>
-            </div>
-            <div class="right">
-                <div class="info">
-                    <h3>Languages</h3>
+        {{/top3Lang}}
+        {{^top3Lang}}
+            <div class="item">
+                <div class="icon">
+                    <span class="material-symbols-outlined">code</span>
                 </div>
-                <h5 class="primary">2nd</h5>
-            </div>
-        </div>
-        <div class="item third">
-            <div class="icon">
-                <span class="material-symbols-outlined">code</span>
-            </div>
-            <div class="right">
-                <div class="info">
-                    <h3>Languages</h3>
+                <div class="right">
+                    <div class="info">
+                        <h3>No Data</h3>
+                    </div>
+                    <h5 class="success">No Data</h5>
                 </div>
-                <h5 class="warning">3rd</h5>
             </div>
-        </div>
+        {{/top3Lang}}
+<!--        -->
     </div>
     <small class="text-muted">Last 1 years</small>
 </div>
@@ -115,10 +109,6 @@
             document.querySelector("aside .sidebar a:nth-child(3)").classList.remove('active');
         }
 
-        //role check
-        if(userRole !== "ADMIN"){
-            settingBtn.style.display = 'none'
-        }
         const currentUpdates = [];
         {{#currentBoard}}
             currentUpdates.push("{{title}}")
@@ -136,6 +126,11 @@
                 }
         );
 
+        const children = document.querySelectorAll(".item .icon");
+        console.log(children);
+        children.forEach((child, index) => {
+            child.classList.add(`icon-${index + 1}`);
+        })
 
     });
 
