@@ -40,7 +40,7 @@
                 <div class="update">
                     <div class="massage">
                         <a href="#"><p><b>No Current Note</b></p></a>
-                        <small class="text-muted">No</small>
+                        <small class="text-muted">No Data</small>
                     </div>
                 </div>
             {{/currentBoard}}
@@ -52,7 +52,7 @@
         {{#top3Lang}}
         <div class="item">
             <div class="icon">
-                <span class="material-symbols-outlined">code</span>
+                <span class="material-symbols-outlined"></span>
             </div>
             <div class="right">
                 <div class="info">
@@ -113,8 +113,6 @@
         {{#currentBoard}}
             currentUpdates.push("{{title}}")
         {{/currentBoard}}
-        //current update title was so long
-        // const currentUpdateTitle = document.querySelectorAll(".updates .update .massage a p b")
         currentUpdates.forEach((update, index) =>{
                     index++;
                     if(parseInt(update.length) > 12) {
@@ -130,6 +128,7 @@
         console.log(children);
         children.forEach((child, index) => {
             child.classList.add(`icon-${index + 1}`);
+            child.querySelector("span").innerText = "counter_" + `${index + 1}`;
         })
 
     });

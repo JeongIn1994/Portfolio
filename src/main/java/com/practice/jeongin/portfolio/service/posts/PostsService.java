@@ -7,14 +7,17 @@ import com.practice.jeongin.portfolio.web.dto.PostsResponseDto;
 import com.practice.jeongin.portfolio.web.dto.PostsSaveRequestDto;
 import com.practice.jeongin.portfolio.web.dto.PostsupdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Log4j2
 @RequiredArgsConstructor
 @Service
 public class PostsService {
@@ -62,11 +65,12 @@ public class PostsService {
     }
 
     public List<Map<String, Object>> getCurrent3Language(){
-        PageRequest pageable = PageRequest.of(0,3);
+        LocalDateTime oneYearsAgo = LocalDateTime.now().minusYears(1);
+        log.info("oneYearsAgo :" + oneYearsAgo) ;
 
-        List<Object[]> languageCounts = postsRepository.getCurrent3Language(pageable);
+        List<Object[]> get3Languages = postsRepository.getCurrentAllLanguage(oneYearsAgo).subList(0,3);
         List<Map<String, Object>> processedData = new ArrayList<>();
-        for (Object[] objArray : languageCounts) {
+        for (Object[] objArray : get3Languages) {
             Map<String, Object> dataMap = new HashMap<>();
             dataMap.put("language", objArray[0]);
             dataMap.put("count", objArray[1]);

@@ -9,7 +9,7 @@ public interface InfoRepository extends JpaRepository<Info, Long> {
     @Query("SELECT i FROM Info i where i.user.email = :email")
     Object getInfoByEmail(@Param("email") String email);
 
-    @Query("Select i From Info i Order By i.id Desc")
+    @Query("Select i From Info i Order By i.createDate Desc")
     Object getUserInfo();
 
 }

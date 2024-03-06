@@ -38,8 +38,10 @@ public class CommonControllerAdvice {
             log.info("Login usersName : "+model.getAttribute("usersName"));
             log.info("Login users role : "+model.getAttribute("role"));
         }
+
         model.addAttribute("currentBoard", boardService.getTop3Board());
         model.addAttribute("top3Lang", postsService.getCurrent3Language());
+
     }
 
     public Role usersRole(String email) {
