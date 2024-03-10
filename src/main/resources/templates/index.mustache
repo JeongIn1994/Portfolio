@@ -11,7 +11,9 @@
                             <h3>{{AdminInfo.email}}</h3>
                             <h3>{{AdminInfo.college}}</h3>
                             <h3>{{AdminInfo.sex}}</h3>
+                            <h3>{{AdminInfo.address}}</h3>
                             <h3>{{AdminInfo.age}}</h3>
+                            <h3>{{AdminInfo.birthday}}</h3>
                             <h3>{{AdminInfo.phone_number}}</h3>
                         </div>
                     {{/AdminInfo}}
@@ -90,7 +92,6 @@
         const deltaY = event.deltaY;
         //scroll action control at first li & last li
         if ((deltaY <= 0 && firstLi.contains(event.target)) || (deltaY > 0 && lastLi.contains(event.target))) {
-            console.log("1");
             return;
         }
 

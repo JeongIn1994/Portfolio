@@ -28,6 +28,10 @@
                             <input type="text" class="form-control" id="email" value="{{userInfo.email}}" readonly>
                         </div>
                         <div class="form-group">
+                            <label for="name">Address</label>
+                            <input type="text" class="form-control" name="address" id="address"  value="{{userInfo.address}}">
+                        </div>
+                        <div class="form-group">
                             <label for="name">Sex</label>
                             <input type="text" class="form-control" id="sex" value="{{userInfo.sex}}" readonly style="margin-bottom: 0.2rem">
                             <select class="form-control" id="sexSelect">
@@ -36,28 +40,40 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label for="name">Collage</label>
+                            <input type="text" class="form-control" id="college"  value="{{userInfo.college}}">
+                        </div>
+                        <div class="form-group">
                             <label for="name">Age</label>
                             <input type="text" class="form-control" id="age" value="{{userInfo.Age}}" >
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Birthday</label>
+                            <input type="date" class="form-control" name="birthDay" id="birthDay"  value="{{userInfo.birthday}}">
                         </div>
                         <div class="form-group">
                             <label for="name">Phone_Number</label>
                             <input type="text" class="form-control" id="phone_number" value="{{userInfo.phone_number}}" >
                         </div>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Update</button>
+                        <button type="button" class="btn btn-primary" onclick="onclickModalInfoUpdate()">Update</button>
                     </form>
                 </div>
                 {{/userInfo}}
                 {{^userInfo}}
                 <!---- Create User Profile ---->
                 <div class="UserProfileDiv">
-                    <form class="UserProfile" action="" method="post">
+                    <form class="UserProfile" action="/info/update" method="post">
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" >
                         </div>
                         <div class="form-group">
                             <label for="name">Email*</label>
-                            <input type="text" class="form-control" id="email" value="{{userEmail}}" readonly>
+                            <input type="text" class="form-control" id="email" value="{{userInfo.email}}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Address</label>
+                            <input type="text" class="form-control" name="address" id="address">
                         </div>
                         <div class="form-group">
                             <label for="name">Sex</label>
@@ -68,14 +84,22 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label for="name">Collage</label>
+                            <input type="text" class="form-control" id="college">
+                        </div>
+                        <div class="form-group">
                             <label for="name">Age</label>
-                            <input type="text" class="form-control" id="age"  >
+                            <input type="text" class="form-control" id="age" >
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Birthday</label>
+                            <input type="date" class="form-control" name="birthDay" id="birthDay" >
                         </div>
                         <div class="form-group">
                             <label for="name">Phone_Number</label>
                             <input type="text" class="form-control" id="phone_number" >
                         </div>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Update</button>
+                        <button type="button" class="btn btn-primary" onclick="onclickModalInfoUpdate()">Update</button>
                     </form>
                 </div>
                 {{/userInfo}}
@@ -217,7 +241,35 @@
         document.querySelector(".BackEndDiv").style.display = "block";
     }
 
+    const onclickModalInfoUpdate = () => {
 
+        const data = {
+            name: $('#name').val(),
+            email: $('#email').val(),
+            address: $('#address').val(),
+            sex: $('#sex').val(),
+            college: $("#college").val(),
+            birthday: $("#birthDay").val(),
+            age: $("#age").val(),
+            phone_number: $("#phone_number").val()
+
+        };
+        console.log(data);
+
+        $.ajax({
+            type: 'POST',
+            url: '/info/update',
+            dataType: 'html',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(data)
+        }).done(() => {
+            alert('Update Was Done!');
+            window.location.href = "/";
+        })
+                .fail((error) => {
+                    console.log(JSON.stringify(error));
+        });
+    }
 
 
 </script>

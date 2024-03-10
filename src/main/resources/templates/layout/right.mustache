@@ -125,7 +125,6 @@
         );
 
         const children = document.querySelectorAll(".item .icon");
-        console.log(children);
         children.forEach((child, index) => {
             child.classList.add(`icon-${index + 1}`);
             child.querySelector("span").innerText = "counter_" + `${index + 1}`;

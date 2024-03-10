@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequiredArgsConstructor
@@ -25,13 +26,12 @@ public class InfoController {
     private final InfoService infoService;
 
    @PostMapping("/update")
-   public void update(InfoDTO infoDTO) {
-        try{
-            infoService.modify(infoDTO);
-            log.info("Update Content :" + infoDTO);
-        }catch (Exception e){
-            log.error(e);
-        }
+   public String update(@RequestBody InfoDTO infoDTO) {
+
+       log.info("Update Content :" + infoDTO);
+       infoService.modify(infoDTO);
+
+       return "index";
    }
 
     public Role usersRole(String email) {
