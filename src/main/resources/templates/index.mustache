@@ -4,41 +4,49 @@
         <div class="insights">
             <div class="profile">
                 <span class="material-symbols-outlined">badge</span>
+                {{#AdminInfo}}
                 <div class="middle">
-                    {{#AdminInfo}}
+
                         <div class="left">
-                            <h3>{{AdminInfo.name}}</h3>
-                            <h3>{{AdminInfo.email}}</h3>
-                            <h3>{{AdminInfo.college}}</h3>
-                            <h3>{{AdminInfo.sex}}</h3>
-                            <h3>{{AdminInfo.address}}</h3>
-                            <h3>{{AdminInfo.age}}</h3>
-                            <h3>{{AdminInfo.birthday}}</h3>
-                            <h3>{{AdminInfo.phone_number}}</h3>
+                            <h3><small>name : </small>{{AdminInfo.name}}</h3>
+                            <h3><small>email : </small>{{AdminInfo.email}}</h3>
+                            <h3><small>college : </small>{{AdminInfo.college}}</h3>
+                            <h3><small>sex : </small>{{AdminInfo.sex}}</h3>
+                            <h3><small>address : </small>{{AdminInfo.address}}</h3>
+                            <h3><small>age : </small>{{AdminInfo.age}}</h3>
+                            <h3><small>phone : </small>{{AdminInfo.phone_number}}</h3>
                         </div>
-                    {{/AdminInfo}}
+
                 </div>
-                <small class="text-muted">Last Modified</small>
+                <small class="text-muted">Last Modified - {{AdminInfo.modifiedDate}}</small>
+                {{/AdminInfo}}
             </div>
             <!---------------- END OF PROFILES ------------------------->
-            <div class="skills_front">
-                <span class="material-symbols-outlined">iframe</span>
-                <div class="middle">
-                    <div class="left">
-                        <img src="" alt="#">
+            <div class="slider">
+                <div class="slides">
+                    <div class="slide">
+                        <p>FrontEnd</p>
+                        <span class="material-symbols-outlined skills_front">iframe</span>
+                        <div class="middle">
+                            <div class="left">
+                                <img src="" alt="#">
+                            </div>
+                        </div>
                     </div>
+                    <!---------------- END OF skills_front ------------------------->
+                    <div class="slide">
+                        <p>BackEnd</p>
+                        <span class="material-symbols-outlined skills_back">iframe</span>
+                        <div class="middle">
+                            <div class="left">
+                                <img src="" alt="#">
+                            </div>
+                        </div>
+                    </div>
+                    <!---------------- END OF skills_back ------------------------->
                 </div>
-                <small class="text-muted">Last Modified</small>
+                <div class="sliderBtn"><small onclick="prevSlide()"><</small><small onclick="nextSlide()">></small></div>
             </div>
-            <!---------------- END OF Skills_front ------------------------->
-            <div class="skills_back">
-                <span class="material-symbols-outlined">code</span>
-                <div class="middle">
-                    <img src="" alt="#">
-                </div>
-                <small class="text-muted">Last Modified</small>
-            </div>
-            <!---------------- END OF skills_back ------------------------->
         </div>
         <!------------------------ END OF INSIGHTS --------------------------->
 
@@ -132,6 +140,18 @@
                 }, delay);
             }
         };
+    }
+
+
+    const slides = document.querySelector('.slides');
+    const slideWidth = document.querySelector('.slide').offsetWidth;
+
+    const nextSlide = () => {
+        slides.style.transform = `translateX(-${slideWidth}px)`;
+    }
+
+    const prevSlide = () => {
+        slides.style.transform = `translateX(0)`;
     }
 
 </script>

@@ -19,7 +19,7 @@ public interface PostsRepository extends JpaRepository<Posts, Long> {
 
     @Query("SELECT p.language, COUNT(p.language) AS count " +
             "FROM Posts p " +
-            "WHERE p.modifiedDate >= :oneYearsAgo " +
+            "WHERE p.start_date >= :oneYearsAgo " +
             "GROUP BY p.language " +
             "ORDER BY COUNT(p.language) DESC")
     List<Object[]> getCurrentAllLanguage(@Param("oneYearsAgo") LocalDateTime oneYearsAgo);

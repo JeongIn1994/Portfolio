@@ -130,6 +130,13 @@
             child.querySelector("span").innerText = "counter_" + `${index + 1}`;
         })
 
+        {{#usersName}}
+            document.querySelector('a[href="/logout"]').style.display = 'block';
+        {{/usersName}}
+        {{^usersName}}
+            document.querySelector('a[href="/logout"]').style.display = 'none';
+        {{/usersName}}
+
     });
 
     menuBtn.addEventListener('click', () => {

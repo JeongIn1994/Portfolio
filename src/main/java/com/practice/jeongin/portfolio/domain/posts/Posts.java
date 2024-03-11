@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -32,15 +33,15 @@ public class Posts extends BaseTimeEntity implements Serializable {
     private String language;
 
     @Column(columnDefinition = "TEXT", nullable = false)
-    private Date start_date;
+    private LocalDateTime start_date;
 
     @Column(columnDefinition = "TEXT", nullable = false)
-    private Date end_date;
+    private LocalDateTime end_date;
 
     @Column(nullable = false)
     private long progress;
 
-    public void update(String title, String content, String language, String summary, Date start_date, Date end_date, long progress){
+    public void update(String title, String content, String language, String summary, LocalDateTime start_date, LocalDateTime end_date, long progress){
         this.title = title;
         this.content = content;
         this.language = language;

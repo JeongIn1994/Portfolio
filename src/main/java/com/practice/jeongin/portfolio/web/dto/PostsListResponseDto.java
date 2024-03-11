@@ -12,8 +12,8 @@ public class PostsListResponseDto {
     private final String title;
     private final String summary;
     private final String language;
-    private final Date start_date;
-    private final Date end_date;
+    private final LocalDateTime start_date;
+    private final LocalDateTime end_date;
     private final LocalDateTime modifiedDate;
     private final long progress;
 

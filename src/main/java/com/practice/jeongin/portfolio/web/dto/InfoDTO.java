@@ -16,6 +16,8 @@ public class InfoDTO {
 
     private String name;
 
+    private long age;
+
     private LocalDate birthday;
 
     private String address;

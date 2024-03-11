@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -14,12 +15,12 @@ public class PostsSaveRequestDto {
     private String content;
     private String summary;
     private String language;
-    private Date start_date;
-    private Date end_date;
+    private LocalDateTime start_date;
+    private LocalDateTime end_date;
     private long progress;
 
     @Builder
-    public PostsSaveRequestDto(String title, String content, String language, String summary, Date start_date, Date end_date, long progress){
+    public PostsSaveRequestDto(String title, String content, String language, String summary, LocalDateTime start_date, LocalDateTime end_date, long progress){
 
         this.title = title;
         this.content = content;

@@ -3,6 +3,7 @@ package com.practice.jeongin.portfolio.web.dto;
 import com.practice.jeongin.portfolio.domain.posts.Posts;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -12,8 +13,8 @@ public class PostsResponseDto {
     private final String title;
     private final String content;
     private final String language;
-    private final Date start_date;
-    private final Date end_date;
+    private final LocalDateTime start_date;
+    private final LocalDateTime end_date;
     private final String summary;
     private final long progress;
 

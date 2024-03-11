@@ -30,7 +30,7 @@ public class InfoServiceImpl implements InfoService{
 
         Info info = (Info) infoRepository.getInfoByEmail(infoDTO.getEmail());
 
-        info.update(infoDTO.getName(),infoDTO.getBirthday(),infoDTO.getAddress(),infoDTO.getPhone_number(),infoDTO.getSex(),infoDTO.getCollege());
+        info.update(infoDTO.getName(), infoDTO.getBirthday(),infoDTO.getAddress(),infoDTO.getPhone_number(),infoDTO.getSex(),infoDTO.getCollege());
 
         infoRepository.save(info);
     }
