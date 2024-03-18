@@ -34,11 +34,13 @@ public class CommonControllerAdvice {
             model.addAttribute("picture", user.getPicture());
             model.addAttribute("userEmail", user.getEmail());
             model.addAttribute("role", usersRole(user.getEmail()));
-            model.addAttribute("userInfo", infoRepository.getInfoByEmail(user.getEmail()));
             log.info("Login usersName : "+model.getAttribute("usersName"));
             log.info("Login users role : "+model.getAttribute("role"));
+            if(isAdminUser(model.getAttribute("role"))){
+                model.addAttribute("userInfo", infoRepository.getInfoByEmail(user.getEmail()));
+                model.addAttribute("userList", usersRepository.findAllUsers());
+            };
         }
-
         model.addAttribute("currentBoard", boardService.getTop3Board());
         model.addAttribute("top3Lang", postsService.getCurrent3Language());
 
@@ -53,5 +55,10 @@ public class CommonControllerAdvice {
         else{
             return Role.USER;
         }
+    }
+
+    public boolean isAdminUser(Object userRole){
+        log.info("isAdmin:"+userRole.toString().equals("ADMIN"));
+        return userRole.toString().equals("ADMIN");
     }
 }

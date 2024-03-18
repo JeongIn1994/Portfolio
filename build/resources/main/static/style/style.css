@@ -256,7 +256,7 @@ main {
 
 main .insights {
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(2,1fr);
     gap: 1.6rem;
 }
 
@@ -281,12 +281,45 @@ main .insights > div span {
     font-size: 2rem;
 }
 
-main .insights > div.skills_front span {
+main .insights > .slider > .slides > .slide > .skills_front {
     background: var(--color-danger);
 }
 
-main .insights > div.skills_back span {
+main .insights > .slider > .slides > .slide > .skills_back{
     background: var(--color-success);
+}
+
+.slider {
+    width: 100%;
+    overflow: hidden;
+    margin: 0 auto;
+    position: relative;
+}
+
+.slides {
+
+    display: flex;
+    transition: transform 0.5s ease;
+
+}
+.slide {
+    flex: 0 0 auto;
+    width: 115%;
+}
+
+.slider > div:last-child {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.sliderBtn {
+    display: flex;
+}
+
+.sliderBtn > small {
+    margin: 0 15px;
 }
 
 main .insights > div .middle {
@@ -482,15 +515,15 @@ main .work-history-summary a {
     }
 
     main .work-history-summary {
-        width: 94%;
+        width: 38%;
         position: absolute;
-        left: 55%;
+        left: 30%;
         transform: translateX(-50%);
         margin: 2rem 0 0 8.8rem;
     }
 
     main .work-history-summary .slider {
-        width: 71vw;
+        width: 100%;
     }
 
     aside .sidebar button {
@@ -573,11 +606,12 @@ main .work-history-summary a {
     main .work-history-summary {
         position: relative;
         margin:  3rem 0 0 0;
+        left: 50%;
         width: 100%;
     }
 
     main .work-history-summary .slider {
-        width: 80vw;
+        width: 100%;
         margin: 0;
     }
 
@@ -629,6 +663,24 @@ main .work-history-summary a {
     #openModalBtn {
         pointer-events: none;
         color: red;
+    }
+
+    .slider {
+        width: 100%;
+        overflow: hidden;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .slides {
+        width: 110%;
+        display: flex;
+        transition: transform 0.5s ease;
+
+    }
+    .slide {
+        flex: 0 0 auto;
+        width: 100%;
     }
 }
 /* ================================ SETTING MODAL ========================== */

@@ -515,15 +515,15 @@ main .work-history-summary a {
     }
 
     main .work-history-summary {
-        width: 94%;
+        width: 38%;
         position: absolute;
-        left: 55%;
+        left: 30%;
         transform: translateX(-50%);
         margin: 2rem 0 0 8.8rem;
     }
 
     main .work-history-summary .slider {
-        width: 71vw;
+        width: 100%;
     }
 
     aside .sidebar button {
@@ -606,11 +606,12 @@ main .work-history-summary a {
     main .work-history-summary {
         position: relative;
         margin:  3rem 0 0 0;
+        left: 50%;
         width: 100%;
     }
 
     main .work-history-summary .slider {
-        width: 80vw;
+        width: 100%;
         margin: 0;
     }
 
@@ -662,6 +663,24 @@ main .work-history-summary a {
     #openModalBtn {
         pointer-events: none;
         color: red;
+    }
+
+    .slider {
+        width: 100%;
+        overflow: hidden;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .slides {
+        width: 110%;
+        display: flex;
+        transition: transform 0.5s ease;
+
+    }
+    .slide {
+        flex: 0 0 auto;
+        width: 100%;
     }
 }
 /* ================================ SETTING MODAL ========================== */

@@ -27,10 +27,14 @@ public class Users extends BaseTimeEntity {
     @Column(nullable = false)
     private Role role;
 
+    @Column
+    private boolean usable;
 
-    public Users update(String name, String picture) {
+
+    public Users update(String name, String picture,boolean usable) {
         this.name = name;
         this.picture = picture;
+        this.usable = usable;
 
         return this;
     }

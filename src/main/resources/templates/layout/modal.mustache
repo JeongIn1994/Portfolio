@@ -97,10 +97,43 @@
                 {{/userInfo}}
                 <!---- User Management ---->
                 <div class="UserManagementDiv">
+                    <input type="text" id="searchInput" placeholder="Search...">
                     <form class="UserManagement">
-
-
-
+                        <table class="table table-hover" id="dataTable">
+                            <tr>
+                                <th>Email</th>
+                                <th>CreateDate</th>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Role Change</th>
+                                <th>Usable</th>
+                                <th>Usable Change</th>
+                            </tr>
+                            {{#userList}}
+                            <tr>
+                                <td>{{email}}</td>
+                                <td>{{createDate}}</td>
+                                <td>{{name}}</td>
+                                <td>{{role}}</td>
+                                <td>
+                                    <select id="userRole">
+                                        <option value="admin">ADMIN</option>
+                                        <option value="user">USER</option>
+                                    </select>
+                                </td>
+                                <td>{{usable}}</td>
+                                <td>
+                                    <select id="usable">
+                                        <option value="on">On</option>
+                                        <option value="off">Off</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            {{/userList}}
+                            <tr id="noDataRow" style="display: none;">
+                                <td colspan="4"><h2>No Data</h2></td>
+                            </tr>
+                        </table>
                     </form>
                 </div>
                 <!---- FrontEnd ---->
@@ -131,10 +164,12 @@
 
     const activeCategory = document.querySelector(".category .active");
     const modalBody = document.querySelector("#modal-body");
+    const searchInput = document.getElementById('searchInput');
+    const tableRows = document.querySelectorAll('#dataTable tbody tr');
 
     document.addEventListener('DOMContentLoaded', () => {
 
-
+        displayUserProfile();
         //url check
         const currentURL = window.location.pathname;
         if (currentURL.includes('board')) {
@@ -155,6 +190,7 @@
                 document.querySelector("#sex").value = document.querySelector("#sexSelect").value;
             })
         {{/userInfo}}
+
 
     })
 
@@ -197,7 +233,6 @@
         document.querySelector(".FrontEndDiv").style.display = "none";
         document.querySelector(".BackEndDiv").style.display = "none";
 
-
     }
 
     const displayUserManagement = () => {
@@ -209,6 +244,7 @@
         document.querySelector(".UserManagementDiv").style.display = "block";
         document.querySelector(".FrontEndDiv").style.display = "none";
         document.querySelector(".BackEndDiv").style.display = "none";
+
     }
 
     const displayFrontEnd = () => {
@@ -261,6 +297,27 @@
                     console.log(JSON.stringify(error));
         });
     }
+
+    searchInput.addEventListener('input', function() {
+        const searchText = this.value.trim().toLowerCase();
+        tableRows.forEach(row => {
+            const columns = row.querySelectorAll('td');
+            let display = 'none';
+
+            columns.forEach(column => {
+                if (column.textContent.toLowerCase().indexOf(searchText) > -1) {
+                    display = '';
+                    found = true;
+                }
+            });
+
+            row.style.display = display;
+        });
+
+        const noDataRow = document.getElementById('noDataRow');
+        noDataRow.style.display = found ? 'none' : '';
+    });
+
 
 
 </script>
