@@ -15,141 +15,18 @@
             <div class="modal-body" id="modal-body">
                 <p class="menuTitle">UserProfile</p>
                 <p class="menuContent" style="color: red"> * mark was readonly</p>
-                {{#userInfo}}
-                <!---- Update User Profile ---->
-                <div class="UserProfileDiv">
-                    <form class="UserProfile" action="/info/update" method="post">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" value="{{userInfo.name}}" >
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Email*</label>
-                            <input type="text" class="form-control" id="email" value="{{userInfo.email}}" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Address</label>
-                            <input type="text" class="form-control" name="address" id="address"  value="{{userInfo.address}}">
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Sex</label>
-                            <input type="text" class="form-control" id="sex" value="{{userInfo.sex}}" readonly style="margin-bottom: 0.2rem">
-                            <select class="form-control" id="sexSelect">
-                                <option value="male">male</option>
-                                <option value="female">female</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Collage</label>
-                            <input type="text" class="form-control" id="college"  value="{{userInfo.college}}">
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Birthday</label>
-                            <input type="date" class="form-control" name="birthDay" id="birthDay"  value="{{userInfo.birthday}}">
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Phone_Number</label>
-                            <input type="text" class="form-control" id="phone_number" value="{{userInfo.phone_number}}" >
-                        </div>
-                        <button type="button" class="btn btn-primary" onclick="onclickModalInfoUpdate()">Update</button>
-                    </form>
-                </div>
-                {{/userInfo}}
-                {{^userInfo}}
-                <!---- Create User Profile ---->
-                <div class="UserProfileDiv">
-                    <form class="UserProfile" action="/info/update" method="post">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" >
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Email*</label>
-                            <input type="text" class="form-control" id="email" value="{{userInfo.email}}" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Address</label>
-                            <input type="text" class="form-control" name="address" id="address">
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Sex</label>
-                            <input type="text" class="form-control" id="sex" readonly style="margin-bottom: 0.2rem">
-                            <select class="form-control" id="sexSelect">
-                                <option value="male">male</option>
-                                <option value="female">female</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Collage</label>
-                            <input type="text" class="form-control" id="college">
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Birthday</label>
-                            <input type="date" class="form-control" name="birthDay" id="birthDay" >
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Phone_Number</label>
-                            <input type="text" class="form-control" id="phone_number" >
-                        </div>
-                        <button type="button" class="btn btn-primary" onclick="onclickModalInfoUpdate()">Update</button>
-                    </form>
-                </div>
-                {{/userInfo}}
+                <!---- User Profile ---->
+                {{>layout/modal/userProfile}}
                 <!---- User Management ---->
-                <div class="UserManagementDiv">
-                    <input type="text" id="searchInput" placeholder="Search...">
-                    <form class="UserManagement">
-                        <table class="table table-hover" id="dataTable">
-                            <tr>
-                                <th>Email</th>
-                                <th>CreateDate</th>
-                                <th>Name</th>
-                                <th>Role</th>
-                                <th>Role Change</th>
-                                <th>Usable</th>
-                                <th>Usable Change</th>
-                            </tr>
-                            {{#userList}}
-                            <tr>
-                                <td>{{email}}</td>
-                                <td>{{createDate}}</td>
-                                <td>{{name}}</td>
-                                <td>{{role}}</td>
-                                <td>
-                                    <select id="userRole">
-                                        <option value="admin">ADMIN</option>
-                                        <option value="user">USER</option>
-                                    </select>
-                                </td>
-                                <td>{{usable}}</td>
-                                <td>
-                                    <select id="usable">
-                                        <option value="on">On</option>
-                                        <option value="off">Off</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            {{/userList}}
-                            <tr id="noDataRow" style="display: none;">
-                                <td colspan="4"><h2>No Data</h2></td>
-                            </tr>
-                        </table>
-                    </form>
-                </div>
+                {{>layout/modal/userManagement}}
                 <!---- FrontEnd ---->
                 <div class="FrontEndDiv">
                     <form class="FrontEnd">
-
-
-
                     </form>
                 </div>
                 <!---- BackEnd ---->
                 <div class="BackEndDiv">
                     <form class="BackEnd">
-
-
-
                     </form>
                 </div>
             </div>
@@ -164,8 +41,6 @@
 
     const activeCategory = document.querySelector(".category .active");
     const modalBody = document.querySelector("#modal-body");
-    const searchInput = document.getElementById('searchInput');
-    const tableRows = document.querySelectorAll('#dataTable tbody tr');
 
     document.addEventListener('DOMContentLoaded', () => {
 
@@ -268,56 +143,5 @@
         document.querySelector(".FrontEndDiv").style.display = "none";
         document.querySelector(".BackEndDiv").style.display = "block";
     }
-
-    const onclickModalInfoUpdate = () => {
-
-        const data = {
-            name: $('#name').val(),
-            email: $('#email').val(),
-            address: $('#address').val(),
-            sex: $('#sex').val(),
-            college: $("#college").val(),
-            birthday: $("#birthDay").val(),
-            phone_number: $("#phone_number").val()
-
-        };
-        console.log(data);
-
-        $.ajax({
-            type: 'POST',
-            url: '/info/update',
-            dataType: 'html',
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(data)
-        }).done(() => {
-            alert('Update Was Done!');
-            window.location.href = "/";
-        })
-                .fail((error) => {
-                    console.log(JSON.stringify(error));
-        });
-    }
-
-    searchInput.addEventListener('input', function() {
-        const searchText = this.value.trim().toLowerCase();
-        tableRows.forEach(row => {
-            const columns = row.querySelectorAll('td');
-            let display = 'none';
-
-            columns.forEach(column => {
-                if (column.textContent.toLowerCase().indexOf(searchText) > -1) {
-                    display = '';
-                    found = true;
-                }
-            });
-
-            row.style.display = display;
-        });
-
-        const noDataRow = document.getElementById('noDataRow');
-        noDataRow.style.display = found ? 'none' : '';
-    });
-
-
 
 </script>

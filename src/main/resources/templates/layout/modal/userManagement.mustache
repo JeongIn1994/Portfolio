@@ -1,0 +1,99 @@
+<div class="UserManagementDiv">
+    <input type="text" id="searchInput" placeholder="Search...">
+    <form class="UserManagement">
+        <table class="table table-hover" id="dataTable">
+            <tr>
+                <th>Email</th>
+                <th>CreateDate</th>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Role Change</th>
+                <th>Usable</th>
+                <th>Usable Change</th>
+                <th>Update</th>
+            </tr>
+            {{#userList}}
+            <tr class="data-tr">
+                <td class="userEmail">{{email}}</td>
+                <td class="createDate">{{createDate}}</td>
+                <td class="name">{{name}}</td>
+                <td class="role">{{role}}</td>
+                <td>
+                    <select id="userRole">
+                        <option value="Admin">Admin</option>
+                        <option value="User">User</option>
+                    </select>
+                </td>
+                <td class="usable">{{usable}}</td>
+                <td>
+                    <select id="usable">
+                        <option value="true">true</option>
+                        <option value="false">false</option>
+                    </select>
+                </td>
+                <td><button onclick="onClickAcceptBtn()">Accept</button></td>
+            </tr>
+            {{/userList}}
+            <tr id="noDataRow" style="display: none;">
+                <td colspan="4"><h2>No Data</h2></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script>
+    const tableRows = document.querySelectorAll('.data-tr');
+    const searchInput = document.getElementById('searchInput');
+
+    searchInput.addEventListener('input', function() {
+        const searchText = this.value.trim().toLowerCase();
+        let found = false;
+
+        tableRows.forEach(row => {
+            const columns = row.querySelectorAll('td');
+            let display = 'none';
+
+
+            columns.forEach(column => {
+                if (column.textContent.toLowerCase().indexOf(searchText) > -1) {
+                    display = '';
+                    found = true;
+                }
+            });
+
+            row.style.display = display;
+        });
+
+        const noDataRow = document.getElementById('noDataRow');
+        noDataRow.style.display = found ? 'none' : '';
+    });
+
+    const onClickAcceptBtn = () => {
+
+        const row = event.target.closest('.data-tr');
+
+        const data = {
+            email : row.querySelector('.userEmail').textContent,
+            name : row.querySelector('.name').textContent,
+            role : row.querySelector('#userRole').value,
+            usable : row.querySelector('#usable').value
+        }
+        console.log(data);
+
+        $.ajax({
+            type: 'POST',
+            url: '/user/update',
+            dataType: 'html',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(data)
+        }).done(() => {
+            alert('Update Was Done!');
+        }).fail((xhr) => {
+            if (xhr.status === 200) {
+                alert('Update Was Done!');
+            } else {
+                console.log(JSON.stringify(xhr));
+            }
+        });
+
+    }
+</script>

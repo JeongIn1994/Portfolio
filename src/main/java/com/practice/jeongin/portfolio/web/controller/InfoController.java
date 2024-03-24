@@ -6,6 +6,7 @@ import com.practice.jeongin.portfolio.domain.user.Role;
 import com.practice.jeongin.portfolio.domain.user.UsersRepository;
 import com.practice.jeongin.portfolio.service.info.InfoService;
 import com.practice.jeongin.portfolio.web.dto.InfoDTO;
+import com.practice.jeongin.portfolio.web.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
@@ -34,11 +35,4 @@ public class InfoController {
        return "index";
    }
 
-    public Role usersRole(String email) {
-        if(email.isEmpty()){
-            return null;
-        }else{
-            return usersRepository.findByEmail(email).get().getRole();
-        }
-    }
 }
