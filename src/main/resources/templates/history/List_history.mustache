@@ -7,11 +7,11 @@
         <tbody id="tbody">
         {{#posts}}
         <tr>
-            <td colspan="2">{{title}}</td>
-            <td>{{language}}</td>
+            <td colspan="2"><b>Project Name</b></td>
+            <td>{{title}}</td>
         </tr>
         <tr>
-            <td>{{title}}</td>
+            <td><b>Dev Date</b></td>
             <td colspan="2">{{start_date}}~{{end_date}}</td>
         </tr>
         <tr>
@@ -37,6 +37,7 @@
 <script>
 
     document.title = "⚙️In's Inventory-HistoryList";
+
 
     if( userRole === "ADMIN" ) {
         document.getElementById('btn-create').style.display = 'block';

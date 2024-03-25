@@ -11,10 +11,10 @@
             <form id="contentForm" method="POST" action="/board/register" enctype="multipart/form-data" >
                 <div class="form-group">
                     <label for="title">Title</label>
-                    <input type="text" class="form-control" name="title" id="title" placeholder="Input Your board Title">
+                    <input type="text" class="form-control" name="title" id="title" placeholder="Input Your board Title" required>
                 </div>
                 <div class="form-group">
-                    <label for="userName">Author</label>
+                    <label for="userName">UserName</label>
                     <input type="text" class="form-control" name="userName" id="userName" value="{{usersName}}" disabled readonly>
                 </div>
                 <div class="form-group">

@@ -5,8 +5,12 @@ import com.practice.jeongin.portfolio.web.dto.PostsResponseDto;
 import com.practice.jeongin.portfolio.web.dto.PostsSaveRequestDto;
 import com.practice.jeongin.portfolio.web.dto.PostsupdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
+@Log4j2
 @RequiredArgsConstructor
 @RestController
 public class PostsApiController {
@@ -15,12 +19,16 @@ public class PostsApiController {
 
     @PostMapping("/api/v1/posts")
     public Long save(@RequestBody PostsSaveRequestDto requestDto){
+        log.info("Save History:"+ requestDto);
+
         return postsService.save(requestDto);
     }
 
     @PutMapping("/api/v1/posts/{id}")
     public Long update(@PathVariable Long id,
                        @RequestBody PostsupdateRequestDto requestDto){
+
+
         return postsService.update(id, requestDto);
     }
 

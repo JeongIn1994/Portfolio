@@ -281,19 +281,12 @@ main .insights > div span {
     font-size: 2rem;
 }
 
-main .insights > .slider > .slides > .slide > .skills_front {
-    background: var(--color-danger);
-}
-
-main .insights > .slider > .slides > .slide > .skills_back{
-    background: var(--color-success);
-}
-
 .slider {
     width: 100%;
     overflow: hidden;
     margin: 0 auto;
     position: relative;
+    align-content: center;
 }
 
 .slides {
@@ -303,8 +296,21 @@ main .insights > .slider > .slides > .slide > .skills_back{
 
 }
 .slide {
+
     flex: 0 0 auto;
-    width: 115%;
+    width: 13vw;
+
+}
+
+
+.middle > .front >img {
+    height: 23vh;
+    width: 85%;
+}
+
+.middle > .back >img {
+    height: 23vh;
+    width: 85%;
 }
 
 .slider > div:last-child {
@@ -321,6 +327,7 @@ main .insights > .slider > .slides > .slide > .skills_back{
 .sliderBtn > small {
     margin: 0 15px;
 }
+
 
 main .insights > div .middle {
     display: flex;
@@ -515,11 +522,11 @@ main .work-history-summary a {
     }
 
     main .work-history-summary {
-        width: 38%;
+        width: 40%;
         position: absolute;
         left: 30%;
         transform: translateX(-50%);
-        margin: 2rem 0 0 8.8rem;
+        margin: 1.5rem 0 0 8rem;
     }
 
     main .work-history-summary .slider {
@@ -530,11 +537,32 @@ main .work-history-summary a {
         font-size: 0;
     }
 
-    #slider>ul>li img {
-        height:25vh;
+    .slider {
+        width: 100%;
+        overflow: hidden;
+        margin: 0 auto;
+        position: relative;
+        align-content: center;
     }
+
+    .slides {
+
+        display: flex;
+        transition: transform 0.5s ease;
+
+    }
+    .slide {
+        flex: 0 0 auto;
+        width: 115%;
+
+    }
+
+
     #content {
         width: 550px; /* 원하는 너비로 조절 */
+    }
+    .recent-update .languages-analytics {
+        display: none;
     }
 }
 
@@ -681,6 +709,9 @@ main .work-history-summary a {
     .slide {
         flex: 0 0 auto;
         width: 100%;
+    }
+    .recent-update .languages-analytics {
+        display: none;
     }
 }
 /* ================================ SETTING MODAL ========================== */
