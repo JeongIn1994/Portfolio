@@ -22,16 +22,28 @@
                 <!---- FrontEnd ---->
                 <div class="FrontEndDiv">
                     <form class="FrontEnd">
-                        <div class="form-group form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="text"> Remember me
-                            </label>
+                        <div class="frontImgDiv">
+                            <div>
+                                <b><h2 class="frontTextContent">No Data</h2></b>
+                            </div>
                         </div>
+                        <label for="frontFile" class="btn btn-warning">Select Files</label>
+                        <input type="file" id="frontFile" style="display: none" onchange="changeFrontFile()">
+                        <button id="attachImg" class="btn btn-info" style="margin-bottom: 6px" onclick="attachFrontImg()">Attach</button>
+                        <button id="deleteImg" class="btn btn-danger" style="margin-bottom: 6px" onclick="deleteFrontImg()">Delete</button>
+                        <button id="registerImg" class="btn btn-primary" style="margin-bottom: 6px" onclick="registFrontImg()">Regist</button>
                     </form>
                 </div>
                 <!---- BackEnd ---->
                 <div class="BackEndDiv">
                     <form class="BackEnd">
+                        <div><B><h2>No Data</h2></B></div>
+                        <img src="#" alt="#" id="backendImg">
+                        <label for="backFile" class="btn btn-warning">Select Files</label>
+                        <input type="file" id="backFile" style="display: none" >
+                        <button id="deleteImg" class="btn btn-danger" style="margin-bottom: 6px">Delete</button>
+                        <button id="attachImg" class="btn btn-info" style="margin-bottom: 6px">Attach</button>
+                        <button id="registerImg" class="btn btn-primary" style="margin-bottom: 6px">Regist</button>
                     </form>
                 </div>
             </div>
@@ -147,6 +159,70 @@
         document.querySelector(".UserManagementDiv").style.display = "none";
         document.querySelector(".FrontEndDiv").style.display = "none";
         document.querySelector(".BackEndDiv").style.display = "block";
+    }
+
+    const registFrontImg = () => {
+        event.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: '/utilsFileUploadAjax',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                console.log('File uploaded successfully:', response);
+                displayUploadedFile(response);
+            },
+            error: function(xhr, status, error) {
+                console.error('Error uploading file:', error);
+            }
+        });
+
+    }
+    const attachFrontImg = () => {
+        event.preventDefault();
+
+        const fileInput = document.getElementById('frontFile');
+        const selectedFile = fileInput.files[0];
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+
+        $.ajax({
+            type: 'POST',
+            url: '/utilsFileUploadAjax',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                console.log('File uploaded successfully:', response);
+                displayUploadedFile(response);
+            },
+            error: function(xhr, status, error) {
+                console.error('Error uploading file:', error);
+            }
+        });
+
+    }
+    const deleteFrontImg = () => {
+        event.preventDefault();
+        const frontImgDiv = document.querySelector('.frontImgDiv');
+        frontImgDiv.innerHTML = ''; // 업로드 전에 이미지 영역 초기화
+
+    }
+
+    const changeFrontFile = () => {
+        document.querySelector('.frontTextContent').textContent = document.getElementById('frontFile').files[0].name;
+    }
+
+    const displayUploadedFile = (response) => {
+        const frontImgDiv = document.querySelector('.frontImgDiv');
+        frontImgDiv.innerHTML = ''; // 업로드 전에 이미지 영역 초기화
+
+        const imgElement = document.createElement('img');
+        imgElement.src = "/display/skills?fileName=" +response.fileName;
+        imgElement.alt = 'Uploaded Image';
+        frontImgDiv.appendChild(imgElement);
     }
 
 </script>

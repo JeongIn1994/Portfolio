@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/style/**", "/script/**", "/image/**", "/fonts/**",
                             "/", "/board/**", "/view/**", "/upload.do", "/replies/**", "/display/**","/imageDisplay/**", "/history/list","/history/view/**","/summaryUploadAjax").permitAll()
                     .antMatchers("/board/register", "/board/modify").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
-                    .antMatchers("/setting", "/api/v1/posts","/history/register","/history/update/**","/info/update","/update/user").hasAnyRole(Role.ADMIN.name())
+                    .antMatchers("/setting", "/api/v1/posts","/history/register","/history/update/**","/info/update","/update/user","/utilsFileUploadAjax").hasAnyRole(Role.ADMIN.name())
                     .anyRequest().authenticated()
                 .and()
                     .logout().logoutSuccessUrl("/")

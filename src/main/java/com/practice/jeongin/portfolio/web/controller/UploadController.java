@@ -40,27 +40,23 @@ public class UploadController {
         if(image.isEmpty()){
             return "";
         }
-        String orgFilename = image.getOriginalFilename();
-        String uuid = UUID.randomUUID().toString().replaceAll("-","");
-        String extension = orgFilename.substring(orgFilename.lastIndexOf(".") + 1);
-        String saveFileName = uuid + "." + extension;
-        String fileFullPath = Paths.get(uploadBaseUrl, saveFileName).toString();
+        String originName = image.getOriginalFilename();
+        String fileName = originName.substring(originName.lastIndexOf("\\") + 1);
+        log.info(fileName);
 
+        String folderPath = makeFolder(0);
 
-        String str = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+        log.info(folderPath);
 
-        String folderPath = str.replace("/" , File.separator);
+        String uuid = UUID.randomUUID().toString();
 
-        File uploadPathFolder = new File(uploadBaseUrl, folderPath);
+        String saveName = uploadBaseUrl + File.separator + folderPath + File.separator + uuid + "_" + fileName;
 
-        if(!uploadPathFolder.exists()){
-            uploadPathFolder.mkdirs();
-        }
+        Path savePath = Paths.get(saveName);
 
         try {
-            File uploadFile = new File(fileFullPath);
-            image.transferTo(uploadFile);
-            return saveFileName;
+            image.transferTo(savePath);
+            return folderPath + "/" + uuid + "_" + fileName;
         }catch (IOException e){
             throw new RuntimeException(e);
         }
@@ -97,7 +93,7 @@ public class UploadController {
         String originName = uploadFile.getOriginalFilename();
         String fileName = originName.substring(originName.lastIndexOf("\\") + 1);
 
-        String folderPath = makeFolder();
+        String folderPath = makeFolder(1);
 
         log.info(folderPath);
 
@@ -117,6 +113,41 @@ public class UploadController {
 
             Thumbnailator.createThumbnail(savePath.toFile(), thumbnailFile, 100, 100);
             UploadResultDTO resultDTO = new UploadResultDTO(fileName, uuid, folderPath);
+            return new ResponseEntity<>(resultDTO, HttpStatus.OK);
+        } catch (IOException e) {
+            log.error(e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/utilsFileUploadAjax")
+    private ResponseEntity<UploadResultDTO> uploadSkillsFile(@RequestParam("file") MultipartFile uploadFile) {
+
+        if (uploadFile == null || uploadFile.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if(!uploadFile.getContentType().startsWith("image")){
+            log.warn("this file is not an image file");
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        String originName = "frontEnd.png";
+        String fileName = originName.substring(originName.lastIndexOf("\\") + 1);
+
+
+        log.info("SkillsFilePath:"+skillsUploadUrl);
+
+        String uuid = UUID.randomUUID().toString();
+
+        String saveName = skillsUploadUrl + File.separator + File.separator + fileName;
+
+        Path savePath = Paths.get(saveName);
+
+        try{
+            uploadFile.transferTo(savePath);
+
+            UploadResultDTO resultDTO = new UploadResultDTO(fileName, uuid, skillsUploadUrl);
             return new ResponseEntity<>(resultDTO, HttpStatus.OK);
         } catch (IOException e) {
             log.error(e);
@@ -192,16 +223,20 @@ public class UploadController {
 
     }
 
-    private String makeFolder(){
+    private String makeFolder(int index){
 
         String str = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
 
         String folderPath = str.replace("/" , File.separator);
 
-        File uploadPathFolder = new File(summaryUploadUrl, folderPath);
-
-        if(!uploadPathFolder.exists()){
-            uploadPathFolder.mkdirs();
+        if(index == 0 ){
+            if(!new File(uploadBaseUrl, folderPath).exists()){
+                new File(uploadBaseUrl, folderPath).mkdirs();
+            }
+        }else if (index == 1){
+            if(!new File(summaryUploadUrl, folderPath).exists()){
+                new File(summaryUploadUrl, folderPath).mkdirs();
+            }
         }
 
         return str;

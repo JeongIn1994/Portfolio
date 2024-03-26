@@ -6,23 +6,26 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class utils extends BaseTimeEntity {
+public class Utils extends BaseTimeEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long uid;
 
+    @Column
     private String uName;
 
+    @Column
     private String category;
 
+    @Column
     private String filePath;
 
     public void update(long uid, String uName, String category, String filePath){
