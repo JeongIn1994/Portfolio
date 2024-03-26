@@ -1,20 +1,14 @@
 # 0.システム仕様
 ### バックエンド
-![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)2.5.3
-
-![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white) v.14
-
-![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)17.0.8
+![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
+![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white) 
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 
 ### フロントエンド
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
-
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
-
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
-
-![jQuery](https://img.shields.io/badge/jquery-%230769AD.svg?style=for-the-badge&logo=jquery&logoColor=white)3.3.1.min
-
+![jQuery](https://img.shields.io/badge/jquery-%230769AD.svg?style=for-the-badge&logo=jquery&logoColor=white)
 
 ### OS
 ![Windows 11](https://img.shields.io/badge/Windows%2011-%230079d5.svg?style=for-the-badge&logo=Windows%2011&logoColor=white)
@@ -76,10 +70,19 @@
 #### ⑧管理者権限がある場合、履歴登録機能を行うボタンを表示する。
 
 ### 2.2.3 履歴修正
-![History_PC_Update](https://github.com/JeongIn1994/Portfolio/assets/77004633/ffcc5aa2-93c2-48e6-824b-522722318535)
+![History_PC_Update](https://github.com/JeongIn1994/Portfolio/assets/77004633/9d06d006-83f0-4b38-81a3-b465e1156137)
 
-
-### 2.2.4 履歴削除
+#### ①プロジェクトのタイトル入力欄を表示する。
+#### ②開発言語選択コンボボックスを表示する。
+#### ③登録したプロジェクトのサマリ登録ボタンを表示する。
+#### ④プロジェクトのサマリ登録ボタンを表示する。
+#### ⑤プロジェクトのサマリの削除ボタンを表示する。
+#### ⑥プロジェクトの詳細フォームを表示する。
+#### ⑦登録した開発開始日入力フォームを表示する。
+#### ⑧登録した開発終了日入力フォームを表示する。
+#### ⑨開発履歴リスト画面に戻るボタンを表示する。
+#### ⑩管理者権限がある場合、履歴更新機能を行うボタンを表示する。
+#### ⑪管理者権限がある場合、履歴削除機能を行うボタンを表示する。
 
 
 
