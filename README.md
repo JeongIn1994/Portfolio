@@ -76,6 +76,9 @@
 #### ⑧管理者権限がある場合、履歴登録機能を行うボタンを表示する。
 
 ### 2.2.3 履歴修正
+![History_PC_Update](https://github.com/JeongIn1994/Portfolio/assets/77004633/ffcc5aa2-93c2-48e6-824b-522722318535)
+
+
 ### 2.2.4 履歴削除
 
 
