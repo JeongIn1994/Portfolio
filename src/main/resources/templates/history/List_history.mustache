@@ -12,7 +12,7 @@
         </tr>
         <tr>
             <td><b>Dev Date</b></td>
-            <td colspan="2">{{start_date}}~{{end_date}}</td>
+            <td colspan="2" class="date">{{start_date}} ~ {{end_date}}</td>
         </tr>
         <tr>
             <td colspan="3"><img alt="#" src="/display?fileName={{summary}}" ></td>
@@ -45,6 +45,20 @@
 
     const onclickAddbtn = () => {
         document.location.href= "/history/regist";
+    }
+
+    const formattedDate = (date) => {
+        const originDate = new Date(date);
+
+        const year = originDate.getFullYear();
+        let month = originDate.getMonth() + 1;
+        let day = originDate.getDate();
+
+        month = month < 10 ? '0' + month : month;
+        day = day < 10 ? '0' + day : day;
+
+        return `${year}-${month}-${day}`
+
     }
 
 </script>

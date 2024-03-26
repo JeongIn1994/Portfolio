@@ -3,6 +3,7 @@ package com.practice.jeongin.portfolio.web.dto;
 import com.practice.jeongin.portfolio.domain.posts.Posts;
 import lombok.Getter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -28,4 +29,5 @@ public class PostsListResponseDto {
         this.progress = entity.getProgress();
 
     }
+
 }

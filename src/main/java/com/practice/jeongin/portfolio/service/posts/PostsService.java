@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -51,9 +52,10 @@ public class PostsService {
 
     @Transactional(readOnly = true)
     public List<PostsListResponseDto> finAllDesc() {
+
         return postsRepository.findAllDesc().stream()
                 .map(PostsListResponseDto::new)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Transactional
@@ -68,14 +70,19 @@ public class PostsService {
         LocalDateTime oneYearsAgo = LocalDateTime.now().minusYears(1);
         log.info("oneYearsAgo :" + oneYearsAgo) ;
 
-        List<Object[]> get3Languages = postsRepository.getCurrentAllLanguage(oneYearsAgo).subList(0,3);
+        List<Object[]> getUsedLanguages = postsRepository.getCurrentAllLanguage(oneYearsAgo);
+        int end = getUsedLanguages.size();
+        List<Object[]> getMostUsedLanguages = getUsedLanguages.subList(0,end);
+
         List<Map<String, Object>> processedData = new ArrayList<>();
-        for (Object[] objArray : get3Languages) {
+        for (Object[] objArray : getMostUsedLanguages) {
             Map<String, Object> dataMap = new HashMap<>();
             dataMap.put("language", objArray[0]);
             dataMap.put("count", objArray[1]);
             processedData.add(dataMap);
         }
+
+        log.info("MostUsedLanguage :"+ getUsedLanguages);
 
         return processedData;
     }

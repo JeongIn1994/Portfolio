@@ -29,8 +29,8 @@ const main = {
             language: $('#selectedLanguage').val(),
             content: editor.getHTML(),
             summary: $("#summary").attr("src").split("/display?fileName=")[1],
-            start_date: $("#start_date").val(),
-            end_date: $("#end_date").val(),
+            start_date: new Date($("#start_date").val()).toISOString(),
+            end_date: new Date($("#end_date").val()).toISOString(),
             progress: setProgress($("#end_date").val())
 
         };
@@ -58,8 +58,8 @@ const main = {
             language: $('#selectedLanguage').val(),
             content: editor.getHTML(),
             summary: $("#summary").attr("src").split("/display?fileName=")[1],
-            start_date: $("#start_date").val(),
-            end_date: $("#end_date").val(),
+            start_date: new Date($("#start_date").val()).toISOString(),
+            end_date: new Date($("#end_date").val()).toISOString(),
             progress: setProgress($("#end_date").val())
 
         };

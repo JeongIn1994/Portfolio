@@ -241,7 +241,6 @@
         el: document.querySelector('#toastUI'),
         height: '450px',
         initialEditType: 'wysiwyg',
-        initialValue: '내용을 입력해 주세요.',
         previewStyle: 'vertical',
         hooks: {
             async addImageBlobHook(blob, callback){
@@ -266,5 +265,7 @@
             }
         }
     });
+    const initialValue = '<p>BackEnd : </p><p>FrontEnd : </p><p>DataBase : </p><p><br></p><p><br></p><p>マンバー数：</p><p>役割：</p><p><br></p><p>担当作業：</p><p>詳細：</p><p></p><p>追記があれば記入すること</p>';
+    editor.setHTML(initialValue)
 
 </script>

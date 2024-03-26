@@ -260,7 +260,6 @@
         el: document.querySelector('#toastUI'),
         height: '450px',
         initialEditType: 'wysiwyg',
-        initialValue: '내용을 입력해 주세요.',
         previewStyle: 'vertical',
         hooks: {
             async addImageBlobHook(blob, callback){
@@ -285,6 +284,13 @@
             }
         }
     });
+    //add content
+    const htmlData = "{{post.content}}";
+    var unescapedString = document.createElement('div');
+    unescapedString.innerHTML = htmlData;
+    var convertedString = unescapedString.textContent || unescapedString.innerText;
+
+    editor.setMarkdown(convertedString);
 
 
 </script>

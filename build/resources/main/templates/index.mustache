@@ -25,20 +25,20 @@
             <div class="slider">
                 <h2 >Skills</h2>
                 <div class="slides">
-                    <div class="slide">
+                    <div class="slide" style="">
                         <p>FrontEnd</p>
-                        <div class="middle">
-                            <div class="left">
-                                <img src="" alt="#">
+                        <div class="middle" >
+                            <div class="front" >
+                                <img src="/display/skills?fileName=frontend.png">
                             </div>
                         </div>
                     </div>
                     <!---------------- END OF skills_front ------------------------->
-                    <div class="slide">
+                    <div class="slide" style="">
                         <p>BackEnd</p>
                         <div class="middle">
-                            <div class="left">
-                                <img src="" alt="#">
+                            <div class="back" >
+                                <img src="/display/skills?fileName=backend.png">
                             </div>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
     let li_List = "";
     let progress = "";
         {{#posts}}
-        "{{progress}}" === "1" ? progress =
+        "{{progress}}" === "0" ? progress =
                 '<h2><span class="badge badge-warning">Ing</span></h2>' : progress = '<h2><span class="badge badge-secondary">Done</span></h2>';
         li_List += "<li>"+progress+"<a href='#'><img alt='#' src='/display?fileName={{summary}}'></a>"
 

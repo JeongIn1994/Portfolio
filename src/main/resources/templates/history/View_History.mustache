@@ -13,7 +13,11 @@
     <div id="postDiv">
         <div class="form-group">
             <label for="title">Title</label>
-            <input type="text" class="form-control" id="title" value="{{post.title}}"readonly>
+            <input type="text" class="form-control" id="title" value="{{post.title}}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="language">Language</label>
+            <input type="text" class="form-control" id="language" value="{{post.language}}" readonly>
         </div>
         <div class="form-group">
             <label for="summary">Summary</label>
@@ -21,7 +25,7 @@
         </div>
         <div class="form-group">
             <label for="content">Content</label>
-            <div class="form-control" id="content" >{{{post.content}}}</div>
+            <div class="form-control" id="content" style="overflow: scroll" >{{{post.content}}}</div>
         </div>
         <div class="form-group">
             <label for="progress">progress
@@ -45,19 +49,18 @@ document.title = "⚙️In's Inventory-{{post.title}}"
 
         if(userRole === "ADMIN"){
             document.querySelector("#btn-update").style.display = "block";
-            document.querySelector("#btn-delete").style.display = "block";
         }
     }
 
     const changProgress = (progress) => {
-        if(progress === 0) {
+        if(progress === 1) {
             document.querySelector("#progress").className = "badge badge-warning";
             document.querySelector("#progress").textContent = "Ing"
             document.querySelector("#date").textContent = formattedDate("{{post.start_date}}") + " ~ " ;
         }else {
             document.querySelector("#progress").className = "badge badge-secondary";
             document.querySelector("#progress").textContent = "Done"
-            document.querySelector("#date").textContent = formattedDate("{{post.start_date}}") + "~" + formattedDate("{{post.end_date}}") ;
+            document.querySelector("#date").textContent = formattedDate("{{post.start_date}}") + " ~ " + formattedDate("{{post.end_date}}") ;
         }
     }
 
