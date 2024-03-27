@@ -208,4 +208,5 @@
 ![ER-diagram](https://github.com/JeongIn1994/Portfolio/assets/77004633/493e8080-cd43-4276-98d4-fd33dbef2c59)
 
 # 4.CRUD
+![CRUD図](https://github.com/JeongIn1994/Portfolio/assets/77004633/bf342a3d-ac7e-4db1-9d80-7c315b3689b3)
 
