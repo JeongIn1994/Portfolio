@@ -121,7 +121,8 @@ public class UploadController {
     }
 
     @PostMapping("/utilsFileUploadAjax")
-    private ResponseEntity<UploadResultDTO> uploadSkillsFile(@RequestParam("file") MultipartFile uploadFile) {
+    private ResponseEntity<UploadResultDTO> uploadSkillsFile(
+            @RequestParam("file") MultipartFile uploadFile,@RequestParam("category")String category) {
 
         if (uploadFile == null || uploadFile.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -132,8 +133,17 @@ public class UploadController {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
-        String originName = "frontEnd.png";
-        String fileName = originName.substring(originName.lastIndexOf("\\") + 1);
+        String originName = null;
+        String fileName = null;
+
+        if(category.equals("frontEnd")){
+            originName = "frontEnd.png";
+            fileName = originName.substring(originName.lastIndexOf("\\") + 1);
+        } else if (category.equals("backEnd")) {
+            originName = "backEnd.png";
+            fileName = originName.substring(originName.lastIndexOf("\\") + 1);
+        }
+        log.info("FileName:"+originName);
 
 
         log.info("SkillsFilePath:"+skillsUploadUrl);
@@ -206,19 +216,17 @@ public class UploadController {
 
 
     @PostMapping("/removeFile")
-    public ResponseEntity<Boolean> removeFile (String fileName){
+    public ResponseEntity<Boolean> removeFile (@RequestParam("fileName") String fileName){
 
-        String srcFileName = null;
+        String srcFileName = fileName;
 
         srcFileName = URLDecoder.decode(fileName, StandardCharsets.UTF_8);
 
-        File file = new File(summaryUploadUrl + File.separator + srcFileName);
+        File file = new File(skillsUploadUrl + File.separator + srcFileName);
+
+        log.info("deleted File Name:" + file.getName());
         boolean result = file.delete();
-
-        File thumbnail = new File(file.getParent(), "s_" + file.getName());
-
-        result = thumbnail.delete();
-
+        log.info("deleted File Result:" + result);
         return new ResponseEntity<>(result, HttpStatus.OK);
 
     }

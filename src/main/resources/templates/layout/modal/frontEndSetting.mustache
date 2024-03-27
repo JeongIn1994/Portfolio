@@ -1,0 +1,81 @@
+<div class="FrontEndDiv">
+    <div class="frontImgDiv">
+        <div>
+            <b><h2 class="frontTextContent">No Selected Data</h2></b>
+        </div>
+    </div>
+    <label for="frontFile" class="btn btn-warning">Select Files</label>
+    <input type="file" id="frontFile" style="display: none" onchange="changeFrontFile()">
+    <button id="attachImg" class="btn btn-info" style="margin-bottom: 6px" onclick="attachFrontImg()" >Upload</button>
+    <button id="deleteImg" class="btn btn-danger" style="margin-bottom: 6px" onclick="deleteFrontImg()">Delete</button>
+</div>
+<script>
+    const attachFrontImg = () => {
+        event.preventDefault();
+
+        const fileInput = document.getElementById('frontFile');
+        const selectedFile = fileInput.files[0];
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+        formData.append('category', "frontEnd");
+
+        $.ajax({
+            type: 'POST',
+            url: '/utilsFileUploadAjax',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                console.log('File uploaded successfully:', response);
+                alert("FrontEnd Img Update Success")
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error('FrontEnd Img Update Failed:', error);
+            }
+        });
+
+    }
+    const deleteFrontImg = () => {
+        event.preventDefault();
+        const frontImgDiv = document.querySelector('.frontImgDiv');
+        const fileName = document.getElementById('frontFile').files[0].name;
+        const fileExt = fileName.slice(fileName.lastIndexOf('.'));
+        frontImgDiv.innerHTML = '<b><h2 class="frontTextContent">No Data</h2></b>';
+
+        $.ajax({
+            type: 'POST',
+            url: '/removeFile',
+            data: { fileName: 'frontEnd' + fileExt },
+            success: function(response) {
+                console.log('File Deleted successfully:', response);
+            },
+            error: function(xhr, status, error) {
+                console.error('Error uploading file:', error);
+            }
+        });
+    }
+
+    const changeFrontFile = () => {
+        const fileInput = document.getElementById('frontFile');
+        const selectedFile = fileInput.files[0];
+        const frontImgDiv = document.querySelector('.frontImgDiv');
+
+        // 이미지 파일이 선택된 경우에만 이미지를 화면에 표시
+        if (selectedFile && selectedFile.type.startsWith('image/')) {
+            frontImgDiv.innerHTML = ''; // 이미지 영역 초기화
+
+            // 새로운 이미지 엘리먼트 생성 및 설정
+            const imgElement = document.createElement('img');
+            imgElement.src = URL.createObjectURL(selectedFile);
+            imgElement.alt = 'Selected Image';
+
+            // 이미지를 화면에 추가
+            frontImgDiv.appendChild(imgElement);
+        } else {
+            // 이미지 파일이 아닌 경우 No Data 표시
+            frontImgDiv.innerHTML = '<b><h2 class="frontTextContent">No Data</h2></b>';
+        }
+
+    }
+</script>
