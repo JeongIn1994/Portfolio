@@ -210,3 +210,14 @@
 # 4.CRUD
 ![CRUD図](https://github.com/JeongIn1994/Portfolio/assets/77004633/bf342a3d-ac7e-4db1-9d80-7c315b3689b3)
 
+# 5.その他
+
+#### ログファイル、スキルシートのイメージ、掲示物のイメージ添付、履歴のサマリイメージ添付はすべてC://resources/filesの下に格納される。詳細は下記の通りになる。
+#### ログファイル → log/yyyy/MM/ddの下にlogfileで保存される。
+#### スキルシートのイメージ → skillsの下にfrontEnd,backEndで保存される。
+#### 掲示物のイメージ添付 → upload/yyyy/MM/ddの下でUUID_ファイル目で保存される。
+#### 履歴のサマリイメージ添付 → summary/yyyy/MM/ddの下でUUID_ファイル目で保存される。
+
+# 6.実装機関
+## 2023.07~2024.03.25 補足修正予定あり
+
