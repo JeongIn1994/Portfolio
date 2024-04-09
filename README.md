@@ -41,10 +41,11 @@
 ## 2.2 履歴画面
 
 ### ・ログオフの状態
-![history_PC](https://github.com/JeongIn1994/Portfolio/assets/77004633/027d5a31-fdbc-4e2b-ac8b-d9c4fb064f1b)
+![history_PC_NoLogin](https://github.com/JeongIn1994/Portfolio/assets/77004633/3455ad39-c324-4ab5-b88b-771c77fa175b)
 
 ### ・ログインの状態
-![history_PC_NoLogin](https://github.com/JeongIn1994/Portfolio/assets/77004633/3455ad39-c324-4ab5-b88b-771c77fa175b)
+
+![history_PC](https://github.com/JeongIn1994/Portfolio/assets/77004633/027d5a31-fdbc-4e2b-ac8b-d9c4fb064f1b)
 
 #### ①管理者権限がある場合表示される履歴登録ボタンを表しする。
 #### ②各履歴の詳細を確認するためのボタンを表示する。
